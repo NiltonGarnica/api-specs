@@ -1,0 +1,155 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API de Clientes",
+    "version": "1.0.0",
+    "description": "API de demostración para consultar clientes registrados. Los datos y endpoints son ficticios y solo sirven como documentación de ejemplo.",
+    "contact": {
+      "name": "Equipo de APIs (demostración)"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.ejemplo.com/v1",
+      "description": "Servidor de demostración (no real)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Clientes",
+      "description": "Consulta de clientes"
+    }
+  ],
+  "paths": {
+    "/clientes": {
+      "get": {
+        "tags": ["Clientes"],
+        "operationId": "listarClientes",
+        "summary": "Listar clientes",
+        "description": "Devuelve los clientes registrados. Se puede buscar por nombre.",
+        "parameters": [
+          {
+            "name": "buscar",
+            "in": "query",
+            "required": false,
+            "description": "Texto a buscar dentro del nombre del cliente.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de clientes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Cliente"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "CLI-001",
+                    "nombre": "Comercial Andina S.A.C.",
+                    "email": "contacto@andina.example",
+                    "telefono": "+51 1 555 0101",
+                    "activo": true
+                  },
+                  {
+                    "id": "CLI-002",
+                    "nombre": "Servicios Lima E.I.R.L.",
+                    "email": "ventas@serviciosl.example",
+                    "telefono": "+51 1 555 0202",
+                    "activo": true
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clientes/{id}": {
+      "get": {
+        "tags": ["Clientes"],
+        "operationId": "obtenerCliente",
+        "summary": "Obtener un cliente",
+        "description": "Devuelve los datos de un cliente según su identificador.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Identificador del cliente.",
+            "schema": {
+              "type": "string",
+              "example": "CLI-001"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cliente"
+                },
+                "example": {
+                  "id": "CLI-001",
+                  "nombre": "Comercial Andina S.A.C.",
+                  "email": "contacto@andina.example",
+                  "telefono": "+51 1 555 0101",
+                  "activo": true
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un cliente con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe el cliente CLI-999."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Cliente": {
+        "type": "object",
+        "required": ["id", "nombre", "email", "activo"],
+        "properties": {
+          "id": { "type": "string", "example": "CLI-001" },
+          "nombre": { "type": "string", "example": "Comercial Andina S.A.C." },
+          "email": { "type": "string", "format": "email", "example": "contacto@andina.example" },
+          "telefono": { "type": "string", "example": "+51 1 555 0101" },
+          "activo": { "type": "boolean", "example": true }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["codigo", "mensaje"],
+        "properties": {
+          "codigo": { "type": "string", "example": "NO_ENCONTRADO" },
+          "mensaje": { "type": "string", "example": "No existe el cliente CLI-999." }
+        }
+      }
+    }
+  }
+}

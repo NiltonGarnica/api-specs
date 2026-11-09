@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Documentación de APIs</title>
+  <meta name="description" content="Portal para consultar y descargar las especificaciones OpenAPI de las APIs de Facturas y Clientes (demostración).">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="#inicio">api-specs</a>
+      <nav class="menu" aria-label="Principal">
+        <a class="menu__link" href="#inicio" data-route="inicio">Inicio</a>
+        <a class="menu__link" href="#facturas" data-route="facturas">Facturas</a>
+        <a class="menu__link" href="#clientes" data-route="clientes">Clientes</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="page">
+    <!-- Inicio -->
+    <section id="vista-inicio" class="view" data-view="inicio" aria-labelledby="titulo-inicio">
+      <h1 id="titulo-inicio" tabindex="-1">Documentación de APIs</h1>
+      <p class="lead">
+        Consulta los endpoints, ejemplos de solicitud y respuesta, y descarga la
+        especificación OpenAPI 3.0.3 en formato JSON de cada API.
+        Ambas APIs son demostraciones con datos ficticios.
+      </p>
+
+      <div class="cards">
+        <a class="card" href="#facturas">
+          <span class="card__eyebrow">OpenAPI <span data-version="facturas">·</span></span>
+          <span class="card__title">API de Facturas</span>
+          <span class="card__text">Listar y crear facturas con sus líneas, totales y estado.</span>
+          <span class="card__cta">Ver documentación →</span>
+        </a>
+        <a class="card" href="#clientes">
+          <span class="card__eyebrow">OpenAPI <span data-version="clientes">·</span></span>
+          <span class="card__title">API de Clientes</span>
+          <span class="card__text">Listar clientes y consultar uno por su identificador.</span>
+          <span class="card__cta">Ver documentación →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Facturas -->
+    <section id="vista-facturas" class="view" data-view="facturas" aria-labelledby="titulo-facturas" hidden>
+      <div class="spec-head">
+        <div>
+          <h1 id="titulo-facturas" tabindex="-1" data-field="title">API de Facturas</h1>
+          <p class="meta"><span class="badge" data-field="version">v…</span> <span class="badge badge--muted">Demostración</span></p>
+        </div>
+        <a class="btn" href="./specs/facturas.json" download="facturas.json">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V4a1 1 0 0 1 1-1Zm-8 15a1 1 0 0 1 1 1v1h14v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+          Descargar JSON
+        </a>
+      </div>
+      <p class="lead" data-field="description">Cargando especificación…</p>
+      <p class="server" data-field="server"></p>
+      <div class="endpoints" data-field="endpoints"></div>
+    </section>
+
+    <!-- Clientes -->
+    <section id="vista-clientes" class="view" data-view="clientes" aria-labelledby="titulo-clientes" hidden>
+      <div class="spec-head">
+        <div>
+          <h1 id="titulo-clientes" tabindex="-1" data-field="title">API de Clientes</h1>
+          <p class="meta"><span class="badge" data-field="version">v…</span> <span class="badge badge--muted">Demostración</span></p>
+        </div>
+        <a class="btn" href="./specs/clientes.json" download="clientes.json">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V4a1 1 0 0 1 1-1Zm-8 15a1 1 0 0 1 1 1v1h14v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+          Descargar JSON
+        </a>
+      </div>
+      <p class="lead" data-field="description">Cargando especificación…</p>
+      <p class="server" data-field="server"></p>
+      <div class="endpoints" data-field="endpoints"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>APIs de demostración · Especificaciones OpenAPI 3.0.3</p>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
