@@ -1,0 +1,830 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API de Tickets de Soporte",
+    "version": "1.0.0",
+    "description": "API de demostración para la mesa de ayuda: tickets de soporte, prioridades y comentarios. Los datos y endpoints son ficticios y solo sirven como documentación de ejemplo.",
+    "contact": {
+      "name": "Equipo de APIs (demostración)"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.ejemplo.com/v1",
+      "description": "Servidor de demostración (no real)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Tickets",
+      "description": "Mesa de ayuda: tickets, prioridades y conversación."
+    }
+  ],
+  "paths": {
+    "/tickets": {
+      "get": {
+        "summary": "Listar tickets",
+        "description": "Devuelve tickets paginados. Se pueden combinar los filtros.",
+        "operationId": "listarTickets",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por estado.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "abierto",
+                "en_progreso",
+                "resuelto",
+                "cerrado"
+              ]
+            }
+          },
+          {
+            "name": "prioridad",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por prioridad.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "baja",
+                "media",
+                "alta",
+                "critica"
+              ]
+            }
+          },
+          {
+            "name": "clienteId",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por cliente.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "description": "Número de página (empieza en 1).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad máxima de resultados por página.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de tickets.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ticket"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "TCK-0001",
+                    "asunto": "Monto incorrecto en factura",
+                    "descripcion": "La factura FAC-0002 tiene un monto incorrecto.",
+                    "clienteId": "CLI-001",
+                    "prioridad": "alta",
+                    "categoria": "facturacion",
+                    "asignadoA": "Luis Rivas",
+                    "estado": "en_progreso",
+                    "creadoEn": "2026-10-01T14:00:00Z"
+                  },
+                  {
+                    "id": "TCK-0002",
+                    "asunto": "No puedo ingresar a mi cuenta",
+                    "descripcion": "El sistema dice que mi contraseña expiró.",
+                    "clienteId": "CLI-002",
+                    "prioridad": "media",
+                    "categoria": "cuenta",
+                    "asignadoA": "Sofía Cárdenas",
+                    "estado": "resuelto",
+                    "creadoEn": "2026-10-15T09:30:00Z"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "description": "Total de registros que cumplen los filtros.",
+                "schema": {
+                  "type": "integer",
+                  "example": 2
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de consulta no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "PARAMETRO_INVALIDO",
+                  "mensaje": "El parámetro 'limite' debe estar entre 1 y 100."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tickets"
+        ]
+      },
+      "post": {
+        "summary": "Crear un ticket",
+        "description": "Registra un ticket nuevo.",
+        "operationId": "crearTicket",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoTicket"
+              },
+              "example": {
+                "asunto": "Error al descargar reporte",
+                "descripcion": "El reporte mensual se descarga vacío.",
+                "clienteId": "CLI-002",
+                "prioridad": "baja",
+                "categoria": "tecnico"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Ticket creado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                },
+                "example": {
+                  "id": "TCK-0003",
+                  "asunto": "Error al descargar reporte",
+                  "descripcion": "El reporte mensual se descarga vacío.",
+                  "clienteId": "CLI-002",
+                  "prioridad": "baja",
+                  "categoria": "tecnico",
+                  "estado": "abierto",
+                  "creadoEn": "2026-11-11T10:30:00Z"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URL del recurso creado.",
+                "schema": {
+                  "type": "string",
+                  "example": "/tickets/TCK-0003"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'asunto' es obligatorio."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tickets"
+        ]
+      }
+    },
+    "/tickets/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del ticket.",
+          "schema": {
+            "type": "string",
+            "pattern": "^TCK-\\d{4}$",
+            "example": "TCK-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener un ticket",
+        "description": "Devuelve los datos de un ticket según su identificador.",
+        "operationId": "obtenerTicket",
+        "responses": {
+          "200": {
+            "description": "Ticket encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                },
+                "example": {
+                  "id": "TCK-0001",
+                  "asunto": "Monto incorrecto en factura",
+                  "descripcion": "La factura FAC-0002 tiene un monto incorrecto.",
+                  "clienteId": "CLI-001",
+                  "prioridad": "alta",
+                  "categoria": "facturacion",
+                  "asignadoA": "Luis Rivas",
+                  "estado": "en_progreso",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un ticket con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un ticket TCK-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tickets"
+        ]
+      },
+      "put": {
+        "summary": "Reemplazar un ticket",
+        "description": "Reemplaza todos los datos editables. Los campos que no se envíen quedan vacíos o con su valor por defecto.",
+        "operationId": "reemplazarTicket",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoTicket"
+              },
+              "example": {
+                "asunto": "Monto incorrecto en factura FAC-0002",
+                "descripcion": "La factura FAC-0002 cobra S/ 50 de más.",
+                "clienteId": "CLI-001",
+                "prioridad": "critica",
+                "categoria": "facturacion",
+                "asignadoA": "Luis Rivas"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                },
+                "example": {
+                  "id": "TCK-0001",
+                  "asunto": "Monto incorrecto en factura FAC-0002",
+                  "descripcion": "La factura FAC-0002 cobra S/ 50 de más.",
+                  "clienteId": "CLI-001",
+                  "prioridad": "critica",
+                  "categoria": "facturacion",
+                  "asignadoA": "Luis Rivas",
+                  "estado": "en_progreso",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'asunto' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un ticket con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un ticket TCK-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tickets"
+        ]
+      },
+      "patch": {
+        "summary": "Actualizar un ticket parcialmente",
+        "description": "Cambia solo los campos enviados. El resto se mantiene.",
+        "operationId": "actualizarTicket",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarTicket"
+              },
+              "example": {
+                "prioridad": "critica"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket"
+                },
+                "example": {
+                  "id": "TCK-0001",
+                  "asunto": "Monto incorrecto en factura",
+                  "descripcion": "La factura FAC-0002 tiene un monto incorrecto.",
+                  "clienteId": "CLI-001",
+                  "prioridad": "critica",
+                  "categoria": "facturacion",
+                  "asignadoA": "Luis Rivas",
+                  "estado": "en_progreso",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'asunto' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un ticket con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un ticket TCK-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tickets"
+        ]
+      },
+      "delete": {
+        "summary": "Eliminar un ticket",
+        "description": "Elimina un ticket de forma permanente.",
+        "operationId": "eliminarTicket",
+        "responses": {
+          "204": {
+            "description": "Ticket eliminado. No devuelve contenido."
+          },
+          "404": {
+            "description": "No existe un ticket con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un ticket TCK-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tickets"
+        ]
+      }
+    },
+    "/tickets/{id}/comentarios": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del ticket.",
+          "schema": {
+            "type": "string",
+            "pattern": "^TCK-\\d{4}$",
+            "example": "TCK-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Listar comentarios",
+        "description": "Devuelve la conversación del ticket. Por defecto no incluye las notas internas.",
+        "operationId": "listarComentariosTicket",
+        "parameters": [
+          {
+            "name": "incluirInternos",
+            "in": "query",
+            "required": false,
+            "description": "Incluye las notas internas del equipo de soporte.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comentarios del ticket.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Comentario"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "COM-0201",
+                    "autor": "Comercial Andina S.A.C.",
+                    "mensaje": "La factura FAC-0002 tiene un monto incorrecto.",
+                    "interno": false,
+                    "creadoEn": "2026-11-10T16:40:00Z"
+                  },
+                  {
+                    "id": "COM-0202",
+                    "autor": "Soporte - Luis Rivas",
+                    "mensaje": "Ya corregimos el monto. Por favor, revise la factura otra vez.",
+                    "interno": false,
+                    "creadoEn": "2026-11-11T11:05:00Z"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un ticket con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un ticket TCK-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tickets"
+        ]
+      },
+      "post": {
+        "summary": "Agregar un comentario",
+        "description": "Agrega un mensaje al ticket. Si `interno` es `true`, solo lo ve el equipo de soporte.",
+        "operationId": "agregarComentarioTicket",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoComentario"
+              },
+              "example": {
+                "autor": "Soporte - Luis Rivas",
+                "mensaje": "Ya corregimos el monto. Por favor, revise la factura otra vez.",
+                "interno": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Comentario agregado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comentario"
+                },
+                "example": {
+                  "id": "COM-0202",
+                  "autor": "Soporte - Luis Rivas",
+                  "mensaje": "Ya corregimos el monto. Por favor, revise la factura otra vez.",
+                  "interno": false,
+                  "creadoEn": "2026-11-11T11:05:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Comentario vacío.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El mensaje no puede estar vacío."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un ticket con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un ticket TCK-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Tickets"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NuevoTicket": {
+        "type": "object",
+        "required": [
+          "asunto",
+          "descripcion",
+          "clienteId",
+          "prioridad",
+          "categoria"
+        ],
+        "properties": {
+          "asunto": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Monto incorrecto en factura"
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "La factura FAC-0002 tiene un monto incorrecto."
+          },
+          "clienteId": {
+            "type": "string",
+            "example": "CLI-001"
+          },
+          "prioridad": {
+            "type": "string",
+            "enum": [
+              "baja",
+              "media",
+              "alta",
+              "critica"
+            ],
+            "example": "alta"
+          },
+          "categoria": {
+            "type": "string",
+            "enum": [
+              "facturacion",
+              "tecnico",
+              "cuenta"
+            ],
+            "example": "facturacion"
+          },
+          "asignadoA": {
+            "type": "string",
+            "example": "Luis Rivas"
+          }
+        }
+      },
+      "ActualizarTicket": {
+        "type": "object",
+        "minProperties": 1,
+        "description": "Todos los campos son opcionales; se cambian solo los enviados.",
+        "properties": {
+          "asunto": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Monto incorrecto en factura"
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "La factura FAC-0002 tiene un monto incorrecto."
+          },
+          "clienteId": {
+            "type": "string",
+            "example": "CLI-001"
+          },
+          "prioridad": {
+            "type": "string",
+            "enum": [
+              "baja",
+              "media",
+              "alta",
+              "critica"
+            ],
+            "example": "alta"
+          },
+          "categoria": {
+            "type": "string",
+            "enum": [
+              "facturacion",
+              "tecnico",
+              "cuenta"
+            ],
+            "example": "facturacion"
+          },
+          "asignadoA": {
+            "type": "string",
+            "example": "Luis Rivas"
+          }
+        }
+      },
+      "Ticket": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NuevoTicket"
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "creadoEn",
+              "estado"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^TCK-\\d{4}$",
+                "example": "TCK-0001"
+              },
+              "estado": {
+                "type": "string",
+                "enum": [
+                  "abierto",
+                  "en_progreso",
+                  "resuelto",
+                  "cerrado"
+                ],
+                "example": "abierto"
+              },
+              "creadoEn": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2026-10-01T14:00:00Z"
+              }
+            }
+          }
+        ]
+      },
+      "NuevoComentario": {
+        "type": "object",
+        "required": [
+          "autor",
+          "mensaje"
+        ],
+        "properties": {
+          "autor": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Soporte - Luis Rivas"
+          },
+          "mensaje": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Ya corregimos el monto."
+          },
+          "interno": {
+            "type": "boolean",
+            "default": false,
+            "example": false
+          }
+        }
+      },
+      "Comentario": {
+        "type": "object",
+        "required": [
+          "id",
+          "autor",
+          "mensaje",
+          "interno",
+          "creadoEn"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "COM-0202"
+          },
+          "autor": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Soporte - Luis Rivas"
+          },
+          "mensaje": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Ya corregimos el monto."
+          },
+          "interno": {
+            "type": "boolean",
+            "default": false,
+            "example": false
+          },
+          "creadoEn": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-11-11T11:05:00Z"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "codigo",
+          "mensaje"
+        ],
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "example": "NO_ENCONTRADO"
+          },
+          "mensaje": {
+            "type": "string",
+            "example": "No existe un ticket TCK-9999."
+          }
+        }
+      }
+    }
+  }
+}

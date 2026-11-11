@@ -1,0 +1,815 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API de Citas",
+    "version": "1.0.0",
+    "description": "API de demostración para agendar citas de atención y consultar horarios libres. Los datos y endpoints son ficticios y solo sirven como documentación de ejemplo.",
+    "contact": {
+      "name": "Equipo de APIs (demostración)"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.ejemplo.com/v1",
+      "description": "Servidor de demostración (no real)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Citas",
+      "description": "Agenda de citas, disponibilidad y reprogramaciones."
+    }
+  ],
+  "paths": {
+    "/citas": {
+      "get": {
+        "summary": "Listar citas",
+        "description": "Devuelve citas paginados. Se pueden combinar los filtros.",
+        "operationId": "listarCitas",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por estado de la cita.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "programada",
+                "reprogramada",
+                "cancelada",
+                "atendida"
+              ]
+            }
+          },
+          {
+            "name": "fecha",
+            "in": "query",
+            "required": false,
+            "description": "Filtra las citas de un día.",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "clienteId",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por cliente.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "description": "Número de página (empieza en 1).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad máxima de resultados por página.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de citas.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Cita"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "CIT-0001",
+                    "clienteId": "CLI-001",
+                    "servicio": "Consulta nutricional",
+                    "profesional": "Lic. Carla Vega",
+                    "inicio": "2026-11-18T10:00:00-05:00",
+                    "duracionMinutos": 30,
+                    "notas": "Primera consulta.",
+                    "estado": "programada",
+                    "creadoEn": "2026-10-01T14:00:00Z"
+                  },
+                  {
+                    "id": "CIT-0002",
+                    "clienteId": "CLI-002",
+                    "servicio": "Evaluación física",
+                    "profesional": "Lic. Diego Ramos",
+                    "inicio": "2026-11-18T16:00:00-05:00",
+                    "duracionMinutos": 45,
+                    "notas": "",
+                    "estado": "atendida",
+                    "creadoEn": "2026-10-15T09:30:00Z"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "description": "Total de registros que cumplen los filtros.",
+                "schema": {
+                  "type": "integer",
+                  "example": 2
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de consulta no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "PARAMETRO_INVALIDO",
+                  "mensaje": "El parámetro 'limite' debe estar entre 1 y 100."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Citas"
+        ]
+      },
+      "post": {
+        "summary": "Crear una cita",
+        "description": "Registra una cita nuevoa.",
+        "operationId": "crearCita",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevaCita"
+              },
+              "example": {
+                "clienteId": "CLI-002",
+                "servicio": "Consulta nutricional",
+                "profesional": "Lic. Carla Vega",
+                "inicio": "2026-11-19T09:30:00-05:00",
+                "duracionMinutos": 30,
+                "notas": "Control mensual."
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Cita creada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cita"
+                },
+                "example": {
+                  "id": "CIT-0003",
+                  "clienteId": "CLI-002",
+                  "servicio": "Consulta nutricional",
+                  "profesional": "Lic. Carla Vega",
+                  "inicio": "2026-11-19T09:30:00-05:00",
+                  "duracionMinutos": 30,
+                  "notas": "Control mensual.",
+                  "estado": "programada",
+                  "creadoEn": "2026-11-11T10:30:00Z"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URL del recurso creado.",
+                "schema": {
+                  "type": "string",
+                  "example": "/citas/CIT-0003"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'clienteId' es obligatorio."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Citas"
+        ]
+      }
+    },
+    "/citas/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador de la cita.",
+          "schema": {
+            "type": "string",
+            "pattern": "^CIT-\\d{4}$",
+            "example": "CIT-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener una cita",
+        "description": "Devuelve los datos de una cita según su identificador.",
+        "operationId": "obtenerCita",
+        "responses": {
+          "200": {
+            "description": "Cita encontrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cita"
+                },
+                "example": {
+                  "id": "CIT-0001",
+                  "clienteId": "CLI-001",
+                  "servicio": "Consulta nutricional",
+                  "profesional": "Lic. Carla Vega",
+                  "inicio": "2026-11-18T10:00:00-05:00",
+                  "duracionMinutos": 30,
+                  "notas": "Primera consulta.",
+                  "estado": "programada",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe una cita con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe una cita CIT-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Citas"
+        ]
+      },
+      "put": {
+        "summary": "Reemplazar una cita",
+        "description": "Reemplaza todos los datos editables. Los campos que no se envíen quedan vacíos o con su valor por defecto.",
+        "operationId": "reemplazarCita",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevaCita"
+              },
+              "example": {
+                "clienteId": "CLI-001",
+                "servicio": "Consulta nutricional",
+                "profesional": "Lic. Diego Ramos",
+                "inicio": "2026-11-18T10:00:00-05:00",
+                "duracionMinutos": 45,
+                "notas": "Traer exámenes."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cita actualizada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cita"
+                },
+                "example": {
+                  "id": "CIT-0001",
+                  "clienteId": "CLI-001",
+                  "servicio": "Consulta nutricional",
+                  "profesional": "Lic. Diego Ramos",
+                  "inicio": "2026-11-18T10:00:00-05:00",
+                  "duracionMinutos": 45,
+                  "notas": "Traer exámenes.",
+                  "estado": "programada",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'clienteId' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe una cita con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe una cita CIT-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Citas"
+        ]
+      },
+      "patch": {
+        "summary": "Actualizar una cita parcialmente",
+        "description": "Cambia solo los campos enviados. El resto se mantiene.",
+        "operationId": "actualizarCita",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarCita"
+              },
+              "example": {
+                "notas": "Traer resultados de laboratorio."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cita actualizada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cita"
+                },
+                "example": {
+                  "id": "CIT-0001",
+                  "clienteId": "CLI-001",
+                  "servicio": "Consulta nutricional",
+                  "profesional": "Lic. Carla Vega",
+                  "inicio": "2026-11-18T10:00:00-05:00",
+                  "duracionMinutos": 30,
+                  "notas": "Traer resultados de laboratorio.",
+                  "estado": "programada",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'clienteId' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe una cita con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe una cita CIT-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Citas"
+        ]
+      },
+      "delete": {
+        "summary": "Eliminar una cita",
+        "description": "Cancela y elimina la cita de la agenda.",
+        "operationId": "eliminarCita",
+        "responses": {
+          "204": {
+            "description": "Cita eliminada. No devuelve contenido."
+          },
+          "404": {
+            "description": "No existe una cita con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe una cita CIT-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Citas"
+        ]
+      }
+    },
+    "/citas/disponibilidad": {
+      "get": {
+        "summary": "Consultar disponibilidad",
+        "description": "Devuelve los horarios libres de un día para un servicio.",
+        "operationId": "consultarDisponibilidad",
+        "parameters": [
+          {
+            "name": "fecha",
+            "in": "query",
+            "required": true,
+            "description": "Día a consultar.",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "servicio",
+            "in": "query",
+            "required": false,
+            "description": "Servicio para el que se busca horario.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Horarios disponibles.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Disponibilidad"
+                },
+                "example": {
+                  "fecha": "2026-11-20",
+                  "servicio": "Consulta nutricional",
+                  "horarios": [
+                    "09:00",
+                    "09:30",
+                    "11:00",
+                    "15:30"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Falta la fecha o no es válida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El parámetro 'fecha' es obligatorio."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Citas"
+        ]
+      }
+    },
+    "/citas/{id}/reprogramar": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador de la cita.",
+          "schema": {
+            "type": "string",
+            "pattern": "^CIT-\\d{4}$",
+            "example": "CIT-0001"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Reprogramar una cita",
+        "description": "Mueve la cita a un nuevo horario libre.",
+        "operationId": "reprogramarCita",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Reprogramacion"
+              },
+              "example": {
+                "nuevoInicio": "2026-11-20T11:00:00-05:00",
+                "motivo": "El cliente pidió cambio de horario."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cita reprogramada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cita"
+                },
+                "example": {
+                  "id": "CIT-0001",
+                  "clienteId": "CLI-001",
+                  "servicio": "Consulta nutricional",
+                  "profesional": "Lic. Carla Vega",
+                  "inicio": "2026-11-20T11:00:00-05:00",
+                  "duracionMinutos": 30,
+                  "notas": "Primera consulta.",
+                  "estado": "reprogramada",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El nuevo inicio debe ser una fecha futura."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe una cita con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe una cita CIT-9999."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "El horario ya está ocupado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "HORARIO_OCUPADO",
+                  "mensaje": "Ya existe una cita el 2026-11-20 a las 11:00."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Citas"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NuevaCita": {
+        "type": "object",
+        "required": [
+          "clienteId",
+          "servicio",
+          "inicio",
+          "duracionMinutos"
+        ],
+        "properties": {
+          "clienteId": {
+            "type": "string",
+            "example": "CLI-001"
+          },
+          "servicio": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Consulta nutricional"
+          },
+          "profesional": {
+            "type": "string",
+            "example": "Lic. Carla Vega"
+          },
+          "inicio": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-11-18T10:00:00-05:00"
+          },
+          "duracionMinutos": {
+            "type": "integer",
+            "minimum": 15,
+            "maximum": 240,
+            "example": 30
+          },
+          "notas": {
+            "type": "string",
+            "example": "Primera consulta."
+          }
+        }
+      },
+      "ActualizarCita": {
+        "type": "object",
+        "minProperties": 1,
+        "description": "Todos los campos son opcionales; se cambian solo los enviados.",
+        "properties": {
+          "clienteId": {
+            "type": "string",
+            "example": "CLI-001"
+          },
+          "servicio": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Consulta nutricional"
+          },
+          "profesional": {
+            "type": "string",
+            "example": "Lic. Carla Vega"
+          },
+          "inicio": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-11-18T10:00:00-05:00"
+          },
+          "duracionMinutos": {
+            "type": "integer",
+            "minimum": 15,
+            "maximum": 240,
+            "example": 30
+          },
+          "notas": {
+            "type": "string",
+            "example": "Primera consulta."
+          }
+        }
+      },
+      "Cita": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NuevaCita"
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "creadoEn",
+              "estado"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^CIT-\\d{4}$",
+                "example": "CIT-0001"
+              },
+              "estado": {
+                "type": "string",
+                "enum": [
+                  "programada",
+                  "reprogramada",
+                  "cancelada",
+                  "atendida"
+                ],
+                "example": "programada"
+              },
+              "creadoEn": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2026-10-01T14:00:00Z"
+              }
+            }
+          }
+        ]
+      },
+      "Disponibilidad": {
+        "type": "object",
+        "required": [
+          "fecha",
+          "horarios"
+        ],
+        "properties": {
+          "fecha": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-11-20"
+          },
+          "servicio": {
+            "type": "string",
+            "example": "Consulta nutricional"
+          },
+          "horarios": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^\\d{2}:\\d{2}$"
+            },
+            "example": [
+              "09:00",
+              "09:30"
+            ]
+          }
+        }
+      },
+      "Reprogramacion": {
+        "type": "object",
+        "required": [
+          "nuevoInicio"
+        ],
+        "properties": {
+          "nuevoInicio": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-11-20T11:00:00-05:00"
+          },
+          "motivo": {
+            "type": "string",
+            "example": "El cliente pidió cambio de horario."
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "codigo",
+          "mensaje"
+        ],
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "example": "NO_ENCONTRADO"
+          },
+          "mensaje": {
+            "type": "string",
+            "example": "No existe una cita CIT-9999."
+          }
+        }
+      }
+    }
+  }
+}

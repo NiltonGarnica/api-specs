@@ -1,0 +1,852 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API de Proveedores",
+    "version": "1.0.0",
+    "description": "API de demostración para administrar proveedores, sus productos y su calificación. Los datos y endpoints son ficticios y solo sirven como documentación de ejemplo.",
+    "contact": {
+      "name": "Equipo de APIs (demostración)"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.ejemplo.com/v1",
+      "description": "Servidor de demostración (no real)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Proveedores",
+      "description": "Proveedores, productos que suministran y evaluaciones."
+    }
+  ],
+  "paths": {
+    "/proveedores": {
+      "get": {
+        "summary": "Listar proveedores",
+        "description": "Devuelve proveedores paginados. Se pueden combinar los filtros.",
+        "operationId": "listarProveedores",
+        "parameters": [
+          {
+            "name": "rubro",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por rubro.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "tecnologia",
+                "logistica",
+                "insumos"
+              ]
+            }
+          },
+          {
+            "name": "pais",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por país (código ISO de 2 letras).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "buscar",
+            "in": "query",
+            "required": false,
+            "description": "Texto a buscar en la razón social o el RUC.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "description": "Número de página (empieza en 1).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad máxima de resultados por página.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de proveedores.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Proveedor"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "PRV-0001",
+                    "razonSocial": "Distribuidora Tecnológica del Sur S.A.C.",
+                    "ruc": "20123456789",
+                    "email": "compras@dtsur.example",
+                    "telefono": "+51 1 555 0303",
+                    "pais": "PE",
+                    "rubro": "tecnologia",
+                    "calificacion": 4.5,
+                    "creadoEn": "2026-10-01T14:00:00Z"
+                  },
+                  {
+                    "id": "PRV-0002",
+                    "razonSocial": "Transportes Rápidos del Norte S.A.",
+                    "ruc": "20987654321",
+                    "email": "operaciones@trnorte.example",
+                    "telefono": "+51 44 555 0404",
+                    "pais": "PE",
+                    "rubro": "logistica",
+                    "calificacion": 3.8,
+                    "creadoEn": "2026-10-15T09:30:00Z"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "description": "Total de registros que cumplen los filtros.",
+                "schema": {
+                  "type": "integer",
+                  "example": 2
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de consulta no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "PARAMETRO_INVALIDO",
+                  "mensaje": "El parámetro 'limite' debe estar entre 1 y 100."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Proveedores"
+        ]
+      },
+      "post": {
+        "summary": "Crear un proveedor",
+        "description": "Registra un proveedor nuevo.",
+        "operationId": "crearProveedor",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoProveedor"
+              },
+              "example": {
+                "razonSocial": "Insumos Andinos E.I.R.L.",
+                "ruc": "20456789123",
+                "email": "ventas@insumosandinos.example",
+                "telefono": "+51 84 555 0505",
+                "pais": "PE",
+                "rubro": "insumos"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Proveedor creado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Proveedor"
+                },
+                "example": {
+                  "id": "PRV-0003",
+                  "razonSocial": "Insumos Andinos E.I.R.L.",
+                  "ruc": "20456789123",
+                  "email": "ventas@insumosandinos.example",
+                  "telefono": "+51 84 555 0505",
+                  "pais": "PE",
+                  "rubro": "insumos",
+                  "calificacion": 0,
+                  "creadoEn": "2026-11-11T10:30:00Z"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URL del recurso creado.",
+                "schema": {
+                  "type": "string",
+                  "example": "/proveedores/PRV-0003"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'razonSocial' es obligatorio."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Proveedores"
+        ]
+      }
+    },
+    "/proveedores/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del proveedor.",
+          "schema": {
+            "type": "string",
+            "pattern": "^PRV-\\d{4}$",
+            "example": "PRV-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener un proveedor",
+        "description": "Devuelve los datos de un proveedor según su identificador.",
+        "operationId": "obtenerProveedor",
+        "responses": {
+          "200": {
+            "description": "Proveedor encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Proveedor"
+                },
+                "example": {
+                  "id": "PRV-0001",
+                  "razonSocial": "Distribuidora Tecnológica del Sur S.A.C.",
+                  "ruc": "20123456789",
+                  "email": "compras@dtsur.example",
+                  "telefono": "+51 1 555 0303",
+                  "pais": "PE",
+                  "rubro": "tecnologia",
+                  "calificacion": 4.5,
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un proveedor con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un proveedor PRV-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Proveedores"
+        ]
+      },
+      "put": {
+        "summary": "Reemplazar un proveedor",
+        "description": "Reemplaza todos los datos editables. Los campos que no se envíen quedan vacíos o con su valor por defecto.",
+        "operationId": "reemplazarProveedor",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoProveedor"
+              },
+              "example": {
+                "razonSocial": "Distribuidora Tecnológica del Sur S.A.C.",
+                "ruc": "20123456789",
+                "email": "proveedores@dtsur.example",
+                "telefono": "+51 1 555 0310",
+                "pais": "PE",
+                "rubro": "tecnologia"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Proveedor actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Proveedor"
+                },
+                "example": {
+                  "id": "PRV-0001",
+                  "razonSocial": "Distribuidora Tecnológica del Sur S.A.C.",
+                  "ruc": "20123456789",
+                  "email": "proveedores@dtsur.example",
+                  "telefono": "+51 1 555 0310",
+                  "pais": "PE",
+                  "rubro": "tecnologia",
+                  "calificacion": 4.5,
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'razonSocial' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un proveedor con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un proveedor PRV-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Proveedores"
+        ]
+      },
+      "patch": {
+        "summary": "Actualizar un proveedor parcialmente",
+        "description": "Cambia solo los campos enviados. El resto se mantiene.",
+        "operationId": "actualizarProveedor",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarProveedor"
+              },
+              "example": {
+                "telefono": "+51 1 555 0399"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Proveedor actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Proveedor"
+                },
+                "example": {
+                  "id": "PRV-0001",
+                  "razonSocial": "Distribuidora Tecnológica del Sur S.A.C.",
+                  "ruc": "20123456789",
+                  "email": "compras@dtsur.example",
+                  "telefono": "+51 1 555 0399",
+                  "pais": "PE",
+                  "rubro": "tecnologia",
+                  "calificacion": 4.5,
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'razonSocial' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un proveedor con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un proveedor PRV-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Proveedores"
+        ]
+      },
+      "delete": {
+        "summary": "Eliminar un proveedor",
+        "description": "Elimina un proveedor de forma permanente.",
+        "operationId": "eliminarProveedor",
+        "responses": {
+          "204": {
+            "description": "Proveedor eliminado. No devuelve contenido."
+          },
+          "404": {
+            "description": "No existe un proveedor con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un proveedor PRV-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Proveedores"
+        ]
+      }
+    },
+    "/proveedores/{id}/productos": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del proveedor.",
+          "schema": {
+            "type": "string",
+            "pattern": "^PRV-\\d{4}$",
+            "example": "PRV-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Listar productos suministrados",
+        "description": "Devuelve los productos que vende el proveedor, con su precio de compra y plazo de entrega.",
+        "operationId": "listarProductosProveedor",
+        "responses": {
+          "200": {
+            "description": "Productos del proveedor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductoSuministrado"
+                  }
+                },
+                "example": [
+                  {
+                    "productoId": "PRD-0001",
+                    "precioCompra": 120.0,
+                    "moneda": "PEN",
+                    "plazoEntregaDias": 5
+                  },
+                  {
+                    "productoId": "PRD-0003",
+                    "precioCompra": 45.5,
+                    "moneda": "PEN",
+                    "plazoEntregaDias": 3
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un proveedor con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un proveedor PRV-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Proveedores"
+        ]
+      }
+    },
+    "/proveedores/{id}/evaluaciones": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del proveedor.",
+          "schema": {
+            "type": "string",
+            "pattern": "^PRV-\\d{4}$",
+            "example": "PRV-0001"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Evaluar un proveedor",
+        "description": "Registra una evaluación del 1 al 5 y recalcula la calificación promedio del proveedor.",
+        "operationId": "evaluarProveedor",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevaEvaluacion"
+              },
+              "example": {
+                "puntaje": 5,
+                "comentario": "Entregó antes del plazo."
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Evaluación registrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Evaluacion"
+                },
+                "example": {
+                  "id": "EVA-0042",
+                  "proveedorId": "PRV-0001",
+                  "puntaje": 5,
+                  "comentario": "Entregó antes del plazo.",
+                  "nuevaCalificacion": 4.6,
+                  "creadoEn": "2026-11-11T10:30:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Puntaje no válido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El puntaje debe estar entre 1 y 5."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un proveedor con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un proveedor PRV-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Proveedores"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NuevoProveedor": {
+        "type": "object",
+        "required": [
+          "razonSocial",
+          "ruc",
+          "email",
+          "pais",
+          "rubro"
+        ],
+        "properties": {
+          "razonSocial": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Distribuidora Tecnológica del Sur S.A.C."
+          },
+          "ruc": {
+            "type": "string",
+            "pattern": "^\\d{11}$",
+            "example": "20123456789"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "compras@dtsur.example"
+          },
+          "telefono": {
+            "type": "string",
+            "example": "+51 1 555 0303"
+          },
+          "pais": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$",
+            "description": "Código ISO 3166-1 alfa-2.",
+            "example": "PE"
+          },
+          "rubro": {
+            "type": "string",
+            "enum": [
+              "tecnologia",
+              "logistica",
+              "insumos"
+            ],
+            "example": "tecnologia"
+          }
+        }
+      },
+      "ActualizarProveedor": {
+        "type": "object",
+        "minProperties": 1,
+        "description": "Todos los campos son opcionales; se cambian solo los enviados.",
+        "properties": {
+          "razonSocial": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Distribuidora Tecnológica del Sur S.A.C."
+          },
+          "ruc": {
+            "type": "string",
+            "pattern": "^\\d{11}$",
+            "example": "20123456789"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "compras@dtsur.example"
+          },
+          "telefono": {
+            "type": "string",
+            "example": "+51 1 555 0303"
+          },
+          "pais": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$",
+            "description": "Código ISO 3166-1 alfa-2.",
+            "example": "PE"
+          },
+          "rubro": {
+            "type": "string",
+            "enum": [
+              "tecnologia",
+              "logistica",
+              "insumos"
+            ],
+            "example": "tecnologia"
+          }
+        }
+      },
+      "Proveedor": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NuevoProveedor"
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "creadoEn",
+              "calificacion"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^PRV-\\d{4}$",
+                "example": "PRV-0001"
+              },
+              "calificacion": {
+                "type": "number",
+                "format": "double",
+                "minimum": 0,
+                "maximum": 5,
+                "example": 4.5
+              },
+              "creadoEn": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2026-10-01T14:00:00Z"
+              }
+            }
+          }
+        ]
+      },
+      "ProductoSuministrado": {
+        "type": "object",
+        "required": [
+          "productoId",
+          "precioCompra",
+          "moneda"
+        ],
+        "properties": {
+          "productoId": {
+            "type": "string",
+            "example": "PRD-0001"
+          },
+          "precioCompra": {
+            "type": "number",
+            "format": "double",
+            "minimum": 0,
+            "example": 120.0
+          },
+          "moneda": {
+            "type": "string",
+            "enum": [
+              "PEN",
+              "USD"
+            ],
+            "example": "PEN"
+          },
+          "plazoEntregaDias": {
+            "type": "integer",
+            "minimum": 0,
+            "example": 5
+          }
+        }
+      },
+      "NuevaEvaluacion": {
+        "type": "object",
+        "required": [
+          "puntaje"
+        ],
+        "properties": {
+          "puntaje": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "example": 5
+          },
+          "comentario": {
+            "type": "string",
+            "example": "Entregó antes del plazo."
+          }
+        }
+      },
+      "Evaluacion": {
+        "type": "object",
+        "required": [
+          "id",
+          "proveedorId",
+          "puntaje",
+          "nuevaCalificacion",
+          "creadoEn"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "EVA-0042"
+          },
+          "proveedorId": {
+            "type": "string",
+            "example": "PRV-0001"
+          },
+          "puntaje": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "example": 5
+          },
+          "comentario": {
+            "type": "string",
+            "example": "Entregó antes del plazo."
+          },
+          "nuevaCalificacion": {
+            "type": "number",
+            "format": "double",
+            "minimum": 0,
+            "maximum": 5,
+            "example": 4.6
+          },
+          "creadoEn": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-11-11T10:30:00Z"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "codigo",
+          "mensaje"
+        ],
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "example": "NO_ENCONTRADO"
+          },
+          "mensaje": {
+            "type": "string",
+            "example": "No existe un proveedor PRV-9999."
+          }
+        }
+      }
+    }
+  }
+}

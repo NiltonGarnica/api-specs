@@ -1,0 +1,866 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API de Empleados",
+    "version": "1.0.0",
+    "description": "API de demostración para la ficha de empleados y el control de asistencia. Los datos y endpoints son ficticios y solo sirven como documentación de ejemplo.",
+    "contact": {
+      "name": "Equipo de APIs (demostración)"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.ejemplo.com/v1",
+      "description": "Servidor de demostración (no real)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Empleados",
+      "description": "Fichas de empleados y registro de asistencia."
+    }
+  ],
+  "paths": {
+    "/empleados": {
+      "get": {
+        "summary": "Listar empleados",
+        "description": "Devuelve empleados paginados. Se pueden combinar los filtros.",
+        "operationId": "listarEmpleados",
+        "parameters": [
+          {
+            "name": "area",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por área.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ventas",
+                "operaciones",
+                "tecnologia",
+                "finanzas"
+              ]
+            }
+          },
+          {
+            "name": "activo",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por empleados activos o dados de baja.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "buscar",
+            "in": "query",
+            "required": false,
+            "description": "Texto a buscar en nombres, apellidos o documento.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "description": "Número de página (empieza en 1).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad máxima de resultados por página.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de empleados.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Empleado"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "EMP-0001",
+                    "nombres": "María Fernanda",
+                    "apellidos": "Quispe Rojas",
+                    "documento": "45678912",
+                    "email": "mquispe@empresa.example",
+                    "cargo": "Analista de sistemas",
+                    "area": "tecnologia",
+                    "fechaIngreso": "2024-03-01",
+                    "activo": true,
+                    "creadoEn": "2026-10-01T14:00:00Z"
+                  },
+                  {
+                    "id": "EMP-0002",
+                    "nombres": "José Luis",
+                    "apellidos": "Huamán Torres",
+                    "documento": "41234567",
+                    "email": "jhuaman@empresa.example",
+                    "cargo": "Ejecutivo comercial",
+                    "area": "ventas",
+                    "fechaIngreso": "2022-08-15",
+                    "activo": true,
+                    "creadoEn": "2026-10-15T09:30:00Z"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "description": "Total de registros que cumplen los filtros.",
+                "schema": {
+                  "type": "integer",
+                  "example": 2
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de consulta no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "PARAMETRO_INVALIDO",
+                  "mensaje": "El parámetro 'limite' debe estar entre 1 y 100."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Empleados"
+        ]
+      },
+      "post": {
+        "summary": "Crear un empleado",
+        "description": "Registra un empleado nuevo.",
+        "operationId": "crearEmpleado",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoEmpleado"
+              },
+              "example": {
+                "nombres": "Ana Lucía",
+                "apellidos": "Mendoza Paz",
+                "documento": "47891234",
+                "email": "amendoza@empresa.example",
+                "cargo": "Asistente contable",
+                "area": "finanzas",
+                "fechaIngreso": "2026-11-15"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Empleado creado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Empleado"
+                },
+                "example": {
+                  "id": "EMP-0003",
+                  "nombres": "Ana Lucía",
+                  "apellidos": "Mendoza Paz",
+                  "documento": "47891234",
+                  "email": "amendoza@empresa.example",
+                  "cargo": "Asistente contable",
+                  "area": "finanzas",
+                  "fechaIngreso": "2026-11-15",
+                  "activo": true,
+                  "creadoEn": "2026-11-11T10:30:00Z"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URL del recurso creado.",
+                "schema": {
+                  "type": "string",
+                  "example": "/empleados/EMP-0003"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'nombres' es obligatorio."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Empleados"
+        ]
+      }
+    },
+    "/empleados/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del empleado.",
+          "schema": {
+            "type": "string",
+            "pattern": "^EMP-\\d{4}$",
+            "example": "EMP-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener un empleado",
+        "description": "Devuelve los datos de un empleado según su identificador.",
+        "operationId": "obtenerEmpleado",
+        "responses": {
+          "200": {
+            "description": "Empleado encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Empleado"
+                },
+                "example": {
+                  "id": "EMP-0001",
+                  "nombres": "María Fernanda",
+                  "apellidos": "Quispe Rojas",
+                  "documento": "45678912",
+                  "email": "mquispe@empresa.example",
+                  "cargo": "Analista de sistemas",
+                  "area": "tecnologia",
+                  "fechaIngreso": "2024-03-01",
+                  "activo": true,
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un empleado con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un empleado EMP-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Empleados"
+        ]
+      },
+      "put": {
+        "summary": "Reemplazar un empleado",
+        "description": "Reemplaza todos los datos editables. Los campos que no se envíen quedan vacíos o con su valor por defecto.",
+        "operationId": "reemplazarEmpleado",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoEmpleado"
+              },
+              "example": {
+                "nombres": "María Fernanda",
+                "apellidos": "Quispe Rojas",
+                "documento": "45678912",
+                "email": "mquispe@empresa.example",
+                "cargo": "Jefa de sistemas",
+                "area": "tecnologia",
+                "fechaIngreso": "2024-03-01"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Empleado actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Empleado"
+                },
+                "example": {
+                  "id": "EMP-0001",
+                  "nombres": "María Fernanda",
+                  "apellidos": "Quispe Rojas",
+                  "documento": "45678912",
+                  "email": "mquispe@empresa.example",
+                  "cargo": "Jefa de sistemas",
+                  "area": "tecnologia",
+                  "fechaIngreso": "2024-03-01",
+                  "activo": true,
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'nombres' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un empleado con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un empleado EMP-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Empleados"
+        ]
+      },
+      "patch": {
+        "summary": "Actualizar un empleado parcialmente",
+        "description": "Cambia solo los campos enviados. El resto se mantiene.",
+        "operationId": "actualizarEmpleado",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarEmpleado"
+              },
+              "example": {
+                "cargo": "Analista de sistemas sénior"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Empleado actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Empleado"
+                },
+                "example": {
+                  "id": "EMP-0001",
+                  "nombres": "María Fernanda",
+                  "apellidos": "Quispe Rojas",
+                  "documento": "45678912",
+                  "email": "mquispe@empresa.example",
+                  "cargo": "Analista de sistemas sénior",
+                  "area": "tecnologia",
+                  "fechaIngreso": "2024-03-01",
+                  "activo": true,
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'nombres' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un empleado con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un empleado EMP-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Empleados"
+        ]
+      },
+      "delete": {
+        "summary": "Eliminar un empleado",
+        "description": "Da de baja al empleado. Sus asistencias se conservan como historial.",
+        "operationId": "eliminarEmpleado",
+        "responses": {
+          "204": {
+            "description": "Empleado eliminado. No devuelve contenido."
+          },
+          "404": {
+            "description": "No existe un empleado con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un empleado EMP-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Empleados"
+        ]
+      }
+    },
+    "/empleados/{id}/asistencias": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del empleado.",
+          "schema": {
+            "type": "string",
+            "pattern": "^EMP-\\d{4}$",
+            "example": "EMP-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Listar asistencias",
+        "description": "Devuelve las marcas de asistencia del empleado en un rango de fechas.",
+        "operationId": "listarAsistenciasEmpleado",
+        "parameters": [
+          {
+            "name": "desde",
+            "in": "query",
+            "required": false,
+            "description": "Fecha inicial (inclusive).",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "hasta",
+            "in": "query",
+            "required": false,
+            "description": "Fecha final (inclusive).",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Asistencias del empleado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Asistencia"
+                  }
+                },
+                "example": [
+                  {
+                    "fecha": "2026-11-10",
+                    "entrada": "08:58",
+                    "salida": "18:02",
+                    "estado": "puntual"
+                  },
+                  {
+                    "fecha": "2026-11-11",
+                    "entrada": "09:12",
+                    "salida": "18:05",
+                    "estado": "tardanza"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Rango de fechas no válido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "La fecha 'desde' no puede ser posterior a 'hasta'."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un empleado con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un empleado EMP-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Empleados"
+        ]
+      },
+      "post": {
+        "summary": "Registrar una marca de asistencia",
+        "description": "Registra la entrada o la salida del empleado.",
+        "operationId": "registrarAsistenciaEmpleado",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarcaAsistencia"
+              },
+              "example": {
+                "tipo": "salida",
+                "fechaHora": "2026-11-10T18:02:00-05:00"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Marca registrada. Devuelve la asistencia del día.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Asistencia"
+                },
+                "example": {
+                  "fecha": "2026-11-10",
+                  "entrada": "08:58",
+                  "salida": "18:02",
+                  "estado": "puntual"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos de la marca no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El tipo debe ser 'entrada' o 'salida'."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un empleado con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un empleado EMP-9999."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "La marca ya fue registrada ese día.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "MARCA_DUPLICADA",
+                  "mensaje": "El empleado ya registró su salida el 2026-11-10."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Empleados"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NuevoEmpleado": {
+        "type": "object",
+        "required": [
+          "nombres",
+          "apellidos",
+          "documento",
+          "email",
+          "area",
+          "fechaIngreso"
+        ],
+        "properties": {
+          "nombres": {
+            "type": "string",
+            "minLength": 1,
+            "example": "María Fernanda"
+          },
+          "apellidos": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Quispe Rojas"
+          },
+          "documento": {
+            "type": "string",
+            "pattern": "^\\d{8}$",
+            "description": "DNI de 8 dígitos.",
+            "example": "45678912"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "mquispe@empresa.example"
+          },
+          "cargo": {
+            "type": "string",
+            "example": "Analista de sistemas"
+          },
+          "area": {
+            "type": "string",
+            "enum": [
+              "ventas",
+              "operaciones",
+              "tecnologia",
+              "finanzas"
+            ],
+            "example": "tecnologia"
+          },
+          "fechaIngreso": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-03-01"
+          }
+        }
+      },
+      "ActualizarEmpleado": {
+        "type": "object",
+        "minProperties": 1,
+        "description": "Todos los campos son opcionales; se cambian solo los enviados.",
+        "properties": {
+          "nombres": {
+            "type": "string",
+            "minLength": 1,
+            "example": "María Fernanda"
+          },
+          "apellidos": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Quispe Rojas"
+          },
+          "documento": {
+            "type": "string",
+            "pattern": "^\\d{8}$",
+            "description": "DNI de 8 dígitos.",
+            "example": "45678912"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "mquispe@empresa.example"
+          },
+          "cargo": {
+            "type": "string",
+            "example": "Analista de sistemas"
+          },
+          "area": {
+            "type": "string",
+            "enum": [
+              "ventas",
+              "operaciones",
+              "tecnologia",
+              "finanzas"
+            ],
+            "example": "tecnologia"
+          },
+          "fechaIngreso": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-03-01"
+          }
+        }
+      },
+      "Empleado": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NuevoEmpleado"
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "creadoEn",
+              "activo"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^EMP-\\d{4}$",
+                "example": "EMP-0001"
+              },
+              "activo": {
+                "type": "boolean",
+                "example": true
+              },
+              "creadoEn": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2026-10-01T14:00:00Z"
+              }
+            }
+          }
+        ]
+      },
+      "Asistencia": {
+        "type": "object",
+        "required": [
+          "fecha",
+          "estado"
+        ],
+        "properties": {
+          "fecha": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-11-10"
+          },
+          "entrada": {
+            "type": "string",
+            "pattern": "^\\d{2}:\\d{2}$",
+            "example": "08:58"
+          },
+          "salida": {
+            "type": "string",
+            "pattern": "^\\d{2}:\\d{2}$",
+            "example": "18:02"
+          },
+          "estado": {
+            "type": "string",
+            "enum": [
+              "puntual",
+              "tardanza",
+              "falta"
+            ],
+            "example": "puntual"
+          }
+        }
+      },
+      "MarcaAsistencia": {
+        "type": "object",
+        "required": [
+          "tipo",
+          "fechaHora"
+        ],
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "entrada",
+              "salida"
+            ],
+            "example": "salida"
+          },
+          "fechaHora": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-11-10T18:02:00-05:00"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "codigo",
+          "mensaje"
+        ],
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "example": "NO_ENCONTRADO"
+          },
+          "mensaje": {
+            "type": "string",
+            "example": "No existe un empleado EMP-9999."
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,13 +1,14 @@
 (function () {
   "use strict";
 
-  // Cada API se documenta a partir de su propio archivo OpenAPI.
-  var SPECS = {
-    facturas: "./specs/facturas.json",
-    clientes: "./specs/clientes.json"
-  };
-  var ROUTES = ["inicio", "facturas", "clientes"];
-  var cache = {};
+  // La lista de APIs vive en specs/catalogo.json. Para agregar una API basta con
+  // poner su archivo en specs/ y añadir una línea al catálogo.
+  var CATALOGO = "./specs/catalogo.json";
+  var SITE_TITLE = "Documentación de APIs";
+  var METHODS = ["get", "post", "put", "patch", "delete"];
+
+  var apis = [];      // [{ id, nombre, resumen }]
+  var cache = {};     // url -> Promise<JSON>
 
   // ---------- Utilidades ----------
   function esc(value) {
@@ -22,14 +23,32 @@
     return esc(JSON.stringify(obj, null, 2));
   }
 
-  function loadSpec(name) {
-    if (!cache[name]) {
-      cache[name] = fetch(SPECS[name], { cache: "no-cache" }).then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status + " al cargar " + SPECS[name]);
+  function specUrl(id) {
+    return "./specs/" + id + ".json";
+  }
+
+  function loadJSON(url) {
+    if (!cache[url]) {
+      cache[url] = fetch(url, { cache: "no-cache" }).then(function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status + " al cargar " + url);
         return res.json();
       });
+      cache[url].catch(function () { delete cache[url]; });
     }
-    return cache[name];
+    return cache[url];
+  }
+
+  function findApi(id) {
+    for (var i = 0; i < apis.length; i++) if (apis[i].id === id) return apis[i];
+    return null;
+  }
+
+  function countOperations(spec) {
+    var n = 0;
+    Object.keys(spec.paths || {}).forEach(function (path) {
+      METHODS.forEach(function (m) { if (spec.paths[path][m]) n++; });
+    });
+    return n;
   }
 
   // Devuelve el primer ejemplo disponible de un objeto "content" de OpenAPI.
@@ -45,15 +64,24 @@
     return undefined;
   }
 
+  // Texto corto para el tipo de un parámetro: "integer", "string (date)", "string (a, b)"…
+  function typeText(schema) {
+    if (!schema) return "";
+    if (schema.$ref) return schema.$ref.split("/").pop();
+    var t = schema.type || "";
+    if (schema.enum) return t + " (" + schema.enum.join(", ") + ")";
+    if (schema.format) return t + " (" + schema.format + ")";
+    return t;
+  }
+
   // ---------- Renderizado ----------
   function renderParams(params) {
     if (!params || !params.length) return "";
     var rows = params.map(function (p) {
-      var type = p.schema ? p.schema.type + (p.schema.enum ? " (" + p.schema.enum.join(", ") + ")" : "") : "";
       return "<tr>" +
         "<td><code>" + esc(p.name) + "</code></td>" +
         "<td>" + esc(p.in) + "</td>" +
-        "<td>" + esc(type) + "</td>" +
+        "<td>" + esc(typeText(p.schema)) + "</td>" +
         "<td>" + (p.required ? "Sí" : "No") + "</td>" +
         "<td>" + esc(p.description) + "</td>" +
         "</tr>";
@@ -87,11 +115,10 @@
   }
 
   function renderEndpoints(spec) {
-    var methods = ["get", "post", "put", "patch", "delete"];
     var out = [];
     Object.keys(spec.paths || {}).forEach(function (path) {
       var item = spec.paths[path];
-      methods.forEach(function (m) {
+      METHODS.forEach(function (m) {
         var op = item[m];
         if (!op) return;
         var params = (item.parameters || []).concat(op.parameters || []);
@@ -115,35 +142,75 @@
     return out.join("");
   }
 
-  function renderSpec(name) {
-    var view = document.querySelector("[data-view=\"" + name + "\"]");
-    if (!view || view.dataset.loaded) return;
-    loadSpec(name).then(function (spec) {
+  function renderSpec(api) {
+    var view = document.querySelector("[data-view=api]");
+    var field = function (name) { return view.querySelector("[data-field=" + name + "]"); };
+    if (view.dataset.loaded === api.id) return;
+    view.dataset.loaded = "";
+    view.dataset.current = api.id;
+
+    // Estado inicial mientras llega el JSON.
+    field("title").textContent = "API de " + api.nombre;
+    field("version").textContent = "v…";
+    field("count").textContent = "";
+    field("description").textContent = "Cargando especificación…";
+    field("server").textContent = "";
+    field("endpoints").innerHTML = "";
+    var dl = field("download");
+    dl.setAttribute("href", specUrl(api.id));
+    dl.setAttribute("download", api.id + ".json");
+
+    loadJSON(specUrl(api.id)).then(function (spec) {
+      if (view.dataset.current !== api.id) return; // el usuario ya cambió de API
       var info = spec.info || {};
-      view.querySelector("[data-field=title]").textContent = info.title || name;
-      view.querySelector("[data-field=version]").textContent = "v" + (info.version || "?");
-      view.querySelector("[data-field=description]").textContent = info.description || "";
+      var n = countOperations(spec);
+      field("title").textContent = info.title || api.nombre;
+      field("version").textContent = "v" + (info.version || "?");
+      field("count").textContent = n + (n === 1 ? " endpoint" : " endpoints");
+      field("description").textContent = info.description || "";
       var server = spec.servers && spec.servers[0];
-      view.querySelector("[data-field=server]").innerHTML = server
+      field("server").innerHTML = server
         ? "Servidor base: <code>" + esc(server.url) + "</code>" + (server.description ? " — " + esc(server.description) : "")
         : "";
-      view.querySelector("[data-field=endpoints]").innerHTML = renderEndpoints(spec);
-      view.dataset.loaded = "1";
+      field("endpoints").innerHTML = renderEndpoints(spec);
+      document.title = (info.title || api.nombre) + " · " + SITE_TITLE;
+      view.dataset.loaded = api.id;
     }).catch(function (err) {
-      delete cache[name];
-      view.querySelector("[data-field=endpoints]").innerHTML =
+      if (view.dataset.current !== api.id) return;
+      field("description").textContent = "";
+      field("endpoints").innerHTML =
         "<p class=\"error\">No se pudo cargar la especificación (" + esc(err.message) +
         "). Abre el sitio con un servidor web, por ejemplo <code>py -m http.server 8000</code>.</p>";
-      view.querySelector("[data-field=description]").textContent = "";
     });
   }
 
-  // Muestra la versión de cada API en las tarjetas de inicio.
-  function renderHomeVersions() {
-    Object.keys(SPECS).forEach(function (name) {
-      loadSpec(name).then(function (spec) {
-        var el = document.querySelector("[data-version=\"" + name + "\"]");
-        if (el) el.textContent = "· v" + spec.info.version;
+  // Menú y tarjetas de inicio, a partir del catálogo.
+  function renderCatalog() {
+    var menu = document.querySelector("[data-menu]");
+    var cards = document.querySelector("[data-cards]");
+    apis.forEach(function (api) {
+      var link = document.createElement("a");
+      link.className = "menu__link";
+      link.href = "#" + api.id;
+      link.dataset.route = api.id;
+      link.textContent = api.nombre;
+      menu.appendChild(link);
+    });
+    cards.innerHTML = apis.map(function (api) {
+      return "<a class=\"card\" href=\"#" + esc(api.id) + "\">" +
+        "<span class=\"card__eyebrow\">OpenAPI <span data-version=\"" + esc(api.id) + "\">·</span></span>" +
+        "<span class=\"card__title\">API de " + esc(api.nombre) + "</span>" +
+        "<span class=\"card__text\">" + esc(api.resumen) + "</span>" +
+        "<span class=\"card__cta\">Ver documentación →</span>" +
+        "</a>";
+    }).join("");
+
+    // Versión y cantidad de endpoints de cada API en su tarjeta.
+    apis.forEach(function (api) {
+      loadJSON(specUrl(api.id)).then(function (spec) {
+        var el = cards.querySelector("[data-version=\"" + api.id + "\"]");
+        var n = countOperations(spec);
+        if (el) el.textContent = "· v" + spec.info.version + " · " + n + " endpoints";
       }).catch(function () { /* la pantalla de la API mostrará el error */ });
     });
   }
@@ -151,44 +218,60 @@
   // ---------- Navegación por hash ----------
   function currentRoute() {
     var r = location.hash.replace(/^#/, "");
-    return ROUTES.indexOf(r) >= 0 ? r : null;
+    return r === "inicio" || findApi(r) ? r : null;
   }
 
   function show(route, moveFocus) {
+    var api = route === "inicio" ? null : findApi(route);
     document.querySelectorAll(".view").forEach(function (v) {
-      v.hidden = v.dataset.view !== route;
+      v.hidden = v.dataset.view !== (api ? "api" : "inicio");
     });
     document.querySelectorAll(".menu__link").forEach(function (a) {
-      if (a.dataset.route === route) a.setAttribute("aria-current", "page");
-      else a.removeAttribute("aria-current");
+      if (a.dataset.route === route) {
+        a.setAttribute("aria-current", "page");
+        a.scrollIntoView({ block: "nearest", inline: "nearest" });
+      } else {
+        a.removeAttribute("aria-current");
+      }
     });
-    var titles = { inicio: "Documentación de APIs", facturas: "API de Facturas", clientes: "API de Clientes" };
-    document.title = route === "inicio" ? titles.inicio : titles[route] + " · Documentación de APIs";
-    if (route !== "inicio") renderSpec(route);
+    document.title = api ? "API de " + api.nombre + " · " + SITE_TITLE : SITE_TITLE;
+    if (api) renderSpec(api);
     window.scrollTo(0, 0);
     if (moveFocus) {
-      var h1 = document.querySelector("[data-view=\"" + route + "\"] h1");
+      var h1 = document.querySelector("[data-view=\"" + (api ? "api" : "inicio") + "\"] h1");
       if (h1) h1.focus({ preventScroll: true });
     }
   }
 
+  function goHome() {
+    history.replaceState(null, "", "#inicio");
+    show("inicio", false);
+  }
+
   function onHashChange() {
     var route = currentRoute();
-    if (!route) {
-      history.replaceState(null, "", "#inicio");
-      route = "inicio";
-    }
-    show(route, true);
+    if (route) show(route, true);
+    else goHome();
   }
 
-  window.addEventListener("hashchange", onHashChange);
+  // "Saltar al contenido" mueve el foco sin cambiar de pantalla.
+  document.querySelector("[data-skip]").addEventListener("click", function (e) {
+    e.preventDefault();
+    document.getElementById("contenido").focus();
+  });
 
-  // Arranque: respeta el enlace directo (#facturas, #clientes…).
-  var initial = currentRoute();
-  if (!initial) {
-    history.replaceState(null, "", "#inicio");
-    initial = "inicio";
-  }
-  show(initial, false);
-  renderHomeVersions();
+  // ---------- Arranque ----------
+  loadJSON(CATALOGO).then(function (data) {
+    apis = data.apis || [];
+    renderCatalog();
+    window.addEventListener("hashchange", onHashChange);
+    // Respeta el enlace directo (#facturas, #envios…).
+    var initial = currentRoute();
+    if (initial) show(initial, false);
+    else goHome();
+  }).catch(function (err) {
+    document.querySelector("[data-cards]").innerHTML =
+      "<p class=\"error\">No se pudo cargar el catálogo de APIs (" + esc(err.message) +
+      "). Abre el sitio con un servidor web, por ejemplo <code>py -m http.server 8000</code>.</p>";
+  });
 })();

@@ -1,0 +1,14 @@
+{
+  "apis": [
+    { "id": "facturas", "nombre": "Facturas", "resumen": "Listar y crear facturas con sus líneas, totales y estado." },
+    { "id": "clientes", "nombre": "Clientes", "resumen": "Listar clientes y consultar uno por su identificador." },
+    { "id": "productos", "nombre": "Productos", "resumen": "Catálogo de productos, precios y movimientos de stock." },
+    { "id": "pedidos", "nombre": "Pedidos", "resumen": "Pedidos de venta con sus ítems, total y estado." },
+    { "id": "proveedores", "nombre": "Proveedores", "resumen": "Proveedores, productos que suministran y evaluaciones." },
+    { "id": "empleados", "nombre": "Empleados", "resumen": "Fichas de empleados y registro de asistencia." },
+    { "id": "citas", "nombre": "Citas", "resumen": "Agenda de citas, disponibilidad y reprogramaciones." },
+    { "id": "envios", "nombre": "Envíos", "resumen": "Despachos, seguimiento y eventos de entrega." },
+    { "id": "cursos", "nombre": "Cursos", "resumen": "Cursos de capacitación, cupos e inscripciones." },
+    { "id": "tickets", "nombre": "Tickets", "resumen": "Mesa de ayuda: tickets, prioridades y conversación." }
+  ]
+}

@@ -1,0 +1,856 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API de Cursos",
+    "version": "1.0.0",
+    "description": "API de demostración para publicar cursos de capacitación y gestionar sus inscripciones. Los datos y endpoints son ficticios y solo sirven como documentación de ejemplo.",
+    "contact": {
+      "name": "Equipo de APIs (demostración)"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.ejemplo.com/v1",
+      "description": "Servidor de demostración (no real)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Cursos",
+      "description": "Cursos de capacitación, cupos e inscripciones."
+    }
+  ],
+  "paths": {
+    "/cursos": {
+      "get": {
+        "summary": "Listar cursos",
+        "description": "Devuelve cursos paginados. Se pueden combinar los filtros.",
+        "operationId": "listarCursos",
+        "parameters": [
+          {
+            "name": "modalidad",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por modalidad.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "presencial",
+                "virtual"
+              ]
+            }
+          },
+          {
+            "name": "buscar",
+            "in": "query",
+            "required": false,
+            "description": "Texto a buscar en el título o el docente.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "description": "Número de página (empieza en 1).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad máxima de resultados por página.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de cursos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Curso"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "CUR-0001",
+                    "titulo": "Excel para finanzas",
+                    "descripcion": "Tablas dinámicas, fórmulas financieras y gráficos.",
+                    "docente": "Ing. Paola Salas",
+                    "modalidad": "virtual",
+                    "fechaInicio": "2026-12-01",
+                    "cupos": 25,
+                    "precio": 350.0,
+                    "inscritos": 18,
+                    "creadoEn": "2026-10-01T14:00:00Z"
+                  },
+                  {
+                    "id": "CUR-0002",
+                    "titulo": "Atención al cliente",
+                    "descripcion": "Técnicas de servicio y manejo de reclamos.",
+                    "docente": "Lic. Martín Chávez",
+                    "modalidad": "presencial",
+                    "fechaInicio": "2026-12-08",
+                    "cupos": 20,
+                    "precio": 280.0,
+                    "inscritos": 7,
+                    "creadoEn": "2026-10-15T09:30:00Z"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "description": "Total de registros que cumplen los filtros.",
+                "schema": {
+                  "type": "integer",
+                  "example": 2
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de consulta no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "PARAMETRO_INVALIDO",
+                  "mensaje": "El parámetro 'limite' debe estar entre 1 y 100."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Cursos"
+        ]
+      },
+      "post": {
+        "summary": "Crear un curso",
+        "description": "Registra un curso nuevo.",
+        "operationId": "crearCurso",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoCurso"
+              },
+              "example": {
+                "titulo": "Introducción a Python",
+                "descripcion": "Fundamentos de programación con ejercicios prácticos.",
+                "docente": "Ing. Renato Flores",
+                "modalidad": "virtual",
+                "fechaInicio": "2027-01-12",
+                "cupos": 30,
+                "precio": 420.0
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Curso creado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Curso"
+                },
+                "example": {
+                  "id": "CUR-0003",
+                  "titulo": "Introducción a Python",
+                  "descripcion": "Fundamentos de programación con ejercicios prácticos.",
+                  "docente": "Ing. Renato Flores",
+                  "modalidad": "virtual",
+                  "fechaInicio": "2027-01-12",
+                  "cupos": 30,
+                  "precio": 420.0,
+                  "inscritos": 0,
+                  "creadoEn": "2026-11-11T10:30:00Z"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URL del recurso creado.",
+                "schema": {
+                  "type": "string",
+                  "example": "/cursos/CUR-0003"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'titulo' es obligatorio."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Cursos"
+        ]
+      }
+    },
+    "/cursos/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del curso.",
+          "schema": {
+            "type": "string",
+            "pattern": "^CUR-\\d{4}$",
+            "example": "CUR-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener un curso",
+        "description": "Devuelve los datos de un curso según su identificador.",
+        "operationId": "obtenerCurso",
+        "responses": {
+          "200": {
+            "description": "Curso encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Curso"
+                },
+                "example": {
+                  "id": "CUR-0001",
+                  "titulo": "Excel para finanzas",
+                  "descripcion": "Tablas dinámicas, fórmulas financieras y gráficos.",
+                  "docente": "Ing. Paola Salas",
+                  "modalidad": "virtual",
+                  "fechaInicio": "2026-12-01",
+                  "cupos": 25,
+                  "precio": 350.0,
+                  "inscritos": 18,
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un curso con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un curso CUR-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Cursos"
+        ]
+      },
+      "put": {
+        "summary": "Reemplazar un curso",
+        "description": "Reemplaza todos los datos editables. Los campos que no se envíen quedan vacíos o con su valor por defecto.",
+        "operationId": "reemplazarCurso",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoCurso"
+              },
+              "example": {
+                "titulo": "Excel para finanzas",
+                "descripcion": "Tablas dinámicas, fórmulas financieras, gráficos y macros.",
+                "docente": "Ing. Paola Salas",
+                "modalidad": "virtual",
+                "fechaInicio": "2026-12-01",
+                "cupos": 30,
+                "precio": 390.0
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Curso actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Curso"
+                },
+                "example": {
+                  "id": "CUR-0001",
+                  "titulo": "Excel para finanzas",
+                  "descripcion": "Tablas dinámicas, fórmulas financieras, gráficos y macros.",
+                  "docente": "Ing. Paola Salas",
+                  "modalidad": "virtual",
+                  "fechaInicio": "2026-12-01",
+                  "cupos": 30,
+                  "precio": 390.0,
+                  "inscritos": 18,
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'titulo' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un curso con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un curso CUR-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Cursos"
+        ]
+      },
+      "patch": {
+        "summary": "Actualizar un curso parcialmente",
+        "description": "Cambia solo los campos enviados. El resto se mantiene.",
+        "operationId": "actualizarCurso",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarCurso"
+              },
+              "example": {
+                "cupos": 30
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Curso actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Curso"
+                },
+                "example": {
+                  "id": "CUR-0001",
+                  "titulo": "Excel para finanzas",
+                  "descripcion": "Tablas dinámicas, fórmulas financieras y gráficos.",
+                  "docente": "Ing. Paola Salas",
+                  "modalidad": "virtual",
+                  "fechaInicio": "2026-12-01",
+                  "cupos": 30,
+                  "precio": 350.0,
+                  "inscritos": 18,
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'titulo' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un curso con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un curso CUR-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Cursos"
+        ]
+      },
+      "delete": {
+        "summary": "Eliminar un curso",
+        "description": "Elimina un curso de forma permanente.",
+        "operationId": "eliminarCurso",
+        "responses": {
+          "204": {
+            "description": "Curso eliminado. No devuelve contenido."
+          },
+          "404": {
+            "description": "No existe un curso con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un curso CUR-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Cursos"
+        ]
+      }
+    },
+    "/cursos/{id}/inscripciones": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del curso.",
+          "schema": {
+            "type": "string",
+            "pattern": "^CUR-\\d{4}$",
+            "example": "CUR-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Listar inscripciones",
+        "description": "Devuelve los alumnos inscritos en el curso.",
+        "operationId": "listarInscripcionesCurso",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por estado de la inscripción.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "activa",
+                "retirada"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inscripciones del curso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Inscripcion"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "INS-0029",
+                    "cursoId": "CUR-0001",
+                    "alumno": "Carlos Medina",
+                    "email": "cmedina@correo.example",
+                    "estado": "activa",
+                    "creadoEn": "2026-11-05T15:00:00Z"
+                  },
+                  {
+                    "id": "INS-0031",
+                    "cursoId": "CUR-0001",
+                    "alumno": "Rosa Elena Paredes",
+                    "email": "rparedes@correo.example",
+                    "estado": "activa",
+                    "creadoEn": "2026-11-11T10:30:00Z"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Filtro no válido.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El estado debe ser 'activa' o 'retirada'."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un curso con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un curso CUR-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Cursos"
+        ]
+      },
+      "post": {
+        "summary": "Inscribir a un alumno",
+        "description": "Inscribe a un alumno si el curso tiene cupos libres.",
+        "operationId": "inscribirAlumnoCurso",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevaInscripcion"
+              },
+              "example": {
+                "alumno": "Rosa Elena Paredes",
+                "email": "rparedes@correo.example"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Alumno inscrito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inscripcion"
+                },
+                "example": {
+                  "id": "INS-0031",
+                  "cursoId": "CUR-0001",
+                  "alumno": "Rosa Elena Paredes",
+                  "email": "rparedes@correo.example",
+                  "estado": "activa",
+                  "creadoEn": "2026-11-11T10:30:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos del alumno no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El email no es válido."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un curso con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un curso CUR-9999."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "El curso no tiene cupos libres.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "SIN_CUPOS",
+                  "mensaje": "El curso CUR-0001 ya tiene 25 inscritos."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Cursos"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NuevoCurso": {
+        "type": "object",
+        "required": [
+          "titulo",
+          "docente",
+          "modalidad",
+          "fechaInicio",
+          "cupos",
+          "precio"
+        ],
+        "properties": {
+          "titulo": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Excel para finanzas"
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "Tablas dinámicas, fórmulas financieras y gráficos."
+          },
+          "docente": {
+            "type": "string",
+            "example": "Ing. Paola Salas"
+          },
+          "modalidad": {
+            "type": "string",
+            "enum": [
+              "presencial",
+              "virtual"
+            ],
+            "example": "virtual"
+          },
+          "fechaInicio": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-12-01"
+          },
+          "cupos": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 25
+          },
+          "precio": {
+            "type": "number",
+            "format": "double",
+            "minimum": 0,
+            "example": 350.0
+          }
+        }
+      },
+      "ActualizarCurso": {
+        "type": "object",
+        "minProperties": 1,
+        "description": "Todos los campos son opcionales; se cambian solo los enviados.",
+        "properties": {
+          "titulo": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Excel para finanzas"
+          },
+          "descripcion": {
+            "type": "string",
+            "example": "Tablas dinámicas, fórmulas financieras y gráficos."
+          },
+          "docente": {
+            "type": "string",
+            "example": "Ing. Paola Salas"
+          },
+          "modalidad": {
+            "type": "string",
+            "enum": [
+              "presencial",
+              "virtual"
+            ],
+            "example": "virtual"
+          },
+          "fechaInicio": {
+            "type": "string",
+            "format": "date",
+            "example": "2026-12-01"
+          },
+          "cupos": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 25
+          },
+          "precio": {
+            "type": "number",
+            "format": "double",
+            "minimum": 0,
+            "example": 350.0
+          }
+        }
+      },
+      "Curso": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NuevoCurso"
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "creadoEn",
+              "inscritos"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^CUR-\\d{4}$",
+                "example": "CUR-0001"
+              },
+              "inscritos": {
+                "type": "integer",
+                "minimum": 0,
+                "example": 18
+              },
+              "creadoEn": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2026-10-01T14:00:00Z"
+              }
+            }
+          }
+        ]
+      },
+      "NuevaInscripcion": {
+        "type": "object",
+        "required": [
+          "alumno",
+          "email"
+        ],
+        "properties": {
+          "alumno": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Rosa Elena Paredes"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "rparedes@correo.example"
+          }
+        }
+      },
+      "Inscripcion": {
+        "type": "object",
+        "required": [
+          "id",
+          "cursoId",
+          "alumno",
+          "email",
+          "estado",
+          "creadoEn"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "INS-0031"
+          },
+          "cursoId": {
+            "type": "string",
+            "example": "CUR-0001"
+          },
+          "alumno": {
+            "type": "string",
+            "example": "Rosa Elena Paredes"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "rparedes@correo.example"
+          },
+          "estado": {
+            "type": "string",
+            "enum": [
+              "activa",
+              "retirada"
+            ],
+            "example": "activa"
+          },
+          "creadoEn": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-11-11T10:30:00Z"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "codigo",
+          "mensaje"
+        ],
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "example": "NO_ENCONTRADO"
+          },
+          "mensaje": {
+            "type": "string",
+            "example": "No existe un curso CUR-9999."
+          }
+        }
+      }
+    }
+  }
+}

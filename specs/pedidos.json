@@ -1,0 +1,844 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API de Pedidos",
+    "version": "1.0.0",
+    "description": "API de demostración para registrar pedidos de venta y seguir su estado. Los productos y clientes se identifican con los IDs de las APIs de Productos y Clientes. Los datos y endpoints son ficticios y solo sirven como documentación de ejemplo.",
+    "contact": {
+      "name": "Equipo de APIs (demostración)"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.ejemplo.com/v1",
+      "description": "Servidor de demostración (no real)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Pedidos",
+      "description": "Pedidos de venta con sus ítems, total y estado."
+    }
+  ],
+  "paths": {
+    "/pedidos": {
+      "get": {
+        "summary": "Listar pedidos",
+        "description": "Devuelve pedidos paginados. Se pueden combinar los filtros.",
+        "operationId": "listarPedidos",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por estado del pedido.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "borrador",
+                "confirmado",
+                "cancelado",
+                "entregado"
+              ]
+            }
+          },
+          {
+            "name": "clienteId",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por cliente.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "description": "Número de página (empieza en 1).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad máxima de resultados por página.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de pedidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pedido"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "PED-0001",
+                    "clienteId": "CLI-001",
+                    "direccionEntrega": "Av. Arequipa 1234, Lima",
+                    "items": [
+                      {
+                        "productoId": "PRD-0001",
+                        "cantidad": 2,
+                        "precioUnitario": 189.9
+                      }
+                    ],
+                    "notas": "Entregar en horario de oficina.",
+                    "total": 379.8,
+                    "estado": "borrador",
+                    "creadoEn": "2026-10-01T14:00:00Z"
+                  },
+                  {
+                    "id": "PED-0002",
+                    "clienteId": "CLI-002",
+                    "direccionEntrega": "Jr. Junín 456, Arequipa",
+                    "items": [
+                      {
+                        "productoId": "PRD-0002",
+                        "cantidad": 1,
+                        "precioUnitario": 649.0
+                      },
+                      {
+                        "productoId": "PRD-0001",
+                        "cantidad": 1,
+                        "precioUnitario": 189.9
+                      }
+                    ],
+                    "notas": "",
+                    "total": 838.9,
+                    "estado": "entregado",
+                    "creadoEn": "2026-10-15T09:30:00Z"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "description": "Total de registros que cumplen los filtros.",
+                "schema": {
+                  "type": "integer",
+                  "example": 2
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de consulta no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "PARAMETRO_INVALIDO",
+                  "mensaje": "El parámetro 'limite' debe estar entre 1 y 100."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pedidos"
+        ]
+      },
+      "post": {
+        "summary": "Crear un pedido",
+        "description": "Registra un pedido nuevo.",
+        "operationId": "crearPedido",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoPedido"
+              },
+              "example": {
+                "clienteId": "CLI-001",
+                "direccionEntrega": "Av. Arequipa 1234, Lima",
+                "items": [
+                  {
+                    "productoId": "PRD-0003",
+                    "cantidad": 3
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pedido creado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pedido"
+                },
+                "example": {
+                  "id": "PED-0003",
+                  "clienteId": "CLI-001",
+                  "direccionEntrega": "Av. Arequipa 1234, Lima",
+                  "items": [
+                    {
+                      "productoId": "PRD-0003",
+                      "cantidad": 3,
+                      "precioUnitario": 79.9
+                    }
+                  ],
+                  "total": 239.7,
+                  "estado": "borrador",
+                  "notas": "",
+                  "creadoEn": "2026-11-11T10:30:00Z"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URL del recurso creado.",
+                "schema": {
+                  "type": "string",
+                  "example": "/pedidos/PED-0003"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'clienteId' es obligatorio."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pedidos"
+        ]
+      }
+    },
+    "/pedidos/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del pedido.",
+          "schema": {
+            "type": "string",
+            "pattern": "^PED-\\d{4}$",
+            "example": "PED-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener un pedido",
+        "description": "Devuelve los datos de un pedido según su identificador.",
+        "operationId": "obtenerPedido",
+        "responses": {
+          "200": {
+            "description": "Pedido encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pedido"
+                },
+                "example": {
+                  "id": "PED-0001",
+                  "clienteId": "CLI-001",
+                  "direccionEntrega": "Av. Arequipa 1234, Lima",
+                  "items": [
+                    {
+                      "productoId": "PRD-0001",
+                      "cantidad": 2,
+                      "precioUnitario": 189.9
+                    }
+                  ],
+                  "notas": "Entregar en horario de oficina.",
+                  "total": 379.8,
+                  "estado": "borrador",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un pedido con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un pedido PED-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pedidos"
+        ]
+      },
+      "put": {
+        "summary": "Reemplazar un pedido",
+        "description": "Reemplaza todos los datos editables. Los campos que no se envíen quedan vacíos o con su valor por defecto.",
+        "operationId": "reemplazarPedido",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoPedido"
+              },
+              "example": {
+                "clienteId": "CLI-001",
+                "direccionEntrega": "Calle Los Pinos 220, Miraflores",
+                "items": [
+                  {
+                    "productoId": "PRD-0001",
+                    "cantidad": 3
+                  }
+                ],
+                "notas": "Llamar antes de llegar."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pedido actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pedido"
+                },
+                "example": {
+                  "id": "PED-0001",
+                  "clienteId": "CLI-001",
+                  "direccionEntrega": "Calle Los Pinos 220, Miraflores",
+                  "items": [
+                    {
+                      "productoId": "PRD-0001",
+                      "cantidad": 3,
+                      "precioUnitario": 189.9
+                    }
+                  ],
+                  "notas": "Llamar antes de llegar.",
+                  "total": 569.7,
+                  "estado": "borrador",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'clienteId' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un pedido con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un pedido PED-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pedidos"
+        ]
+      },
+      "patch": {
+        "summary": "Actualizar un pedido parcialmente",
+        "description": "Cambia solo los campos enviados. El resto se mantiene.",
+        "operationId": "actualizarPedido",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarPedido"
+              },
+              "example": {
+                "notas": "Dejar en recepción."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pedido actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pedido"
+                },
+                "example": {
+                  "id": "PED-0001",
+                  "clienteId": "CLI-001",
+                  "direccionEntrega": "Av. Arequipa 1234, Lima",
+                  "items": [
+                    {
+                      "productoId": "PRD-0001",
+                      "cantidad": 2,
+                      "precioUnitario": 189.9
+                    }
+                  ],
+                  "notas": "Dejar en recepción.",
+                  "total": 379.8,
+                  "estado": "borrador",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'clienteId' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un pedido con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un pedido PED-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pedidos"
+        ]
+      },
+      "delete": {
+        "summary": "Eliminar un pedido",
+        "description": "Elimina un pedido de forma permanente.",
+        "operationId": "eliminarPedido",
+        "responses": {
+          "204": {
+            "description": "Pedido eliminado. No devuelve contenido."
+          },
+          "404": {
+            "description": "No existe un pedido con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un pedido PED-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pedidos"
+        ]
+      }
+    },
+    "/pedidos/{id}/confirmar": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del pedido.",
+          "schema": {
+            "type": "string",
+            "pattern": "^PED-\\d{4}$",
+            "example": "PED-0001"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Confirmar un pedido",
+        "description": "Pasa un pedido de `borrador` a `confirmado` y reserva el stock de sus productos.",
+        "operationId": "confirmarPedido",
+        "responses": {
+          "200": {
+            "description": "Pedido confirmado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pedido"
+                },
+                "example": {
+                  "id": "PED-0001",
+                  "clienteId": "CLI-001",
+                  "direccionEntrega": "Av. Arequipa 1234, Lima",
+                  "items": [
+                    {
+                      "productoId": "PRD-0001",
+                      "cantidad": 2,
+                      "precioUnitario": 189.9
+                    }
+                  ],
+                  "notas": "Entregar en horario de oficina.",
+                  "total": 379.8,
+                  "estado": "confirmado",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un pedido con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un pedido PED-9999."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "El pedido no está en un estado que permita esta acción.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "ESTADO_INVALIDO",
+                  "mensaje": "El pedido PED-0001 ya fue cancelado."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pedidos"
+        ]
+      }
+    },
+    "/pedidos/{id}/cancelar": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del pedido.",
+          "schema": {
+            "type": "string",
+            "pattern": "^PED-\\d{4}$",
+            "example": "PED-0001"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Cancelar un pedido",
+        "description": "Cancela un pedido que todavía no fue entregado y libera el stock reservado.",
+        "operationId": "cancelarPedido",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelacionPedido"
+              },
+              "example": {
+                "motivo": "El cliente desistió de la compra."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pedido cancelado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pedido"
+                },
+                "example": {
+                  "id": "PED-0001",
+                  "clienteId": "CLI-001",
+                  "direccionEntrega": "Av. Arequipa 1234, Lima",
+                  "items": [
+                    {
+                      "productoId": "PRD-0001",
+                      "cantidad": 2,
+                      "precioUnitario": 189.9
+                    }
+                  ],
+                  "notas": "Entregar en horario de oficina.",
+                  "total": 379.8,
+                  "estado": "cancelado",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Falta el motivo de la cancelación.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El motivo es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un pedido con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un pedido PED-9999."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "El pedido no está en un estado que permita esta acción.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "ESTADO_INVALIDO",
+                  "mensaje": "El pedido PED-0001 ya fue cancelado."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Pedidos"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NuevoPedido": {
+        "type": "object",
+        "required": [
+          "clienteId",
+          "direccionEntrega",
+          "items"
+        ],
+        "properties": {
+          "clienteId": {
+            "type": "string",
+            "example": "CLI-001"
+          },
+          "direccionEntrega": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Av. Arequipa 1234, Lima"
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/ItemPedido"
+            }
+          },
+          "notas": {
+            "type": "string",
+            "example": "Entregar en horario de oficina."
+          }
+        }
+      },
+      "ActualizarPedido": {
+        "type": "object",
+        "minProperties": 1,
+        "description": "Todos los campos son opcionales; se cambian solo los enviados.",
+        "properties": {
+          "clienteId": {
+            "type": "string",
+            "example": "CLI-001"
+          },
+          "direccionEntrega": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Av. Arequipa 1234, Lima"
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/ItemPedido"
+            }
+          },
+          "notas": {
+            "type": "string",
+            "example": "Entregar en horario de oficina."
+          }
+        }
+      },
+      "Pedido": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NuevoPedido"
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "creadoEn",
+              "total",
+              "estado"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^PED-\\d{4}$",
+                "example": "PED-0001"
+              },
+              "total": {
+                "type": "number",
+                "format": "double",
+                "minimum": 0,
+                "example": 379.8
+              },
+              "estado": {
+                "type": "string",
+                "enum": [
+                  "borrador",
+                  "confirmado",
+                  "cancelado",
+                  "entregado"
+                ],
+                "example": "borrador"
+              },
+              "creadoEn": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2026-10-01T14:00:00Z"
+              }
+            }
+          }
+        ]
+      },
+      "ItemPedido": {
+        "type": "object",
+        "required": [
+          "productoId",
+          "cantidad"
+        ],
+        "properties": {
+          "productoId": {
+            "type": "string",
+            "example": "PRD-0001"
+          },
+          "cantidad": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 2
+          },
+          "precioUnitario": {
+            "type": "number",
+            "format": "double",
+            "minimum": 0,
+            "readOnly": true,
+            "description": "Lo completa el servidor con el precio vigente.",
+            "example": 189.9
+          }
+        }
+      },
+      "CancelacionPedido": {
+        "type": "object",
+        "required": [
+          "motivo"
+        ],
+        "properties": {
+          "motivo": {
+            "type": "string",
+            "minLength": 1,
+            "example": "El cliente desistió de la compra."
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "codigo",
+          "mensaje"
+        ],
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "example": "NO_ENCONTRADO"
+          },
+          "mensaje": {
+            "type": "string",
+            "example": "No existe un pedido PED-9999."
+          }
+        }
+      }
+    }
+  }
+}

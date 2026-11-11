@@ -1,0 +1,883 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API de Envíos",
+    "version": "1.0.0",
+    "description": "API de demostración para despachar pedidos y seguir sus envíos. Los datos y endpoints son ficticios y solo sirven como documentación de ejemplo.",
+    "contact": {
+      "name": "Equipo de APIs (demostración)"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.ejemplo.com/v1",
+      "description": "Servidor de demostración (no real)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Envíos",
+      "description": "Despachos, seguimiento y eventos de entrega."
+    }
+  ],
+  "paths": {
+    "/envios": {
+      "get": {
+        "summary": "Listar envíos",
+        "description": "Devuelve envíos paginados. Se pueden combinar los filtros.",
+        "operationId": "listarEnvios",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por estado del envío.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "registrado",
+                "en_transito",
+                "entregado",
+                "devuelto"
+              ]
+            }
+          },
+          {
+            "name": "ciudad",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por ciudad de destino.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pedidoId",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por pedido.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "description": "Número de página (empieza en 1).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad máxima de resultados por página.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de envíos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Envio"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "ENV-0001",
+                    "pedidoId": "PED-0001",
+                    "destinatario": "Comercial Andina S.A.C.",
+                    "direccion": "Av. Arequipa 1234",
+                    "ciudad": "Lima",
+                    "modalidad": "moto",
+                    "pesoKg": 2.5,
+                    "codigoSeguimiento": "SEG-7781-LIM",
+                    "estado": "en_transito",
+                    "creadoEn": "2026-10-01T14:00:00Z"
+                  },
+                  {
+                    "id": "ENV-0002",
+                    "pedidoId": "PED-0002",
+                    "destinatario": "Servicios Lima E.I.R.L.",
+                    "direccion": "Jr. Junín 456",
+                    "ciudad": "Arequipa",
+                    "modalidad": "terrestre",
+                    "pesoKg": 6.0,
+                    "codigoSeguimiento": "SEG-7782-AQP",
+                    "estado": "entregado",
+                    "creadoEn": "2026-10-15T09:30:00Z"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "description": "Total de registros que cumplen los filtros.",
+                "schema": {
+                  "type": "integer",
+                  "example": 2
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de consulta no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "PARAMETRO_INVALIDO",
+                  "mensaje": "El parámetro 'limite' debe estar entre 1 y 100."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Envíos"
+        ]
+      },
+      "post": {
+        "summary": "Crear un envío",
+        "description": "Registra un envío nuevo.",
+        "operationId": "crearEnvio",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoEnvio"
+              },
+              "example": {
+                "pedidoId": "PED-0003",
+                "destinatario": "Comercial Andina S.A.C.",
+                "direccion": "Av. Arequipa 1234",
+                "ciudad": "Lima",
+                "modalidad": "moto",
+                "pesoKg": 1.2
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Envío creado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envio"
+                },
+                "example": {
+                  "id": "ENV-0003",
+                  "pedidoId": "PED-0003",
+                  "destinatario": "Comercial Andina S.A.C.",
+                  "direccion": "Av. Arequipa 1234",
+                  "ciudad": "Lima",
+                  "modalidad": "moto",
+                  "pesoKg": 1.2,
+                  "codigoSeguimiento": "SEG-7790-LIM",
+                  "estado": "registrado",
+                  "creadoEn": "2026-11-11T10:30:00Z"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URL del recurso creado.",
+                "schema": {
+                  "type": "string",
+                  "example": "/envios/ENV-0003"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'pedidoId' es obligatorio."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Envíos"
+        ]
+      }
+    },
+    "/envios/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del envío.",
+          "schema": {
+            "type": "string",
+            "pattern": "^ENV-\\d{4}$",
+            "example": "ENV-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener un envío",
+        "description": "Devuelve los datos de un envío según su identificador.",
+        "operationId": "obtenerEnvio",
+        "responses": {
+          "200": {
+            "description": "Envío encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envio"
+                },
+                "example": {
+                  "id": "ENV-0001",
+                  "pedidoId": "PED-0001",
+                  "destinatario": "Comercial Andina S.A.C.",
+                  "direccion": "Av. Arequipa 1234",
+                  "ciudad": "Lima",
+                  "modalidad": "moto",
+                  "pesoKg": 2.5,
+                  "codigoSeguimiento": "SEG-7781-LIM",
+                  "estado": "en_transito",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un envío con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un envío ENV-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Envíos"
+        ]
+      },
+      "put": {
+        "summary": "Reemplazar un envío",
+        "description": "Reemplaza todos los datos editables. Los campos que no se envíen quedan vacíos o con su valor por defecto.",
+        "operationId": "reemplazarEnvio",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoEnvio"
+              },
+              "example": {
+                "pedidoId": "PED-0001",
+                "destinatario": "Comercial Andina S.A.C.",
+                "direccion": "Calle Los Pinos 220",
+                "ciudad": "Lima",
+                "modalidad": "moto",
+                "pesoKg": 2.5
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Envío actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envio"
+                },
+                "example": {
+                  "id": "ENV-0001",
+                  "pedidoId": "PED-0001",
+                  "destinatario": "Comercial Andina S.A.C.",
+                  "direccion": "Calle Los Pinos 220",
+                  "ciudad": "Lima",
+                  "modalidad": "moto",
+                  "pesoKg": 2.5,
+                  "codigoSeguimiento": "SEG-7781-LIM",
+                  "estado": "en_transito",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'pedidoId' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un envío con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un envío ENV-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Envíos"
+        ]
+      },
+      "patch": {
+        "summary": "Actualizar un envío parcialmente",
+        "description": "Cambia solo los campos enviados. El resto se mantiene.",
+        "operationId": "actualizarEnvio",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarEnvio"
+              },
+              "example": {
+                "direccion": "Calle Los Pinos 220, oficina 301"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Envío actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envio"
+                },
+                "example": {
+                  "id": "ENV-0001",
+                  "pedidoId": "PED-0001",
+                  "destinatario": "Comercial Andina S.A.C.",
+                  "direccion": "Calle Los Pinos 220, oficina 301",
+                  "ciudad": "Lima",
+                  "modalidad": "moto",
+                  "pesoKg": 2.5,
+                  "codigoSeguimiento": "SEG-7781-LIM",
+                  "estado": "en_transito",
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'pedidoId' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un envío con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un envío ENV-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Envíos"
+        ]
+      },
+      "delete": {
+        "summary": "Eliminar un envío",
+        "description": "Elimina un envío que todavía está en estado `registrado`.",
+        "operationId": "eliminarEnvio",
+        "responses": {
+          "204": {
+            "description": "Envío eliminado. No devuelve contenido."
+          },
+          "404": {
+            "description": "No existe un envío con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un envío ENV-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Envíos"
+        ]
+      }
+    },
+    "/envios/{id}/seguimiento": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del envío.",
+          "schema": {
+            "type": "string",
+            "pattern": "^ENV-\\d{4}$",
+            "example": "ENV-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Ver el seguimiento",
+        "description": "Devuelve el estado del envío y todos sus eventos en orden cronológico.",
+        "operationId": "verSeguimientoEnvio",
+        "responses": {
+          "200": {
+            "description": "Seguimiento del envío.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Seguimiento"
+                },
+                "example": {
+                  "envioId": "ENV-0001",
+                  "codigoSeguimiento": "SEG-7781-LIM",
+                  "estado": "en_transito",
+                  "eventos": [
+                    {
+                      "id": "EVT-0101",
+                      "tipo": "recogido",
+                      "ubicacion": "Almacén Lima",
+                      "detalle": "Paquete recogido.",
+                      "fechaHora": "2026-11-10T09:00:00-05:00"
+                    },
+                    {
+                      "id": "EVT-0102",
+                      "tipo": "en_ruta",
+                      "ubicacion": "Lima",
+                      "detalle": "Salió hacia el destino.",
+                      "fechaHora": "2026-11-10T14:20:00-05:00"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un envío con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un envío ENV-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Envíos"
+        ]
+      }
+    },
+    "/envios/{id}/eventos": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del envío.",
+          "schema": {
+            "type": "string",
+            "pattern": "^ENV-\\d{4}$",
+            "example": "ENV-0001"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Registrar un evento",
+        "description": "Agrega un evento de seguimiento. Un evento `entregado` cambia el estado del envío a `entregado`.",
+        "operationId": "registrarEventoEnvio",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoEventoEnvio"
+              },
+              "example": {
+                "tipo": "en_agencia",
+                "ubicacion": "Agencia Arequipa",
+                "detalle": "Llegó a la agencia de destino.",
+                "fechaHora": "2026-11-11T08:40:00-05:00"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Evento registrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventoEnvio"
+                },
+                "example": {
+                  "id": "EVT-0103",
+                  "tipo": "en_agencia",
+                  "ubicacion": "Agencia Arequipa",
+                  "detalle": "Llegó a la agencia de destino.",
+                  "fechaHora": "2026-11-11T08:40:00-05:00"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos del evento no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El tipo de evento no es válido."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un envío con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un envío ENV-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Envíos"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NuevoEnvio": {
+        "type": "object",
+        "required": [
+          "pedidoId",
+          "destinatario",
+          "direccion",
+          "ciudad",
+          "modalidad"
+        ],
+        "properties": {
+          "pedidoId": {
+            "type": "string",
+            "example": "PED-0001"
+          },
+          "destinatario": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Comercial Andina S.A.C."
+          },
+          "direccion": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Av. Arequipa 1234"
+          },
+          "ciudad": {
+            "type": "string",
+            "example": "Lima"
+          },
+          "modalidad": {
+            "type": "string",
+            "enum": [
+              "terrestre",
+              "aereo",
+              "moto"
+            ],
+            "example": "terrestre"
+          },
+          "pesoKg": {
+            "type": "number",
+            "format": "double",
+            "minimum": 0,
+            "example": 2.5
+          }
+        }
+      },
+      "ActualizarEnvio": {
+        "type": "object",
+        "minProperties": 1,
+        "description": "Todos los campos son opcionales; se cambian solo los enviados.",
+        "properties": {
+          "pedidoId": {
+            "type": "string",
+            "example": "PED-0001"
+          },
+          "destinatario": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Comercial Andina S.A.C."
+          },
+          "direccion": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Av. Arequipa 1234"
+          },
+          "ciudad": {
+            "type": "string",
+            "example": "Lima"
+          },
+          "modalidad": {
+            "type": "string",
+            "enum": [
+              "terrestre",
+              "aereo",
+              "moto"
+            ],
+            "example": "terrestre"
+          },
+          "pesoKg": {
+            "type": "number",
+            "format": "double",
+            "minimum": 0,
+            "example": 2.5
+          }
+        }
+      },
+      "Envio": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NuevoEnvio"
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "creadoEn",
+              "codigoSeguimiento",
+              "estado"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^ENV-\\d{4}$",
+                "example": "ENV-0001"
+              },
+              "codigoSeguimiento": {
+                "type": "string",
+                "example": "SEG-7781-LIM"
+              },
+              "estado": {
+                "type": "string",
+                "enum": [
+                  "registrado",
+                  "en_transito",
+                  "entregado",
+                  "devuelto"
+                ],
+                "example": "en_transito"
+              },
+              "creadoEn": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2026-10-01T14:00:00Z"
+              }
+            }
+          }
+        ]
+      },
+      "NuevoEventoEnvio": {
+        "type": "object",
+        "required": [
+          "tipo",
+          "fechaHora"
+        ],
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "recogido",
+              "en_ruta",
+              "en_agencia",
+              "entregado",
+              "incidencia"
+            ],
+            "example": "en_agencia"
+          },
+          "ubicacion": {
+            "type": "string",
+            "example": "Agencia Arequipa"
+          },
+          "detalle": {
+            "type": "string",
+            "example": "Llegó a la agencia de destino."
+          },
+          "fechaHora": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-11-11T08:40:00-05:00"
+          }
+        }
+      },
+      "EventoEnvio": {
+        "type": "object",
+        "required": [
+          "id",
+          "tipo",
+          "fechaHora"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "EVT-0103"
+          },
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "recogido",
+              "en_ruta",
+              "en_agencia",
+              "entregado",
+              "incidencia"
+            ],
+            "example": "en_agencia"
+          },
+          "ubicacion": {
+            "type": "string",
+            "example": "Agencia Arequipa"
+          },
+          "detalle": {
+            "type": "string",
+            "example": "Llegó a la agencia de destino."
+          },
+          "fechaHora": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-11-11T08:40:00-05:00"
+          }
+        }
+      },
+      "Seguimiento": {
+        "type": "object",
+        "required": [
+          "envioId",
+          "codigoSeguimiento",
+          "estado",
+          "eventos"
+        ],
+        "properties": {
+          "envioId": {
+            "type": "string",
+            "example": "ENV-0001"
+          },
+          "codigoSeguimiento": {
+            "type": "string",
+            "example": "SEG-7781-LIM"
+          },
+          "estado": {
+            "type": "string",
+            "enum": [
+              "registrado",
+              "en_transito",
+              "entregado",
+              "devuelto"
+            ],
+            "example": "en_transito"
+          },
+          "eventos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventoEnvio"
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "codigo",
+          "mensaje"
+        ],
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "example": "NO_ENCONTRADO"
+          },
+          "mensaje": {
+            "type": "string",
+            "example": "No existe un envío ENV-9999."
+          }
+        }
+      }
+    }
+  }
+}

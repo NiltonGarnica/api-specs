@@ -1,0 +1,821 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API de Productos",
+    "version": "1.0.0",
+    "description": "API de demostración para gestionar el catálogo de productos y su stock. Los datos y endpoints son ficticios y solo sirven como documentación de ejemplo.",
+    "contact": {
+      "name": "Equipo de APIs (demostración)"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.ejemplo.com/v1",
+      "description": "Servidor de demostración (no real)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Productos",
+      "description": "Catálogo de productos, precios y movimientos de stock."
+    }
+  ],
+  "paths": {
+    "/productos": {
+      "get": {
+        "summary": "Listar productos",
+        "description": "Devuelve productos paginados. Se pueden combinar los filtros.",
+        "operationId": "listarProductos",
+        "parameters": [
+          {
+            "name": "categoria",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por categoría.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "perifericos",
+                "monitores",
+                "accesorios"
+              ]
+            }
+          },
+          {
+            "name": "activo",
+            "in": "query",
+            "required": false,
+            "description": "Filtra por productos activos o inactivos.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "buscar",
+            "in": "query",
+            "required": false,
+            "description": "Texto a buscar en el nombre o el SKU.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "description": "Número de página (empieza en 1).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limite",
+            "in": "query",
+            "required": false,
+            "description": "Cantidad máxima de resultados por página.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de productos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Producto"
+                  }
+                },
+                "example": [
+                  {
+                    "id": "PRD-0001",
+                    "nombre": "Teclado mecánico",
+                    "sku": "TEC-MEC-01",
+                    "categoria": "perifericos",
+                    "precio": 189.9,
+                    "moneda": "PEN",
+                    "activo": true,
+                    "stock": 35,
+                    "creadoEn": "2026-10-01T14:00:00Z"
+                  },
+                  {
+                    "id": "PRD-0002",
+                    "nombre": "Monitor 24 pulgadas",
+                    "sku": "MON-24-01",
+                    "categoria": "monitores",
+                    "precio": 649.0,
+                    "moneda": "PEN",
+                    "activo": true,
+                    "stock": 12,
+                    "creadoEn": "2026-10-15T09:30:00Z"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "X-Total-Count": {
+                "description": "Total de registros que cumplen los filtros.",
+                "schema": {
+                  "type": "integer",
+                  "example": 2
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de consulta no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "PARAMETRO_INVALIDO",
+                  "mensaje": "El parámetro 'limite' debe estar entre 1 y 100."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Productos"
+        ]
+      },
+      "post": {
+        "summary": "Crear un producto",
+        "description": "Registra un producto nuevo.",
+        "operationId": "crearProducto",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoProducto"
+              },
+              "example": {
+                "nombre": "Mouse inalámbrico",
+                "sku": "MOU-INA-01",
+                "categoria": "perifericos",
+                "precio": 79.9,
+                "moneda": "PEN",
+                "activo": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Producto creado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Producto"
+                },
+                "example": {
+                  "id": "PRD-0003",
+                  "nombre": "Mouse inalámbrico",
+                  "sku": "MOU-INA-01",
+                  "categoria": "perifericos",
+                  "precio": 79.9,
+                  "moneda": "PEN",
+                  "activo": true,
+                  "stock": 0,
+                  "creadoEn": "2026-11-11T10:30:00Z"
+                }
+              }
+            },
+            "headers": {
+              "Location": {
+                "description": "URL del recurso creado.",
+                "schema": {
+                  "type": "string",
+                  "example": "/productos/PRD-0003"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'nombre' es obligatorio."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Productos"
+        ]
+      }
+    },
+    "/productos/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del producto.",
+          "schema": {
+            "type": "string",
+            "pattern": "^PRD-\\d{4}$",
+            "example": "PRD-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener un producto",
+        "description": "Devuelve los datos de un producto según su identificador.",
+        "operationId": "obtenerProducto",
+        "responses": {
+          "200": {
+            "description": "Producto encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Producto"
+                },
+                "example": {
+                  "id": "PRD-0001",
+                  "nombre": "Teclado mecánico",
+                  "sku": "TEC-MEC-01",
+                  "categoria": "perifericos",
+                  "precio": 189.9,
+                  "moneda": "PEN",
+                  "activo": true,
+                  "stock": 35,
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un producto con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un producto PRD-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Productos"
+        ]
+      },
+      "put": {
+        "summary": "Reemplazar un producto",
+        "description": "Reemplaza todos los datos editables. Los campos que no se envíen quedan vacíos o con su valor por defecto.",
+        "operationId": "reemplazarProducto",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NuevoProducto"
+              },
+              "example": {
+                "nombre": "Teclado mecánico RGB",
+                "sku": "TEC-MEC-01",
+                "categoria": "perifericos",
+                "precio": 209.9,
+                "moneda": "PEN",
+                "activo": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Producto actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Producto"
+                },
+                "example": {
+                  "id": "PRD-0001",
+                  "nombre": "Teclado mecánico RGB",
+                  "sku": "TEC-MEC-01",
+                  "categoria": "perifericos",
+                  "precio": 209.9,
+                  "moneda": "PEN",
+                  "activo": true,
+                  "stock": 35,
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'nombre' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un producto con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un producto PRD-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Productos"
+        ]
+      },
+      "patch": {
+        "summary": "Actualizar un producto parcialmente",
+        "description": "Cambia solo los campos enviados. El resto se mantiene.",
+        "operationId": "actualizarProducto",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActualizarProducto"
+              },
+              "example": {
+                "precio": 179.9
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Producto actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Producto"
+                },
+                "example": {
+                  "id": "PRD-0001",
+                  "nombre": "Teclado mecánico",
+                  "sku": "TEC-MEC-01",
+                  "categoria": "perifericos",
+                  "precio": 179.9,
+                  "moneda": "PEN",
+                  "activo": true,
+                  "stock": 35,
+                  "creadoEn": "2026-10-01T14:00:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "El campo 'nombre' es obligatorio."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un producto con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un producto PRD-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Productos"
+        ]
+      },
+      "delete": {
+        "summary": "Eliminar un producto",
+        "description": "Elimina un producto de forma permanente.",
+        "operationId": "eliminarProducto",
+        "responses": {
+          "204": {
+            "description": "Producto eliminado. No devuelve contenido."
+          },
+          "404": {
+            "description": "No existe un producto con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un producto PRD-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Productos"
+        ]
+      }
+    },
+    "/productos/{id}/stock": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del producto.",
+          "schema": {
+            "type": "string",
+            "pattern": "^PRD-\\d{4}$",
+            "example": "PRD-0001"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Consultar stock",
+        "description": "Devuelve las unidades disponibles y reservadas de un producto.",
+        "operationId": "consultarStockProducto",
+        "responses": {
+          "200": {
+            "description": "Stock actual del producto.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stock"
+                },
+                "example": {
+                  "productoId": "PRD-0001",
+                  "disponible": 35,
+                  "reservado": 4,
+                  "actualizadoEn": "2026-11-10T09:15:00Z"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un producto con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un producto PRD-9999."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Productos"
+        ]
+      }
+    },
+    "/productos/{id}/ajustes-stock": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador del producto.",
+          "schema": {
+            "type": "string",
+            "pattern": "^PRD-\\d{4}$",
+            "example": "PRD-0001"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Ajustar stock",
+        "description": "Registra una entrada o salida de unidades y devuelve el stock resultante.",
+        "operationId": "ajustarStockProducto",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AjusteStock"
+              },
+              "example": {
+                "tipo": "entrada",
+                "cantidad": 20,
+                "motivo": "Compra a proveedor PRV-0001"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Ajuste registrado. Devuelve el stock actualizado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stock"
+                },
+                "example": {
+                  "productoId": "PRD-0001",
+                  "disponible": 55,
+                  "reservado": 4,
+                  "actualizadoEn": "2026-11-11T10:30:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos del ajuste no válidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "DATOS_INVALIDOS",
+                  "mensaje": "La cantidad debe ser mayor que cero."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No existe un producto con ese identificador.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "NO_ENCONTRADO",
+                  "mensaje": "No existe un producto PRD-9999."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No hay unidades suficientes para la salida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "codigo": "STOCK_INSUFICIENTE",
+                  "mensaje": "Solo hay 35 unidades disponibles."
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Productos"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NuevoProducto": {
+        "type": "object",
+        "required": [
+          "nombre",
+          "sku",
+          "categoria",
+          "precio",
+          "moneda"
+        ],
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Teclado mecánico"
+          },
+          "sku": {
+            "type": "string",
+            "minLength": 1,
+            "example": "TEC-MEC-01"
+          },
+          "categoria": {
+            "type": "string",
+            "enum": [
+              "perifericos",
+              "monitores",
+              "accesorios"
+            ],
+            "example": "perifericos"
+          },
+          "precio": {
+            "type": "number",
+            "format": "double",
+            "minimum": 0,
+            "example": 189.9
+          },
+          "moneda": {
+            "type": "string",
+            "enum": [
+              "PEN",
+              "USD"
+            ],
+            "example": "PEN"
+          },
+          "activo": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "ActualizarProducto": {
+        "type": "object",
+        "minProperties": 1,
+        "description": "Todos los campos son opcionales; se cambian solo los enviados.",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "minLength": 1,
+            "example": "Teclado mecánico"
+          },
+          "sku": {
+            "type": "string",
+            "minLength": 1,
+            "example": "TEC-MEC-01"
+          },
+          "categoria": {
+            "type": "string",
+            "enum": [
+              "perifericos",
+              "monitores",
+              "accesorios"
+            ],
+            "example": "perifericos"
+          },
+          "precio": {
+            "type": "number",
+            "format": "double",
+            "minimum": 0,
+            "example": 189.9
+          },
+          "moneda": {
+            "type": "string",
+            "enum": [
+              "PEN",
+              "USD"
+            ],
+            "example": "PEN"
+          },
+          "activo": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "Producto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NuevoProducto"
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "creadoEn",
+              "stock"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^PRD-\\d{4}$",
+                "example": "PRD-0001"
+              },
+              "stock": {
+                "type": "integer",
+                "minimum": 0,
+                "example": 35
+              },
+              "creadoEn": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2026-10-01T14:00:00Z"
+              }
+            }
+          }
+        ]
+      },
+      "Stock": {
+        "type": "object",
+        "required": [
+          "productoId",
+          "disponible",
+          "reservado",
+          "actualizadoEn"
+        ],
+        "properties": {
+          "productoId": {
+            "type": "string",
+            "example": "PRD-0001"
+          },
+          "disponible": {
+            "type": "integer",
+            "minimum": 0,
+            "example": 35
+          },
+          "reservado": {
+            "type": "integer",
+            "minimum": 0,
+            "example": 4
+          },
+          "actualizadoEn": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-11-10T09:15:00Z"
+          }
+        }
+      },
+      "AjusteStock": {
+        "type": "object",
+        "required": [
+          "tipo",
+          "cantidad"
+        ],
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "entrada",
+              "salida"
+            ],
+            "example": "entrada"
+          },
+          "cantidad": {
+            "type": "integer",
+            "minimum": 1,
+            "example": 20
+          },
+          "motivo": {
+            "type": "string",
+            "example": "Compra a proveedor PRV-0001"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": [
+          "codigo",
+          "mensaje"
+        ],
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "example": "NO_ENCONTRADO"
+          },
+          "mensaje": {
+            "type": "string",
+            "example": "No existe un producto PRD-9999."
+          }
+        }
+      }
+    }
+  }
+}
