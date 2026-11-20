@@ -57,6 +57,14 @@ Se puede buscar por endpoint o API, filtrar por año y cambiar el orden.
 
 Los datos están en `specs/square-changelog.json` (recopilados el 2026-11-20).
 
+También hay una versión **estática** en `cambios.html`: solo fecha → endpoints, escrita
+directo en el HTML (sin JavaScript), pensada para que un crawler como Lightpanda la lea.
+Si cambias el JSON, regénerala con:
+
+```
+py tools/generar_cambios.py
+```
+
 ## Probar en Windows
 
 Necesitas Python instalado. El sitio carga los JSON con `fetch`, así que **no funciona abriendo `index.html` con doble clic**: hay que servirlo con un servidor web local.
