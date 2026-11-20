@@ -1,88 +1,64 @@
-"""Genera el historial de cambios de las APIs del proyecto a partir de los commits de git.
+"""Historial de cambios de las APIs: fecha -> endpoints.
 
-Para cada commit que toca specs/*.json compara los endpoints (método + ruta) con el
-estado anterior y anota cuáles se agregaron, cambiaron o se quitaron. Agrupa por fecha.
+specs/cambios.json es la fuente (puedes editarlo a mano: agrega una fecha con sus endpoints).
+Este script genera cambios.html (versión estática, sin JavaScript) a partir de ese JSON.
 
-Salida:
-  specs/cambios.json  -> lo usa la vista #cambios del sitio
-  cambios.html        -> versión estática (sin JavaScript): fecha -> endpoints
-
-Uso (desde la carpeta del repo, después de hacer commit de tus cambios):
-  py tools/generar_cambios.py
+  py tools/generar_cambios.py          -> regenera cambios.html desde specs/cambios.json
+  py tools/generar_cambios.py --demo   -> vuelve a crear fechas de demostración al azar
+                                          (2 endpoints por fecha) y regenera cambios.html
 """
-import html, json, pathlib, subprocess
+import html, json, pathlib, sys
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 METODOS = ["get", "post", "put", "patch", "delete"]
-IGNORAR = {"specs/catalogo.json", "specs/cambios.json"}
 
 
-def git(*args):
-    return subprocess.run(["git", *args], cwd=RAIZ, capture_output=True, text=True,
-                          encoding="utf-8", check=True).stdout
+def crear_demo(semilla=2026):
+    """Reparte los endpoints actuales de las specs en fechas al azar, 2 endpoints por fecha.
+    Respeta el orden: Facturas y Clientes primero, y dentro de cada API el orden de la spec."""
+    import datetime, random
+    rnd = random.Random(semilla)
+    catalogo = json.loads((RAIZ / "specs" / "catalogo.json").read_text(encoding="utf-8"))["apis"]
+    colas = []
+    for api in catalogo:
+        spec = json.loads((RAIZ / "specs" / f"{api['id']}.json").read_text(encoding="utf-8"))
+        nombre = spec.get("info", {}).get("title", api["nombre"])
+        eps = [{"metodo": m.upper(), "ruta": r, "resumen": item[m].get("summary", ""), "estado": "nuevo"}
+               for r, item in spec["paths"].items() for m in METODOS if m in item]
+        pares = [eps[i:i + 2] for i in range(0, len(eps), 2)]
+        colas.append({"id": api["id"], "api": nombre, "pares": pares})
 
+    # Las dos primeras APIs del catálogo salen primero; el resto se intercala al azar.
+    orden = [(colas[0], p) for p in colas[0]["pares"]] + [(colas[1], p) for p in colas[1]["pares"]]
+    resto = [c for c in colas[2:] for _ in c["pares"]]
+    rnd.shuffle(resto)
+    usados = {c["id"]: 0 for c in colas}
+    for c in resto:
+        orden.append((c, c["pares"][usados[c["id"]]]))
+        usados[c["id"]] += 1
 
-def endpoints_en(commit):
-    """{(api_id, METODO, ruta): {"api": nombre, "resumen": ...}} de todas las specs en ese commit."""
-    out = {}
-    archivos = git("ls-tree", "-r", "--name-only", commit, "specs").split()
-    for ruta_archivo in archivos:
-        if not ruta_archivo.endswith(".json") or ruta_archivo in IGNORAR:
-            continue
-        try:
-            spec = json.loads(git("show", f"{commit}:{ruta_archivo}"))
-        except (json.JSONDecodeError, subprocess.CalledProcessError):
-            continue
-        if "paths" not in spec:
-            continue
-        api_id = pathlib.Path(ruta_archivo).stem
-        nombre = spec.get("info", {}).get("title", api_id)
-        for ruta, item in spec["paths"].items():
-            for m in METODOS:
-                if m in item:
-                    op = item[m]
-                    out[(api_id, m.upper(), ruta)] = {
-                        "api": nombre,
-                        "resumen": op.get("summary", ""),
-                        "firma": json.dumps(op, sort_keys=True, ensure_ascii=False),
-                    }
-    return out
+    inicio, fin = datetime.date(2025, 1, 6), datetime.date(2026, 11, 11)
+    dias = sorted(rnd.sample(range((fin - inicio).days + 1), len(orden)))
+    versiones = []
+    for dia, (c, par) in zip(dias, orden):
+        fecha = (inicio + datetime.timedelta(days=dia)).isoformat()
+        versiones.append({"fecha": fecha, "apis": [{"id": c["id"], "api": c["api"], "endpoints": par}]})
+    versiones.sort(key=lambda v: v["fecha"], reverse=True)
+    return versiones
 
 
 def main():
-    commits = git("log", "--reverse", "--format=%H|%ad|%s", "--date=format:%Y-%m-%d", "--", "specs").splitlines()
-    previo, por_fecha = {}, {}
-    for linea in commits:
-        sha, fecha, mensaje = linea.split("|", 2)
-        actual = endpoints_en(sha)
-        cambios = []
-        for k in [k for k in actual if k not in previo]:
-            cambios.append((k, actual[k], "nuevo"))
-        for k in [k for k in actual if k in previo]:
-            if actual[k]["firma"] != previo[k]["firma"]:
-                cambios.append((k, actual[k], "modificado"))
-        for k in [k for k in previo if k not in actual]:
-            cambios.append((k, previo[k], "eliminado"))
-        previo = actual
-        if not cambios:
-            continue
-        v = por_fecha.setdefault(fecha, {"fecha": fecha, "commits": [], "apis": {}})
-        v["commits"].append({"sha": sha[:7], "mensaje": mensaje})
-        for (api_id, metodo, ruta), info, estado in cambios:
-            g = v["apis"].setdefault(api_id, {"id": api_id, "api": info["api"], "endpoints": []})
-            g["endpoints"].append({"metodo": metodo, "ruta": ruta, "resumen": info["resumen"], "estado": estado})
-
-    versiones = []
-    for fecha in sorted(por_fecha, reverse=True):
-        v = por_fecha[fecha]
-        v["apis"] = list(v["apis"].values())
-        versiones.append(v)
-
-    (RAIZ / "specs" / "cambios.json").write_text(
-        json.dumps({"versiones": versiones}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    ruta_json = RAIZ / "specs" / "cambios.json"
+    if "--demo" in sys.argv or not ruta_json.exists():
+        versiones = crear_demo()
+        ruta_json.write_text(json.dumps({"demostracion": True, "versiones": versiones},
+                                        ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    else:
+        versiones = json.loads(ruta_json.read_text(encoding="utf-8"))["versiones"]
+        versiones.sort(key=lambda v: v["fecha"], reverse=True)
     escribir_html(versiones)
     total = sum(len(g["endpoints"]) for v in versiones for g in v["apis"])
-    print(f"{len(versiones)} fechas, {total} cambios de endpoints")
+    print(f"{len(versiones)} fechas, {total} endpoints")
 
 
 def escribir_html(versiones):
@@ -133,7 +109,7 @@ def escribir_html(versiones):
   <main>
     <p><a href="./#inicio">← Volver al inicio</a></p>
     <h1>Historial de cambios: fechas y endpoints</h1>
-    <p class="resumen-total">{len(versiones)} fechas · {total} endpoints · de la más reciente a la más antigua</p>
+    <p class="resumen-total">{len(versiones)} fechas · {total} endpoints · de la más reciente a la más antigua · fechas de demostración</p>
 {chr(10).join(secciones)}
   </main>
 </body>

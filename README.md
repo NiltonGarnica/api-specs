@@ -49,17 +49,15 @@ Los botones **Descargar JSON** usan enlaces relativos con el atributo `download`
 
 ## Historial de cambios
 
-La pestaña **Cambios** (`#cambios`) muestra, ordenado por fecha, qué endpoints de las
-APIs del proyecto se agregaron, modificaron o quitaron. Hay también una versión
-estática sin JavaScript en `cambios.html` (solo fecha → endpoints).
+La pestaña **Cambios** (`#cambios`) muestra, ordenado por fecha, los endpoints de cada
+versión de las APIs (2 por fecha). Las fechas son de demostración. Hay también una
+versión estática sin JavaScript en `cambios.html` (solo fecha → endpoints).
 
-Los datos salen de los commits del repositorio. Después de cambiar una spec y hacer
-commit, regenera el historial y vuelve a hacer commit:
+Los datos están en `specs/cambios.json`. Para agregar una fecha, edita ese JSON y luego:
 
 ```
-py tools/generar_cambios.py
-git add specs/cambios.json cambios.html
-git commit -m "Actualizar historial de cambios"
+py tools/generar_cambios.py          # regenera cambios.html
+py tools/generar_cambios.py --demo   # vuelve a crear fechas al azar
 ```
 
 ## Probar en Windows

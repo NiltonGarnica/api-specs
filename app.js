@@ -216,7 +216,7 @@
   }
 
   // ---------- Historial de cambios (fechas y endpoints) ----------
-  // specs/cambios.json se genera con: py tools/generar_cambios.py
+  // Datos en specs/cambios.json (cambios.html se regenera con: py tools/generar_cambios.py)
   var CAMBIOS = "./specs/cambios.json";
   var ESTADOS = { nuevo: "Nuevo", modificado: "Modificado", eliminado: "Eliminado" };
   var cambiosListos = false;
@@ -236,7 +236,7 @@
       }).join("");
       return "<div class=\"cl-grupo\"><h4><a href=\"#" + esc(g.id) + "\">" + esc(g.api) + "</a></h4><ul>" + items + "</ul></div>";
     }).join("");
-    var commits = v.commits.map(function (c) {
+    var commits = (v.commits || []).map(function (c) {
       return "<span class=\"cl-commit\"><code>" + esc(c.sha) + "</code> " + esc(c.mensaje) + "</span>";
     }).join("");
 
@@ -245,7 +245,7 @@
         "<time class=\"cl-fecha\" datetime=\"" + esc(v.fecha) + "\">" + esc(v.fecha) + "</time>" +
         "<span class=\"cl-cuenta\">" + n + (n === 1 ? " endpoint" : " endpoints") + "</span>" +
       "</div>" +
-      "<p class=\"cl-commits\">" + commits + "</p>" +
+      (commits ? "<p class=\"cl-commits\">" + commits + "</p>" : "") +
       grupos +
     "</article>";
   }
