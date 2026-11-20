@@ -16,6 +16,7 @@
       <!-- Los enlaces de cada API se generan desde specs/catalogo.json -->
       <nav class="menu" aria-label="Principal" data-menu>
         <a class="menu__link" href="#inicio" data-route="inicio">Inicio</a>
+        <a class="menu__link" href="#cambios" data-route="cambios">Cambios Square</a>
       </nav>
     </div>
   </header>
@@ -47,6 +48,36 @@
       <p class="lead" data-field="description">Cargando especificación…</p>
       <p class="server" data-field="server"></p>
       <div class="endpoints" data-field="endpoints"></div>
+    </section>
+    <!-- Historial de cambios de Square, ordenado por fecha -->
+    <section class="view" data-view="cambios" aria-labelledby="titulo-cambios" hidden>
+      <h1 id="titulo-cambios" tabindex="-1">Historial de cambios de Square</h1>
+      <p class="lead">
+        Cada versión del <a href="https://developer.squareup.com/docs/changelog/connect" target="_blank" rel="noopener">changelog de Square APIs and SDKs</a>
+        ordenada por fecha, con las APIs que toca y los endpoints que menciona su nota de versión.
+      </p>
+      <div class="cl-tools">
+        <label class="cl-field">
+          <span>Buscar endpoint o API</span>
+          <input type="search" placeholder="Ej.: CreatePayment, Orders API" data-cl="q">
+        </label>
+        <label class="cl-field">
+          <span>Año</span>
+          <select data-cl="anio"><option value="">Todos</option></select>
+        </label>
+        <label class="cl-field">
+          <span>Orden</span>
+          <select data-cl="orden">
+            <option value="desc">Más reciente primero</option>
+            <option value="asc">Más antigua primero</option>
+          </select>
+        </label>
+        <label class="cl-check">
+          <input type="checkbox" data-cl="solo"> Solo fechas con endpoints
+        </label>
+      </div>
+      <p class="cl-resumen" data-cl="resumen" aria-live="polite"></p>
+      <div data-cl="lista"></div>
     </section>
   </main>
 

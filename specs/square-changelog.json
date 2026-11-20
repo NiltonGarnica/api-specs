@@ -1,0 +1,4569 @@
+{
+ "fuente": "https://developer.squareup.com/docs/changelog/connect",
+ "actualizado": "2026-11-20",
+ "versiones": [
+  {
+   "fecha": "2026-11-18",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2026-11-18",
+   "etiquetas": [],
+   "apis": [
+    "Checkout API",
+    "Catalog API"
+   ],
+   "endpoints": [
+    {
+     "api": "Checkout API",
+     "endpoints": [
+      {
+       "nombre": "RetrieveMerchantSettings",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdateMerchantSettings",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2026-09-16",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2026-09-16",
+   "etiquetas": [],
+   "apis": [
+    "Transactions API"
+   ],
+   "endpoints": [
+    {
+     "api": "Transactions API",
+     "endpoints": [
+      {
+       "nombre": "CreateRefund",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "CaptureTransaction",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "VoidTransaction",
+       "estado": "retirado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2026-08-19",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2026-08-19",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [
+    {
+     "api": "Catalog API",
+     "endpoints": [
+      {
+       "nombre": "BatchRetrieveCatalogObjects",
+       "estado": "beta"
+      },
+      {
+       "nombre": "SearchCatalogItems",
+       "estado": "beta"
+      },
+      {
+       "nombre": "SearchCatalogObjects",
+       "estado": "beta"
+      }
+     ]
+    },
+    {
+     "api": "Locations API",
+     "endpoints": [
+      {
+       "nombre": "RetrieveLocation",
+       "estado": "beta"
+      },
+      {
+       "nombre": "ListLocations",
+       "estado": "beta"
+      },
+      {
+       "nombre": "UpdateLocation",
+       "estado": "beta"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2026-07-15",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2026-07-15",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [
+    {
+     "api": "Inventory API",
+     "endpoints": [
+      {
+       "nombre": "UpdateInventoryAdjustment",
+       "estado": "beta"
+      },
+      {
+       "nombre": "BatchRetrieveInventoryChanges",
+       "estado": "beta"
+      },
+      {
+       "nombre": "RetrieveInventoryTransfer",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2026-05-20",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2026-05-20",
+   "etiquetas": [],
+   "apis": [
+    "Payments API",
+    "Refunds API"
+   ],
+   "endpoints": [],
+   "objetos": [
+    "Payment",
+    "CardPaymentDetails",
+    "ElectronicMoneyDetails",
+    "PaymentRefund"
+   ]
+  },
+  {
+   "fecha": "2026-04-21",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2026-04-21",
+   "etiquetas": [],
+   "apis": [
+    "Reporting API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2026-01-22",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2026-01-22",
+   "etiquetas": [],
+   "apis": [
+    "Bank Accounts API",
+    "Catalog API",
+    "Mobile Authorization API",
+    "Reader SDK",
+    "OAuth API",
+    "Orders API",
+    "Payments API",
+    "Terminal API"
+   ],
+   "endpoints": [
+    {
+     "api": "Bank Accounts API",
+     "endpoints": [
+      {
+       "nombre": "CreateBankAccount",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "DisableBankAccount",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogItem",
+    "CatalogItemVariation",
+    "CatalogModifier",
+    "OrderLineItem",
+    "OrderLineItemAppliedTax",
+    "OrderReturnServiceCharge",
+    "BuyNowPayLaterDetails",
+    "DigitalWalletDetails",
+    "Card"
+   ]
+  },
+  {
+   "fecha": "2025-10-16",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2025-10-16",
+   "etiquetas": [],
+   "apis": [
+    "Channels API",
+    "Transfer Orders API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2025-09-24",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2025-09-24",
+   "etiquetas": [],
+   "apis": [
+    "Devices API",
+    "Subscriptions API"
+   ],
+   "endpoints": [],
+   "objetos": [
+    "Subscription",
+    "SubscriptionAction"
+   ]
+  },
+  {
+   "fecha": "2025-08-20",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2025-08-20",
+   "etiquetas": [],
+   "apis": [
+    "In-App Payments SDK",
+    "Web Payments SDK",
+    "Payments API"
+   ],
+   "endpoints": [
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "retirado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2025-07-16",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2025-07-16",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2025-06-18",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2025-06-18",
+   "etiquetas": [
+    "RETIRED"
+   ],
+   "apis": [
+    "GraphQL",
+    "Labor API",
+    "Square SDK"
+   ],
+   "endpoints": [],
+   "objetos": [
+    "LoyaltyProgramRewardTier"
+   ]
+  },
+  {
+   "fecha": "2025-05-21",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2025-05-21",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Catalog API",
+    "GraphQL",
+    "Labor API",
+    "Payments API"
+   ],
+   "endpoints": [
+    {
+     "api": "Labor API",
+     "endpoints": [
+      {
+       "nombre": "CreateScheduledShift",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "UpdateScheduledShift",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "PublishScheduledShift",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "BulkPublishScheduledShifts",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "RetrieveScheduledShift",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "SearchScheduledShifts",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "CreateTimecard",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "CreateShift",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "UpdateTimecard",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "UpdateShift",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "DeleteTimecard",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "DeleteShift",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "RetrieveTimecard",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "GetShift",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "SearchTimecards",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "SearchShifts",
+       "estado": "obsoleto"
+      }
+     ]
+    },
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogModifier",
+    "CatalogModifierList",
+    "CatalogItemModifierListInfo",
+    "CatalogModifierOverride"
+   ]
+  },
+  {
+   "fecha": "2025-04-16",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2025-04-16",
+   "etiquetas": [],
+   "apis": [
+    "Catalog API",
+    "Invoices API",
+    "Locations API",
+    "Square SDK",
+    "Terminal API",
+    "Webhooks",
+    "App Marketplace Requirements"
+   ],
+   "endpoints": [
+    {
+     "api": "Terminal API",
+     "endpoints": [
+      {
+       "nombre": "CreateTerminalCheckout",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogItem",
+    "Invoice",
+    "Location"
+   ]
+  },
+  {
+   "fecha": "2025-03-19",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2025-03-19",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Cards API",
+    "Invoices API",
+    "Java",
+    ".NET",
+    "Square SDK",
+    "Terminal API"
+   ],
+   "endpoints": [
+    {
+     "api": "Cards API",
+     "endpoints": [
+      {
+       "nombre": "CreateCard",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Invoices API",
+     "endpoints": [
+      {
+       "nombre": "CreateInvoiceAttachment",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Checkout API",
+     "endpoints": [
+      {
+       "nombre": "CreatePaymentLink",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Card",
+    "Invoice"
+   ]
+  },
+  {
+   "fecha": "2025-02-20",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2025-02-20",
+   "etiquetas": [
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Mobile Authorization API",
+    "Refunds API",
+    "Square SDK",
+    "Terminal API"
+   ],
+   "endpoints": [
+    {
+     "api": "Refunds API",
+     "endpoints": [
+      {
+       "nombre": "ListPaymentRefunds",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Terminal API",
+     "endpoints": [
+      {
+       "nombre": "CreateTerminalCheckout",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2025-01-23",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2025-01-23",
+   "etiquetas": [
+    "DEPRECATED",
+    "RETIRED"
+   ],
+   "apis": [
+    "Customers API",
+    "Mobile Payments SDK",
+    "Node.js",
+    "Reader SDK",
+    "Webhooks"
+   ],
+   "endpoints": [
+    {
+     "api": "Cards API",
+     "endpoints": [
+      {
+       "nombre": "ListCards",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Gift Cards API",
+     "endpoints": [
+      {
+       "nombre": "ListGiftCards",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "CreateCustomerCard",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "DeleteCustomerCard",
+       "estado": "retirado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Customer",
+    "PaymentOptions"
+   ]
+  },
+  {
+   "fecha": "2024-12-18",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2024-12-18",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Customers API",
+    "GraphQL",
+    "Payments API",
+    "Team API",
+    "Terminal API",
+    "Web Payments SDK"
+   ],
+   "endpoints": [
+    {
+     "api": "Cards API",
+     "endpoints": [
+      {
+       "nombre": "ListCards",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Gift Cards API",
+     "endpoints": [
+      {
+       "nombre": "ListGiftCards",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "CreateCustomerCard",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "DeleteCustomerCard",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Team API",
+     "endpoints": [
+      {
+       "nombre": "CreateJob",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "UpdateJob",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "ListJobs",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "RetrieveJob",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "RetrieveWageSetting",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "UpdateWageSetting",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Terminal API",
+     "endpoints": [
+      {
+       "nombre": "CreateTerminalCheckout",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Customer",
+    "Job",
+    "TeamMember",
+    "JobAssignment"
+   ]
+  },
+  {
+   "fecha": "2024-11-20",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2024-11-20",
+   "etiquetas": [],
+   "apis": [
+    "Customers API",
+    "Mobile Payments SDK",
+    "Refunds API",
+    "Web Payments SDK"
+   ],
+   "endpoints": [
+    {
+     "api": "Cards API",
+     "endpoints": [
+      {
+       "nombre": "ListCards",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Gift Cards API",
+     "endpoints": [
+      {
+       "nombre": "ListGiftCards",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "CreateCustomerCard",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "DeleteCustomerCard",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Refunds API",
+     "endpoints": [
+      {
+       "nombre": "RefundPayment",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Customer"
+   ]
+  },
+  {
+   "fecha": "2024-10-17",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2024-10-17",
+   "etiquetas": [],
+   "apis": [
+    "Customers API",
+    "Gift Card Activities API",
+    "In-App Payments SDK",
+    "Refunds API",
+    "Web Payments SDK"
+   ],
+   "endpoints": [
+    {
+     "api": "Cards API",
+     "endpoints": [
+      {
+       "nombre": "ListCards",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Gift Cards API",
+     "endpoints": [
+      {
+       "nombre": "ListGiftCards",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "CreateCustomerCard",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "DeleteCustomerCard",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Refunds API",
+     "endpoints": [
+      {
+       "nombre": "RefundPayment",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Customer"
+   ]
+  },
+  {
+   "fecha": "2024-09-19",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2024-09-19",
+   "etiquetas": [],
+   "apis": [
+    "Bookings API",
+    "Customers API",
+    "Orders API",
+    "Payments API"
+   ],
+   "endpoints": [
+    {
+     "api": "Cards API",
+     "endpoints": [
+      {
+       "nombre": "ListCards",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Gift Cards API",
+     "endpoints": [
+      {
+       "nombre": "ListGiftCards",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "CreateCustomerCard",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "DeleteCustomerCard",
+       "estado": "retirado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Booking",
+    "Customer",
+    "Order",
+    "CatalogMeasurementUnit",
+    "Payment"
+   ]
+  },
+  {
+   "fecha": "2024-08-21",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2024-08-21",
+   "etiquetas": [
+    "GA"
+   ],
+   "apis": [
+    "Catalog API",
+    "Payments API",
+    "Refunds API"
+   ],
+   "endpoints": [
+    {
+     "api": "Catalog API",
+     "endpoints": [
+      {
+       "nombre": "BatchRetrieveCatalogObjects",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "RetrieveCatalogObject",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "SearchCatalogObjects",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "ListPayments",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogEcomSeoData",
+    "CategoryPathToRootNode",
+    "CatalogCategory",
+    "CatalogItem",
+    "CatalogObject",
+    "Payment"
+   ]
+  },
+  {
+   "fecha": "2024-07-17",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2024-07-17",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Web Payments SDK",
+    "GraphQL"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2024-06-04",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2024-06-04",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Events API",
+    "Mobile Payments SDK"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2024-05-15",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2024-05-15",
+   "etiquetas": [],
+   "apis": [
+    "Catalog API",
+    "Customers API"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "SearchCustomers",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogItem",
+    "Payment",
+    "DestinationDetailsCardRefundDetails"
+   ]
+  },
+  {
+   "fecha": "2024-04-17",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2024-04-17",
+   "etiquetas": [
+    "RETIRED"
+   ],
+   "apis": [
+    "Bookings API",
+    "Catalog API",
+    "OAuth API"
+   ],
+   "endpoints": [
+    {
+     "api": "Bookings API",
+     "endpoints": [
+      {
+       "nombre": "UpdateBooking",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "OAuth API",
+     "endpoints": [
+      {
+       "nombre": "RenewToken",
+       "estado": "retirado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogModifierList",
+    "CatalogCategory",
+    "CatalogCustomAttributeDefinition"
+   ]
+  },
+  {
+   "fecha": "2024-03-20",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2024-03-20",
+   "etiquetas": [],
+   "apis": [
+    "Payments API",
+    "Payouts API"
+   ],
+   "endpoints": [],
+   "objetos": [
+    "Payment"
+   ]
+  },
+  {
+   "fecha": "2024-02-22",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2024-02-22",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Catalog API",
+    "Customers API",
+    "Payouts API",
+    "Webhook Subscriptions API"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "BulkCreateCustomers",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "BulkUpdateCustomers",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "BulkDeleteCustomers",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "BulkRetrieveCustomers",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Payouts API",
+     "endpoints": [
+      {
+       "nombre": "ListPayoutEntries",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Webhook Subscriptions API",
+     "endpoints": [
+      {
+       "nombre": "CreateWebhookSubscription",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdateWebhookSubscription",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogModifierList",
+    "CatalogModifierListInfo",
+    "PaymentRefund",
+    "Subscription"
+   ]
+  },
+  {
+   "fecha": "2024-01-18",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2024-01-18",
+   "etiquetas": [],
+   "apis": [
+    "Catalog API",
+    "GraphQL",
+    "Invoices API",
+    "Loyalty API",
+    "Orders API"
+   ],
+   "endpoints": [
+    {
+     "api": "Invoices API",
+     "endpoints": [
+      {
+       "nombre": "CreateInvoiceAttachment",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "DeleteInvoiceAttachment",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "UpdateCustomer",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogItem",
+    "CatalogItemFoodAndBeverageDetails",
+    "CatalogItemFoodAndBeverageDetailsDietaryPreference",
+    "CatalogItemFoodAndBeverageDetailsIngredient",
+    "InvoiceAttachment",
+    "Invoice",
+    "LoyaltyPromotion",
+    "OrderReturn",
+    "OrderReturnTip",
+    "OrderLineItem"
+   ]
+  },
+  {
+   "fecha": "2023-12-13",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-12-13",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Catalog API",
+    "Checkout API",
+    "Terminal API"
+   ],
+   "endpoints": [
+    {
+     "api": "Catalog API",
+     "endpoints": [
+      {
+       "nombre": "SearchCatalogObjects",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "RetrieveCatalogObject",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "BatchRetrieveCatalogObjects",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Checkout API",
+     "endpoints": [
+      {
+       "nombre": "RetrieveMerchantSettings",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "UpdateMerchantSettings",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "RetrieveLocationSettings",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "UpdateLocationSettings",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Terminal API",
+     "endpoints": [
+      {
+       "nombre": "DismissTerminalCheckout",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "DismissTerminalRefund",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Locations API",
+     "endpoints": [
+      {
+       "nombre": "UpdateLocation",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2023-11-15",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-11-15",
+   "etiquetas": [],
+   "apis": [
+    "Labor API"
+   ],
+   "endpoints": [
+    {
+     "api": "Labor API",
+     "endpoints": [
+      {
+       "nombre": "CreateShift",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "UpdateShift",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "TeamMemberWage",
+    "ShiftWage",
+    "Shift"
+   ]
+  },
+  {
+   "fecha": "2023-11-01",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-11-01",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [
+    {
+     "api": "Subscriptions API",
+     "endpoints": [
+      {
+       "nombre": "BulkSwapPlan",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2023-10-18",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-10-18",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Bookings API",
+    "Devices API",
+    "Subscriptions API"
+   ],
+   "endpoints": [
+    {
+     "api": "Bookings API",
+     "endpoints": [
+      {
+       "nombre": "ListLocationBookingProfiles",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "RetrieveLocationBookingProfile",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Subscriptions API",
+     "endpoints": [
+      {
+       "nombre": "ChangeBillingAnchorDate",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "BulkSwapPlan",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "LocationBookingProfile",
+    "Subscription",
+    "CatalogSubscriptionPlanVariation",
+    "SubscriptionAction",
+    "SubscriptionEvent"
+   ]
+  },
+  {
+   "fecha": "2023-09-25",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-09-25",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Bookings API",
+    "Devices API",
+    "Inventory API",
+    "Webhooks"
+   ],
+   "endpoints": [
+    {
+     "api": "Bookings API",
+     "endpoints": [
+      {
+       "nombre": "BulkRetrieveTeamMemberBookingProfiles",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Devices API",
+     "endpoints": [
+      {
+       "nombre": "ListDevices",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "GetDevice",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "ItemVariationLocationOverrides",
+    "ModifierLocationOverrides",
+    "Device"
+   ]
+  },
+  {
+   "fecha": "2023-09-06",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-09-06",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": [
+    "TaxIds"
+   ]
+  },
+  {
+   "fecha": "2023-08-16",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-08-16",
+   "etiquetas": [
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Bookings API",
+    "Booking Custom Attributes API",
+    "Catalog API",
+    "Gift Cards API",
+    "Locations API",
+    "Loyalty API",
+    "Orders API",
+    "Payments API"
+   ],
+   "endpoints": [
+    {
+     "api": "Bookings API",
+     "endpoints": [
+      {
+       "nombre": "BulkRetrieveBookings",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "ListBookings",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Catalog API",
+     "endpoints": [
+      {
+       "nombre": "SearchCatalogItems",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Gift Cards API",
+     "endpoints": [
+      {
+       "nombre": "ListGiftCards",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogItem",
+    "TaxIds",
+    "LoyaltyPromotionIncentivePointsMultiplierData",
+    "TenderType",
+    "Tender",
+    "TenderBankAccountDetails",
+    "TenderBuyNowPayLaterDetails",
+    "TenderSquareAccountDetails",
+    "Payment"
+   ]
+  },
+  {
+   "fecha": "2023-08-02",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-08-02",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2023-07-20",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-07-20",
+   "etiquetas": [
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Customers API",
+    "Invoices API",
+    "Terminal API",
+    "Webhooks"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "ListCustomers",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "SearchCustomers",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Invoices API",
+     "endpoints": [
+      {
+       "nombre": "CreateInvoice",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdateInvoice",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Terminal API",
+     "endpoints": [
+      {
+       "nombre": "CancelTerminalCheckout",
+       "estado": "obsoleto"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "InvoiceAcceptedPaymentMethods",
+    "TerminalCheckout"
+   ]
+  },
+  {
+   "fecha": "2023-07-06",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-07-06",
+   "etiquetas": [
+    "RETIRED"
+   ],
+   "apis": [
+    "Connect v1"
+   ],
+   "endpoints": [
+    {
+     "api": "Subscriptions API",
+     "endpoints": [
+      {
+       "nombre": "CreateSubscription",
+       "estado": "retirado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2023-06-08",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-06-08",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Checkout API",
+    "GraphQL",
+    "Labor API",
+    "OAuth API",
+    "Payouts API",
+    "Subscriptions API",
+    "Team API",
+    "Terminal API",
+    "Webhook Subscriptions API"
+   ],
+   "endpoints": [
+    {
+     "api": "Mobile Authorization API",
+     "endpoints": [
+      {
+       "nombre": "CreateMobileAuthorizationCode",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Subscriptions API",
+     "endpoints": [
+      {
+       "nombre": "CreateSubscription",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "SwapPlan",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Terminal API",
+     "endpoints": [
+      {
+       "nombre": "DismissTerminalAction",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CheckoutOptions",
+    "Payouts",
+    "PayoutEntry",
+    "TeamMemberWage",
+    "ShiftWage",
+    "TerminalAction"
+   ]
+  },
+  {
+   "fecha": "2023-05-17",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-05-17",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Cash Drawer Shifts API",
+    "Catalog API",
+    "Inventory API",
+    "Invoices API",
+    "Loyalty API",
+    "Merchant Custom Attributes API",
+    "Point of Sale API"
+   ],
+   "endpoints": [
+    {
+     "api": "Invoices API",
+     "endpoints": [
+      {
+       "nombre": "CreateInvoice",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdateInvoice",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Loyalty API",
+     "endpoints": [
+      {
+       "nombre": "AccumulateLoyaltyPoints",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "CalculateLoyaltyPoints",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Locations API",
+     "endpoints": [
+      {
+       "nombre": "UpdateLocation",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CashDrawerShift",
+    "CashDrawerShiftEvent",
+    "CatalogModifier",
+    "CatalogTax",
+    "Event"
+   ]
+  },
+  {
+   "fecha": "2023-04-19",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-04-19",
+   "etiquetas": [],
+   "apis": [
+    "Catalog API",
+    "Checkout API",
+    "Loyalty API",
+    "OAuth API",
+    "Orders API",
+    "Terminal API"
+   ],
+   "endpoints": [
+    {
+     "api": "Loyalty API",
+     "endpoints": [
+      {
+       "nombre": "SearchLoyaltyAccounts",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "OAuth API",
+     "endpoints": [
+      {
+       "nombre": "RetrieveTokenStatus",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogCustomAttributeDefinition",
+    "CatalogModifier",
+    "PaymentLink",
+    "TerminalCheckout"
+   ]
+  },
+  {
+   "fecha": "2023-03-15",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-03-15",
+   "etiquetas": [],
+   "apis": [
+    "OAuth API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2023-02-01",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-02-01",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [
+    {
+     "api": "Location Custom Attributes API",
+     "endpoints": [
+      {
+       "nombre": "UpdateLocationCustomAttributeDefinition",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2023-01-19",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2023-01-19",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Gift Card Activities API",
+    "Location Custom Attributes API",
+    "OAuth API"
+   ],
+   "endpoints": [],
+   "objetos": [
+    "GiftCardActivity"
+   ]
+  },
+  {
+   "fecha": "2022-12-14",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-12-14",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Customers API",
+    "OAuth API",
+    "Refunds API",
+    "Webhooks"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "SearchCustomers",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "OAuth API",
+     "endpoints": [
+      {
+       "nombre": "RetrieveTokenStatus",
+       "estado": "beta"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2022-11-16",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-11-16",
+   "etiquetas": [
+    "BETA",
+    "RETIRED"
+   ],
+   "apis": [
+    "Booking Custom Attributes API",
+    "Catalog API",
+    "Checkout API",
+    "Customers API",
+    "Loyalty API",
+    "Order Custom Attributes API",
+    "Orders API",
+    "Terminal API",
+    "Square Payment Form"
+   ],
+   "endpoints": [
+    {
+     "api": "Checkout API",
+     "endpoints": [
+      {
+       "nombre": "CreatePaymentLink",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "UpdateCustomer",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Catalog API",
+     "endpoints": [
+      {
+       "nombre": "UpsertCatalogObject",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "BatchUpsertCatalogObjects",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "DeleteCatalogObject",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "BatchDeleteCatalogObjects",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogModifier",
+    "LoyaltyPromotion",
+    "TerminalAction",
+    "TerminalCheckout"
+   ]
+  },
+  {
+   "fecha": "2022-10-19",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-10-19",
+   "etiquetas": [],
+   "apis": [
+    "Customers API",
+    "Invoices API",
+    "Locations API",
+    "Orders API",
+    "Payouts API",
+    "Refunds API"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "CreateCustomer",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdateCustomer",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "RetrieveCustomer",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "SearchCustomers",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Invoices API",
+     "endpoints": [
+      {
+       "nombre": "CreateInvoice",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdateInvoice",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "InvoiceAcceptedPaymentMethods",
+    "Fulfillment",
+    "FulfillmentFulfillmentEntry",
+    "FulfillmentPickupDetails",
+    "FulfillmentPickupDetailsCurbsidePickupDetails",
+    "FulfillmentRecipient",
+    "FulfillmentShipmentDetails",
+    "PayoutEntry",
+    "Refund"
+   ]
+  },
+  {
+   "fecha": "2022-10-05",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-10-05",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Payment"
+   ]
+  },
+  {
+   "fecha": "2022-09-22",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-09-22",
+   "etiquetas": [],
+   "apis": [
+    "Payments API",
+    "Web Payments SDK",
+    "Checkout API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2022-09-21",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-09-21",
+   "etiquetas": [
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Gift Card Activities API",
+    "Invoices API",
+    "OAuth API",
+    "Connect v1"
+   ],
+   "endpoints": [
+    {
+     "api": "OAuth API",
+     "endpoints": [
+      {
+       "nombre": "ObtainToken",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Connect v1",
+     "endpoints": [
+      {
+       "nombre": "ListPayments",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "RetrievePayment",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "ListRefunds",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "CreateRefund",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "ListSettlements",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "RetrieveSettlement",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "ListWebhooks",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "UpdateWebhooks",
+       "estado": "obsoleto"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Invoice"
+   ]
+  },
+  {
+   "fecha": "2022-08-23",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-08-23",
+   "etiquetas": [],
+   "apis": [
+    "Payments API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2022-08-17",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-08-17",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Checkout API",
+    "Customer Custom Attributes API",
+    "Customers API",
+    "Gift Card Activities API",
+    "Locations API",
+    "Loyalty API",
+    "Payments API",
+    "Terminal API",
+    "Webhook Subscriptions API"
+   ],
+   "endpoints": [
+    {
+     "api": "Checkout API",
+     "endpoints": [
+      {
+       "nombre": "CreateCheckout",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "CreatePaymentLink",
+       "estado": "obsoleto"
+      }
+     ]
+    },
+    {
+     "api": "Customer Custom Attributes API",
+     "endpoints": [
+      {
+       "nombre": "UpsertCustomerCustomAttribute",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "BulkUpsertCustomerCustomAttributes",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "SearchCustomers",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Gift Card Activities API",
+     "endpoints": [
+      {
+       "nombre": "CreateGiftCardActivity",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Loyalty API",
+     "endpoints": [
+      {
+       "nombre": "CreateLoyaltyPromotion",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "RetrieveLoyaltyPromotion",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "ListLoyaltyPromotions",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "CancelLoyaltyPromotion",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "AccumulateLoyaltyPoints",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "CalculateLoyaltyPoints",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "AdjustLoyaltyPoints",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Address",
+    "Payment",
+    "TerminalCheckout"
+   ]
+  },
+  {
+   "fecha": "2022-08-03",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-08-03",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2022-07-20",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-07-20",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Catalog API",
+    "Customer Custom Attributes API",
+    "OAuth API",
+    "Orders API"
+   ],
+   "endpoints": [],
+   "objetos": [
+    "CatalogItem",
+    "CustomAttributeDefinition",
+    "Order"
+   ]
+  },
+  {
+   "fecha": "2022-06-29",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-06-29",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2022-06-16",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-06-16",
+   "etiquetas": [],
+   "apis": [
+    "Bookings API",
+    "Gift Card Activities API",
+    "Gift Cards API",
+    "Inventory API",
+    "Payments API",
+    "Payouts API",
+    "Terminal API"
+   ],
+   "endpoints": [
+    {
+     "api": "Gift Card Activities API",
+     "endpoints": [
+      {
+       "nombre": "CreateGiftCardActivity",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Gift Cards API",
+     "endpoints": [
+      {
+       "nombre": "ListGiftCards",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Inventory API",
+     "endpoints": [
+      {
+       "nombre": "BatchRetrieveInventoryCounts",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "BatchRetrieveInventoryChanges",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Settlements API",
+     "endpoints": [
+      {
+       "nombre": "ListSettlements",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "RetrieveSettlement",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Payouts API",
+     "endpoints": [
+      {
+       "nombre": "ListPayouts",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "GetPayout",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "ListPayoutEntries",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "AppointmentSegment",
+    "GiftCardActivityRedeem",
+    "Card",
+    "TerminalAction"
+   ]
+  },
+  {
+   "fecha": "2022-06-02",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-06-02",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Terminal API",
+     "endpoints": [
+      {
+       "nombre": "CreateTerminalAction",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "CreateTerminalCheckout",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2022-05-12",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-05-12",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Bookings API",
+    "Checkout API",
+    "Custom Attributes",
+    "Customer Custom Attributes API",
+    "Gift Cards API",
+    "GraphQL",
+    "Locations API",
+    "Payments API",
+    "Terminal API"
+   ],
+   "endpoints": [
+    {
+     "api": "Checkout API",
+     "endpoints": [
+      {
+       "nombre": "CreatePaymentLink",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "UpdatePaymentLink",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "DeletePaymentLink",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "ListPaymentLinks",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "RetrievePaymentLink",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "CreateCheckout",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Gift Cards API",
+     "endpoints": [
+      {
+       "nombre": "CreateGiftCard",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Locations API",
+     "endpoints": [
+      {
+       "nombre": "CreateLocation",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdateLocation",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Terminal API",
+     "endpoints": [
+      {
+       "nombre": "CreateTerminalAction",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "SearchTerminalActions",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "GetTerminalAction",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "CancelTerminalAction",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2022-04-20",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-04-20",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Catalog API",
+    "Inventory API",
+    "Orders API",
+    "Payouts API",
+    "Terminal API"
+   ],
+   "endpoints": [
+    {
+     "api": "Catalog API",
+     "endpoints": [
+      {
+       "nombre": "BatchRetrieveCatalogObjects",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogModifier",
+    "CatalogItemVariation",
+    "ItemVariationLocationOverrides",
+    "OrderLineItemModifier",
+    "DeviceCheckoutOptions"
+   ]
+  },
+  {
+   "fecha": "2022-04-06",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-04-06",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [
+    {
+     "api": "Subscriptions API",
+     "endpoints": [
+      {
+       "nombre": "UpdateSubscription",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "ListSubscriptionEvents",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Subscription"
+   ]
+  },
+  {
+   "fecha": "2022-03-16",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-03-16",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Customers API",
+    "Customer Groups API",
+    "Subscriptions API",
+    "Vendors API"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "CreateCustomer",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "SearchCustomers",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdateCustomer",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Customer Groups API",
+     "endpoints": [
+      {
+       "nombre": "CreateCustomerGroup",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdateCustomerGroup",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2022-03-02",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-03-02",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [
+    {
+     "api": "Locations API",
+     "endpoints": [
+      {
+       "nombre": "CreateLocation",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdateLocation",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "ListLocations",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2022-02-16",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-02-16",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Payments API",
+    "Web Payments SDK",
+    "Locations API",
+    "Subscriptions API",
+    "Orders API",
+    "Loyalty API",
+    "Inventory API"
+   ],
+   "endpoints": [
+    {
+     "api": "Orders API",
+     "endpoints": [
+      {
+       "nombre": "RetrieveOrder",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdateOrder",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Locations API",
+     "endpoints": [
+      {
+       "nombre": "CreateLocation",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Loyalty API",
+     "endpoints": [
+      {
+       "nombre": "CreateLoyaltyAccount",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "InventoryAdjustment",
+    "InventoryPhysicalCount",
+    "InventoryTransfer",
+    "Order",
+    "OrderFulfillment",
+    "TaxIds",
+    "LoyaltyAccount"
+   ]
+  },
+  {
+   "fecha": "2022-02-02",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-02-02",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2022-01-20",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2022-01-20",
+   "etiquetas": [
+    "RETIRED"
+   ],
+   "apis": [
+    "Loyalty API",
+    "Locations API",
+    "Merchants API",
+    "Catalog API",
+    "Bookings API"
+   ],
+   "endpoints": [],
+   "objetos": [
+    "BookingCreatorDetails",
+    "AppointmentSegment",
+    "Booking",
+    "CatalogDiscount",
+    "Address",
+    "LoyaltyProgramAccrualRule",
+    "Merchant"
+   ]
+  },
+  {
+   "fecha": "2021-12-15",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-12-15",
+   "etiquetas": [
+    "RETIRED"
+   ],
+   "apis": [
+    "Invoices API",
+    "Catalog API",
+    "Cards API"
+   ],
+   "endpoints": [
+    {
+     "api": "Invoices API",
+     "endpoints": [
+      {
+       "nombre": "ListInvoices",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "RetrieveInvoice",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Catalog API",
+     "endpoints": [
+      {
+       "nombre": "CreateCatalogImage",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdateCatalogImage",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Invoice",
+    "CatalogObject",
+    "CatalogItem",
+    "CatalogItemVariation",
+    "CatalogCategory",
+    "CatalogModifierList",
+    "CatalogImage",
+    "CatalogPricingRule"
+   ]
+  },
+  {
+   "fecha": "2021-11-17",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-11-17",
+   "etiquetas": [],
+   "apis": [
+    "Cards API",
+    "Bookings API",
+    "Subscriptions API"
+   ],
+   "endpoints": [
+    {
+     "api": "Bookings API",
+     "endpoints": [
+      {
+       "nombre": "ListBookings",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Subscriptions API",
+     "endpoints": [
+      {
+       "nombre": "PauseSubscription",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "SwapPlan",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "DeleteSubscriptionAction",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "ResumeSubscription",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "CancelSubscription",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "SearchSubscriptions",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Refunds API",
+     "endpoints": [
+      {
+       "nombre": "ListRefunds",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Card"
+   ]
+  },
+  {
+   "fecha": "2021-10-20",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-10-20",
+   "etiquetas": [
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Payments API",
+    "Transactions API",
+    "Customers API",
+    "Invoices API",
+    "Subscriptions API",
+    "Catalog API",
+    "Refunds API"
+   ],
+   "endpoints": [
+    {
+     "api": "Refunds API",
+     "endpoints": [
+      {
+       "nombre": "ListRefunds",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "CreateRefund",
+       "estado": "obsoleto"
+      }
+     ]
+    },
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "RefundPayment",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "ListPaymentRefund",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "CompletePayment",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "UpdateCustomer",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Payment",
+    "TeamMember",
+    "BankAccountPaymentDetails",
+    "PaymentRefund",
+    "Customer",
+    "CustomerTaxIds",
+    "InvoiceRecipient",
+    "InvoiceRecipientTaxIds",
+    "CatalogSubscriptionPlan",
+    "SubscriptionSource",
+    "Subscription",
+    "SearchSubscriptionsFilter"
+   ]
+  },
+  {
+   "fecha": "2021-09-15",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-09-15",
+   "etiquetas": [],
+   "apis": [
+    "Invoices API",
+    "Orders API",
+    "Team API",
+    "Terminal API"
+   ],
+   "endpoints": [
+    {
+     "api": "Orders API",
+     "endpoints": [
+      {
+       "nombre": "CreateOrder",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "CloneOrder",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "OAuth API",
+     "endpoints": [
+      {
+       "nombre": "ObtainToken",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Invoice",
+    "OrderLineItem",
+    "OrderServiceCharge",
+    "SearchTeamMembersFilter",
+    "TerminalCheckout"
+   ]
+  },
+  {
+   "fecha": "2021-09-01",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-09-01",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2021-08-18",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-08-18",
+   "etiquetas": [],
+   "apis": [
+    "Customers API",
+    "Invoices API",
+    "Loyalty API"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "ListCustomers",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Customer Groups API",
+     "endpoints": [
+      {
+       "nombre": "ListCustomerGroups",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Customer Segments API",
+     "endpoints": [
+      {
+       "nombre": "ListCustomerSegments",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Customer",
+    "LoyaltyAccount",
+    "LoyaltyAccountExpiringPointDeadline"
+   ]
+  },
+  {
+   "fecha": "2021-08-04",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-08-04",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2021-07-21",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-07-21",
+   "etiquetas": [
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Loyalty API",
+    "Inventory API",
+    "Subscriptions API",
+    "Payments API",
+    "Locations API",
+    "Orders API"
+   ],
+   "endpoints": [
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "UpdatePayment",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Inventory API",
+     "endpoints": [
+      {
+       "nombre": "RetrieveInventoryTransfer",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "RetrieveInventoryChanges",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "RetrieveInventoryAdjustment",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "BatchChangeInventory",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "BatchRetrieveInventoryChanges",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "BatchRetrieveInventoryCounts",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "RetrieveInventoryPhysicalCount",
+       "estado": "obsoleto"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "OrderServiceCharge",
+    "OrderQuantityUnit",
+    "OrderLineItem",
+    "OrderLineItemDiscount",
+    "OrderLineItemModifier",
+    "OrderLineItemTax",
+    "OrderReturnLineItem",
+    "OrderReturnLineItemModifier",
+    "OrderReturnServiceCharge",
+    "OrderReturnTax",
+    "OrderReturnDiscount",
+    "Location",
+    "CatalogSubscriptionPlan"
+   ]
+  },
+  {
+   "fecha": "2021-07-08",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-07-08",
+   "etiquetas": [],
+   "apis": [
+    "Catalog API"
+   ],
+   "endpoints": [
+    {
+     "api": "Catalog API",
+     "endpoints": [
+      {
+       "nombre": "SearchCatalogItems",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogMeasurementUnit",
+    "CustomAttributeFilter",
+    "Range",
+    "MeasurementUnit",
+    "MeasurementUnitCustom"
+   ]
+  },
+  {
+   "fecha": "2021-06-16",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-06-16",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Cards API",
+    "Catalog API",
+    "Customers API",
+    "Disputes API",
+    "Gift Card Activities API",
+    "Gift Cards API",
+    "Inventory API",
+    "Invoices API",
+    "Loyalty API",
+    "Subscriptions API"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "CreateCustomerCard",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "DeleteCustomerCard",
+       "estado": "obsoleto"
+      }
+     ]
+    },
+    {
+     "api": "Catalog API",
+     "endpoints": [
+      {
+       "nombre": "UpsertCatalogObject",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "BatchUpsertCatalogObjects",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Cards API",
+     "endpoints": [
+      {
+       "nombre": "CreateCard",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "DisableCard",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "ListCards",
+       "estado": "obsoleto"
+      }
+     ]
+    },
+    {
+     "api": "Gift Cards API",
+     "endpoints": [
+      {
+       "nombre": "LinkCustomerToGiftCard",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "UnlinkCustomerFromGiftCard",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "ListGiftCards",
+       "estado": "obsoleto"
+      }
+     ]
+    },
+    {
+     "api": "Disputes API",
+     "endpoints": [
+      {
+       "nombre": "RemoveDisputeEvidence",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "DeleteDisputeEvidence",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Subscriptions API",
+     "endpoints": [
+      {
+       "nombre": "CreateSubscription",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogPricingRule",
+    "CatalogItemVariation",
+    "Customer",
+    "DisputeEvidence",
+    "Dispute",
+    "CatalogStockConversion",
+    "LoyaltyProgramAccrualRule",
+    "Subscription"
+   ]
+  },
+  {
+   "fecha": "2021-05-18",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-05-18",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2021-05-13",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-05-13",
+   "etiquetas": [
+    "DEPRECATED",
+    "RETIRED"
+   ],
+   "apis": [
+    "Sites API",
+    "Snippets API",
+    "Loyalty API",
+    "Payments API",
+    "Connect v1"
+   ],
+   "endpoints": [
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Loyalty API",
+     "endpoints": [
+      {
+       "nombre": "ListLoyaltyPrograms",
+       "estado": "obsoleto"
+      },
+      {
+       "nombre": "RetrieveLoyaltyProgram",
+       "estado": "obsoleto"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "LoyaltyAccount",
+    "LoyaltyAccountMapping"
+   ]
+  },
+  {
+   "fecha": "2021-04-21",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-04-21",
+   "etiquetas": [
+    "BETA",
+    "RETIRED"
+   ],
+   "apis": [
+    "Customers API",
+    "Invoices API",
+    "Loyalty API",
+    "Inventory API",
+    "Catalog API",
+    "Subscriptions API",
+    "Team API"
+   ],
+   "endpoints": [
+    {
+     "api": "Subscriptions API",
+     "endpoints": [
+      {
+       "nombre": "ListSubscriptionEvents",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "UpdateCustomer",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "DeleteCustomer",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Loyalty API",
+     "endpoints": [
+      {
+       "nombre": "RetrieveLoyaltyProgram",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "ListLoyaltyPrograms",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Customer",
+    "Invoice",
+    "InvoiceAcceptedPaymentMethods",
+    "LoyaltyAccount",
+    "LoyaltyAccountMapping",
+    "InventoryChange",
+    "CatalogItem",
+    "CatalogPricingRule"
+   ]
+  },
+  {
+   "fecha": "2021-04-07",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-04-07",
+   "etiquetas": [],
+   "apis": [
+    "Locations API"
+   ],
+   "endpoints": [
+    {
+     "api": "Orders API",
+     "endpoints": [
+      {
+       "nombre": "CalculateOrder",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Location"
+   ]
+  },
+  {
+   "fecha": "2021-03-17",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-03-17",
+   "etiquetas": [],
+   "apis": [
+    "Invoices API",
+    "Terminal API",
+    "Payments API"
+   ],
+   "endpoints": [
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdatePayment",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Orders API",
+     "endpoints": [
+      {
+       "nombre": "UpdateOrder",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "TerminalCheckout"
+   ]
+  },
+  {
+   "fecha": "2021-02-26",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-02-26",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED",
+    "RETIRED"
+   ],
+   "apis": [
+    "Customers API",
+    "Orders API",
+    "Payments API",
+    "Connect v1"
+   ],
+   "endpoints": [
+    {
+     "api": "Orders API",
+     "endpoints": [
+      {
+       "nombre": "CreateOrder",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "v1 Items API",
+     "endpoints": [
+      {
+       "nombre": "AdjustInventory",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "ListInventory",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "ListTimecards",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "RetrieveTimecards",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "ListTimecardEvents",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "RetrieveBankAccount",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Inventory API",
+     "endpoints": [
+      {
+       "nombre": "BatchChangeInventory",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "BatchRetrieveInventoryCounts",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "RetrieveInventoryCount",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Labor API",
+     "endpoints": [
+      {
+       "nombre": "CreateTimecard",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "CreateShift",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "DeleteTimecard",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "DeleteShift",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "SearchShifts",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "GetShift",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "UpdateTimecard",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "UpdateShift",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Cash Drawers API",
+     "endpoints": [
+      {
+       "nombre": "ListCashDrawerShifts",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "RetrieveCashDrawerShift",
+       "estado": "retirado"
+      }
+     ]
+    },
+    {
+     "api": "Bank Accounts API",
+     "endpoints": [
+      {
+       "nombre": "ListBankAccounts",
+       "estado": "retirado"
+      },
+      {
+       "nombre": "GetBankAccount",
+       "estado": "retirado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Payment",
+    "CardPaymentTimeline"
+   ]
+  },
+  {
+   "fecha": "2021-01-21",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2021-01-21",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Invoices API",
+    "Locations API"
+   ],
+   "endpoints": [
+    {
+     "api": "Locations API",
+     "endpoints": [
+      {
+       "nombre": "UpdateLocation",
+       "estado": "beta"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Location"
+   ]
+  },
+  {
+   "fecha": "2020-12-16",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-12-16",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Customers API",
+    "Loyalty API",
+    "Invoices API",
+    "Orders API",
+    "Catalog API",
+    "Bookings API"
+   ],
+   "endpoints": [
+    {
+     "api": "Bookings API",
+     "endpoints": [
+      {
+       "nombre": "CancelBooking",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "CreateBooking",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Catalog API",
+     "endpoints": [
+      {
+       "nombre": "ListCatalog",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "RetrieveCatalogObject",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "BatchRetrieveCatalogObjects",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "SearchCustomers",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "AddGroupToCustomer",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "RemoveGroupFromCustomer",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "OrderLineItemPricingBlocklists",
+    "OrderLineItem",
+    "Order",
+    "OrderPricingOptions",
+    "OrderLineItemTax",
+    "CatalogTax",
+    "Invoice",
+    "InvoiceCustomField",
+    "LoyaltyProgramRewardTier",
+    "LoyaltyProgramRewardDefinition"
+   ]
+  },
+  {
+   "fecha": "2020-12-02",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-12-02",
+   "etiquetas": [],
+   "apis": [
+    "In-App Payments SDK",
+    "Square Payment Form"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2020-11-18",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-11-18",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Bookings API",
+    "Payments API",
+    "Orders API"
+   ],
+   "endpoints": [],
+   "objetos": [
+    "Payment"
+   ]
+  },
+  {
+   "fecha": "2020-10-28",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-10-28",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Locations API",
+    "Terminal API",
+    "Loyalty API",
+    "Invoices API",
+    "Orders API"
+   ],
+   "endpoints": [
+    {
+     "api": "Terminal API",
+     "endpoints": [
+      {
+       "nombre": "CreateTerminalRefund",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "GetTerminalRefund",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "CancelTerminalRefund",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "SearchTerminalRefunds",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Orders API",
+     "endpoints": [
+      {
+       "nombre": "RetrieveOrder",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Location",
+    "Invoice"
+   ]
+  },
+  {
+   "fecha": "2020-10-14",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-10-14",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2020-09-23",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-09-23",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Invoices API",
+    "Payments API",
+    "Refunds API"
+   ],
+   "endpoints": [
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "ListPayment",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Refunds API",
+     "endpoints": [
+      {
+       "nombre": "ListPaymentRefunds",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "DeviceDetails"
+   ]
+  },
+  {
+   "fecha": "2020-09-09",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-09-09",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2020-08-26",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-08-26",
+   "etiquetas": [
+    "DEPRECATED",
+    "RETIRED"
+   ],
+   "apis": [
+    "Labor API",
+    "Orders API",
+    "Employees API"
+   ],
+   "endpoints": [
+    {
+     "api": "Orders API",
+     "endpoints": [
+      {
+       "nombre": "CreateOrder",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "UpdateOrder",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "BatchRetrieveOrders",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Order"
+   ]
+  },
+  {
+   "fecha": "2020-08-12",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-08-12",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Subscriptions API",
+    "Catalog API"
+   ],
+   "endpoints": [],
+   "objetos": [
+    "CatalogSubscriptionPlan"
+   ]
+  },
+  {
+   "fecha": "2020-07-22",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-07-22",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Catalog API",
+    "Inventory API",
+    "Locations API",
+    "Merchants API",
+    "Orders API",
+    "Terminal API",
+    "Invoices API"
+   ],
+   "endpoints": [
+    {
+     "api": "Catalog API",
+     "endpoints": [
+      {
+       "nombre": "SearchCatalogItems",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "SearchCatalogObjects",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Locations API",
+     "endpoints": [
+      {
+       "nombre": "RetrieveLocation",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Merchants API",
+     "endpoints": [
+      {
+       "nombre": "RetrieveMerchant",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "ListMerchants",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Order",
+    "CatalogPricingRule",
+    "TerminalCheckout"
+   ]
+  },
+  {
+   "fecha": "2020-07-08",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-07-08",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2020-06-25",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-06-25",
+   "etiquetas": [],
+   "apis": [
+    "Catalog API",
+    "Payments API",
+    "Team API"
+   ],
+   "endpoints": [
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogPricingRule",
+    "CardPaymentDetails",
+    "CatalogObject"
+   ]
+  },
+  {
+   "fecha": "2020-06-10",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-06-10",
+   "etiquetas": [],
+   "apis": [
+    "Catalog API",
+    "Customers API",
+    "Labor API",
+    "Payments API",
+    "Refunds API"
+   ],
+   "endpoints": [],
+   "objetos": [
+    "CatalogPricingRule"
+   ]
+  },
+  {
+   "fecha": "2020-05-28",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-05-28",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Customers API",
+    "Orders API",
+    "Loyalty API"
+   ],
+   "endpoints": [
+    {
+     "api": "Orders API",
+     "endpoints": [
+      {
+       "nombre": "CreateOrder",
+       "estado": "beta"
+      },
+      {
+       "nombre": "UpdateOrder",
+       "estado": "beta"
+      }
+     ]
+    },
+    {
+     "api": "Loyalty API",
+     "endpoints": [
+      {
+       "nombre": "CreateLoyaltyReward",
+       "estado": "beta"
+      }
+     ]
+    },
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "SearchCustomers",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Order",
+    "Customer"
+   ]
+  },
+  {
+   "fecha": "2020-05-13",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-05-13",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2020-04-22",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-04-22",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Catalog API",
+    "Customer Groups API",
+    "Customer Segments API",
+    "Customers API",
+    "Devices API",
+    "OAuth API",
+    "Orders API",
+    "Payments API",
+    "Terminal API",
+    "Webhooks"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "AddGroupToCustomer",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "RemoveGroupFromCustomer",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "OAuth API",
+     "endpoints": [
+      {
+       "nombre": "RevokeToken",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Customer",
+    "CustomerQuery",
+    "OrderFulfillmentPickupDetails",
+    "CatalogQuickAmountsSettings"
+   ]
+  },
+  {
+   "fecha": "2020-03-25",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-03-25",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Payments API",
+    "Merchants API"
+   ],
+   "endpoints": [
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Merchants API",
+     "endpoints": [
+      {
+       "nombre": "ListMerchants",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "Payment",
+    "CatalogCustomAttributeDefinition",
+    "CatalogCustomAttributeValue"
+   ]
+  },
+  {
+   "fecha": "2020-02-26",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-02-26",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Bank Accounts API",
+    "Cash Drawer Shifts API",
+    "Catalog API",
+    "Checkout API",
+    "Customers API",
+    "Disputes API",
+    "Orders API",
+    "Webhooks",
+    "Connect v1"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "SearchCustomers",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogModifier",
+    "CatalogModifierList",
+    "Card"
+   ]
+  },
+  {
+   "fecha": "2020-02-12",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-02-12",
+   "etiquetas": [],
+   "apis": [
+    "Transactions API",
+    "Payments API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2020-01-22",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2020-01-22",
+   "etiquetas": [],
+   "apis": [
+    "Employees API",
+    "Refunds API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-12-17",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-12-17",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Cash Drawer Shifts API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-12-11",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-12-11",
+   "etiquetas": [],
+   "apis": [
+    "Payments API"
+   ],
+   "endpoints": [
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "GetPayment",
+       "estado": "actualizado"
+      },
+      {
+       "nombre": "ListPayments",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-11-20",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-11-20",
+   "etiquetas": [
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Connect v1",
+    "Labor API",
+    "Locations API"
+   ],
+   "endpoints": [
+    {
+     "api": "Locations API",
+     "endpoints": [
+      {
+       "nombre": "CreateLocation",
+       "estado": "beta"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-11-13",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-11-13",
+   "etiquetas": [],
+   "apis": [
+    "Square Payment Form"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-10-23",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-10-23",
+   "etiquetas": [],
+   "apis": [
+    "Catalog API",
+    "Merchants API"
+   ],
+   "endpoints": [
+    {
+     "api": "Merchants API",
+     "endpoints": [
+      {
+       "nombre": "ListMerchants",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": [
+    "CatalogPricingRule"
+   ]
+  },
+  {
+   "fecha": "2019-09-25",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-09-25",
+   "etiquetas": [],
+   "apis": [
+    "Locations API",
+    "Payments API",
+    "Catalog API"
+   ],
+   "endpoints": [
+    {
+     "api": "Merchants API",
+     "endpoints": [
+      {
+       "nombre": "RetrieveMerchant",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Locations API",
+     "endpoints": [
+      {
+       "nombre": "RetrieveLocation",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "UpdateLocation",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-08-15",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-08-15",
+   "etiquetas": [
+    "BETA",
+    "DEPRECATED"
+   ],
+   "apis": [
+    "Locations API",
+    "Orders API",
+    "Payments API",
+    "Refunds API",
+    "Transactions API"
+   ],
+   "endpoints": [
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "CreatePayment",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "GetPayment",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "ListPayments",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "CompletePayment",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "CancelPaymentByIdempotencyKey",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "CancelPayment",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "RefundPayment",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Refunds API",
+     "endpoints": [
+      {
+       "nombre": "GetPaymentRefund",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "ListPaymentRefunds",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Orders API",
+     "endpoints": [
+      {
+       "nombre": "SearchOrders",
+       "estado": "beta"
+      },
+      {
+       "nombre": "UpdateOrder",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-07-24",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-07-24",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Catalog API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-06-12",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-06-12",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Catalog API",
+    "Inventory API",
+    "Locations API",
+    "Orders API",
+    "Transactions API",
+    "Webhooks"
+   ],
+   "endpoints": [
+    {
+     "api": "Locations API",
+     "endpoints": [
+      {
+       "nombre": "ListLocations",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-05-08",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-05-08",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Inventory API",
+    "Locations API",
+    "Orders API"
+   ],
+   "endpoints": [
+    {
+     "api": "Orders API",
+     "endpoints": [
+      {
+       "nombre": "SearchOrders",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-04-24",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-04-24",
+   "etiquetas": [],
+   "apis": [
+    "Connect v1",
+    "Employees API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-04-10",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-04-10",
+   "etiquetas": [],
+   "apis": [
+    "Connect v1",
+    "Catalog API",
+    "Orders API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-03-27",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-03-27",
+   "etiquetas": [
+    "RETIRED"
+   ],
+   "apis": [
+    "Catalog API"
+   ],
+   "endpoints": [
+    {
+     "api": "Catalog API",
+     "endpoints": [
+      {
+       "nombre": "CreateCatalogImage",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-03-13",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-03-13",
+   "etiquetas": [],
+   "apis": [
+    "Employees API",
+    "Labor API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2019-02-13",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2019-02-13",
+   "etiquetas": [
+    "BETA"
+   ],
+   "apis": [
+    "Orders API"
+   ],
+   "endpoints": [
+    {
+     "api": "Orders API",
+     "endpoints": [
+      {
+       "nombre": "CreateOrder",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2018-12-12",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2018-12-12",
+   "etiquetas": [],
+   "apis": [
+    "Customers API"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "ListCustomers",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2018-12-05",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2018-12-05",
+   "etiquetas": [],
+   "apis": [
+    "Customers API"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "CreateCustomer",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2018-09-18",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2018-09-18",
+   "etiquetas": [],
+   "apis": [
+    "Customers API",
+    "Inventory API"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "CreateCustomer",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "UpdateCustomer",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2018-07-12",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2018-07-12",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2018-06-28",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2018-06-28",
+   "etiquetas": [],
+   "apis": [
+    "Connect v1",
+    "Customers API"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "SearchCustomers",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "RetrieveCustomer",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "UpdateCustomer",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "DeleteCustomer",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2018-05-24",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2018-05-24",
+   "etiquetas": [],
+   "apis": [
+    "Connect v1",
+    "Customers API"
+   ],
+   "endpoints": [
+    {
+     "api": "Customers API",
+     "endpoints": [
+      {
+       "nombre": "ListCustomers",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2018-04-09",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2018-04-09",
+   "etiquetas": [],
+   "apis": [
+    "Connect v1",
+    "Transactions API"
+   ],
+   "endpoints": [
+    {
+     "api": "Transactions API",
+     "endpoints": [
+      {
+       "nombre": "ListTransactions",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Refunds API",
+     "endpoints": [
+      {
+       "nombre": "ListRefunds",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2017-11-10",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2017-11-10",
+   "etiquetas": [],
+   "apis": [
+    "Connect v1",
+    "Catalog API",
+    "Locations API",
+    "Transactions API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2017-11-02",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2017-11-02",
+   "etiquetas": [],
+   "apis": [
+    "Square Payment Form",
+    "Transactions API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2017-10-30",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2017-10-30",
+   "etiquetas": [],
+   "apis": [],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2017-09-27",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2017-09-27",
+   "etiquetas": [],
+   "apis": [
+    "Checkout API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2017-09-13",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2017-09-13",
+   "etiquetas": [],
+   "apis": [
+    "Transactions API",
+    "Locations API",
+    "Orders API"
+   ],
+   "endpoints": [
+    {
+     "api": "Locations API",
+     "endpoints": [
+      {
+       "nombre": "ListLocations",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "api": "Orders API",
+     "endpoints": [
+      {
+       "nombre": "CreateOrder",
+       "estado": "nuevo"
+      },
+      {
+       "nombre": "BatchRetrieveOrders",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2017-08-22",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2017-08-22",
+   "etiquetas": [],
+   "apis": [
+    "Locations API"
+   ],
+   "endpoints": [
+    {
+     "api": "Locations API",
+     "endpoints": [
+      {
+       "nombre": "ListLocations",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2017-06-22",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2017-06-22",
+   "etiquetas": [],
+   "apis": [
+    "Checkout API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2017-05-23",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2017-05-23",
+   "etiquetas": [],
+   "apis": [
+    "Catalog API"
+   ],
+   "endpoints": [],
+   "objetos": []
+  },
+  {
+   "fecha": "2016-03-30",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2016-03-30",
+   "etiquetas": [],
+   "apis": [
+    "Point of Sale API"
+   ],
+   "endpoints": [
+    {
+     "api": "Transactions API",
+     "endpoints": [
+      {
+       "nombre": "ListTransactions",
+       "estado": "actualizado"
+      }
+     ]
+    },
+    {
+     "api": "Payments API",
+     "endpoints": [
+      {
+       "nombre": "ListPayments",
+       "estado": "actualizado"
+      }
+     ]
+    }
+   ],
+   "objetos": []
+  },
+  {
+   "fecha": "2016-02-16",
+   "url": "https://developer.squareup.com/docs/changelog/connect-logs/2016-02-16",
+   "etiquetas": [],
+   "apis": [
+    "Locations API",
+    "Connect v1"
+   ],
+   "endpoints": [],
+   "objetos": []
+  }
+ ]
+}

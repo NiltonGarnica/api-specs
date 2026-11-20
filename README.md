@@ -47,6 +47,16 @@ Lo que se ve en cada pantalla (nombre, versión, descripción, endpoints, parám
 
 Los botones **Descargar JSON** usan enlaces relativos con el atributo `download` (`./specs/<id>.json`). Por eso funcionan tanto en `http://localhost:8000/` como en `https://<usuario>.github.io/api-specs/`.
 
+## Historial de cambios de Square
+
+La pestaña **Cambios Square** (`#cambios`) lista las 135 versiones del
+[changelog de Square APIs and SDKs](https://developer.squareup.com/docs/changelog/connect)
+ordenadas por fecha. En cada fecha se ven las APIs afectadas y los endpoints que menciona
+la nota de versión (con su estado: nuevo, beta, obsoleto, retirado o actualizado).
+Se puede buscar por endpoint o API, filtrar por año y cambiar el orden.
+
+Los datos están en `specs/square-changelog.json` (recopilados el 2026-11-20).
+
 ## Probar en Windows
 
 Necesitas Python instalado. El sitio carga los JSON con `fetch`, así que **no funciona abriendo `index.html` con doble clic**: hay que servirlo con un servidor web local.
