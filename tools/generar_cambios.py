@@ -63,26 +63,20 @@ def main():
 
 def escribir_html(versiones):
     e = html.escape
+    ultima = max(v["fecha"] for v in versiones)
     secciones = []
     for v in versiones:
-        n = sum(len(g["endpoints"]) for g in v["apis"])
-        items = []
+        tags = []
         for g in v["apis"]:
+            tags.append(f'<a class="api" href="./#{e(g["id"])}">{e(g["api"].removeprefix("API de "))}</a>')
             for ep in g["endpoints"]:
-                items.append(
-                    f'        <li><span class="metodo">{e(ep["metodo"])}</span> '
-                    f'<code class="endpoint">{e(ep["ruta"])}</code> '
-                    f'<span class="api">{e(g["api"])}</span> '
-                    f'<span class="estado">{e(ep["estado"])}</span>'
-                    + (f' <span class="resumen">— {e(ep["resumen"])}</span>' if ep["resumen"] else "")
-                    + "</li>")
+                tags.append(f'<code class="endpoint" title="{e(ep["resumen"])}">'
+                            f'<span class="metodo">{e(ep["metodo"])}</span> {e(ep["ruta"])}</code>')
+        latest = ' <span class="latest">Latest</span>' if v["fecha"] == ultima else ""
         secciones.append(f'''    <section class="fecha" id="{e(v["fecha"])}">
-      <h2><time datetime="{e(v["fecha"])}">{e(v["fecha"])}</time> <small>({n} endpoints)</small></h2>
-      <ul>
-{chr(10).join(items)}
-      </ul>
+      <h2><time datetime="{e(v["fecha"])}">{e(v["fecha"])}</time>{latest}</h2>
+      <p class="tags">{"".join(tags)}</p>
     </section>''')
-    total = sum(len(g["endpoints"]) for v in versiones for g in v["apis"])
     pagina = f'''<!doctype html>
 <html lang="es">
 <head>
@@ -90,26 +84,22 @@ def escribir_html(versiones):
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Historial de cambios · fechas y endpoints</title>
   <style>
-    body {{ font: 16px/1.6 system-ui, "Segoe UI", Roboto, Arial, sans-serif; margin: 0; background: #f6f7f9; color: #1c2230; }}
-    main {{ max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; }}
+    body {{ font: 16px/1.6 system-ui, "Segoe UI", Roboto, Arial, sans-serif; margin: 0; background: #fff; color: #1c2230; }}
+    main {{ max-width: 1100px; margin: 0 auto; padding: 24px 24px 48px; }}
     a {{ color: #2457d6; }}
-    h1 {{ margin: 8px 0 4px; }}
-    .resumen-total {{ color: #5b6475; margin: 0 0 24px; }}
-    .fecha {{ background: #fff; border: 1px solid #e1e5ec; border-radius: 12px; padding: 12px 18px; margin-bottom: 12px; }}
-    .fecha h2 {{ margin: 0 0 6px; font: 700 1.1rem ui-monospace, Consolas, monospace; }}
-    .fecha h2 small {{ font: 400 .85rem system-ui, sans-serif; color: #5b6475; }}
-    ul {{ margin: 0; padding-left: 20px; }}
-    .metodo {{ font: 700 .78rem ui-monospace, Consolas, monospace; }}
-    .endpoint {{ font-weight: 600; overflow-wrap: anywhere; }}
-    .api, .estado, .resumen {{ font-size: .82rem; color: #5b6475; }}
-    .estado {{ background: #eef1f5; border-radius: 999px; padding: 0 8px; }}
+    h1 {{ margin: 8px 0 8px; font-size: 2.2rem; }}
+    .fecha {{ padding: 22px 0 20px; border-bottom: 1px solid #e1e5ec; }}
+    .fecha h2 {{ margin: 0; font-size: 1.45rem; font-weight: 600; display: flex; align-items: center; gap: 12px; }}
+    .latest {{ font-size: 1.05rem; font-weight: 500; color: #2457d6; background: #e8eefc; padding: 4px 16px; border-radius: 999px; }}
+    .tags {{ margin: 10px 0 0; display: flex; flex-wrap: wrap; gap: 4px 14px; color: #5b6475; }}
+    .tags a, .tags code {{ color: #5b6475; text-decoration: none; font: inherit; }}
+    .tags a:hover {{ color: #2457d6; text-decoration: underline; }}
   </style>
 </head>
 <body>
   <main>
     <p><a href="./#inicio">← Volver al inicio</a></p>
-    <h1>Historial de cambios: fechas y endpoints</h1>
-    <p class="resumen-total">{len(versiones)} fechas · {total} endpoints · de la más reciente a la más antigua · fechas de demostración</p>
+    <h1>Historial de cambios</h1>
 {chr(10).join(secciones)}
   </main>
 </body>

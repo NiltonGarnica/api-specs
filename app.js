@@ -221,32 +221,20 @@
   var ESTADOS = { nuevo: "Nuevo", modificado: "Modificado", eliminado: "Eliminado" };
   var cambiosListos = false;
 
-  function renderVersion(v, q) {
-    var n = 0;
-    var grupos = v.apis.map(function (g) {
-      n += g.endpoints.length;
-      var items = g.endpoints.map(function (e) {
-        var texto = (e.metodo + " " + e.ruta + " " + g.api).toLowerCase();
-        var hit = q && texto.indexOf(q) >= 0;
-        return "<li" + (hit ? " class=\"cl-hit\"" : "") + ">" +
-          "<span class=\"method method--" + esc(e.metodo.toLowerCase()) + "\">" + esc(e.metodo) + "</span> " +
-          "<a href=\"#" + esc(g.id) + "\"><code>" + esc(e.ruta) + "</code></a>" +
-          (e.resumen ? " <span class=\"cl-desc\">" + esc(e.resumen) + "</span>" : "") +
-          " <span class=\"cl-estado cl-estado--" + esc(e.estado) + "\">" + esc(ESTADOS[e.estado] || e.estado) + "</span></li>";
-      }).join("");
-      return "<div class=\"cl-grupo\"><h4><a href=\"#" + esc(g.id) + "\">" + esc(g.api) + "</a></h4><ul>" + items + "</ul></div>";
-    }).join("");
-    var commits = (v.commits || []).map(function (c) {
-      return "<span class=\"cl-commit\"><code>" + esc(c.sha) + "</code> " + esc(c.mensaje) + "</span>";
-    }).join("");
-
-    return "<article class=\"cl-item\" id=\"v-" + esc(v.fecha) + "\">" +
-      "<div class=\"cl-item__head\">" +
-        "<time class=\"cl-fecha\" datetime=\"" + esc(v.fecha) + "\">" + esc(v.fecha) + "</time>" +
-        "<span class=\"cl-cuenta\">" + n + (n === 1 ? " endpoint" : " endpoints") + "</span>" +
-      "</div>" +
-      (commits ? "<p class=\"cl-commits\">" + commits + "</p>" : "") +
-      grupos +
+  function renderVersion(v, q, esUltima) {
+    var tags = [];
+    v.apis.forEach(function (g) {
+      tags.push("<a class=\"cl-tag2 cl-tag2--api\" href=\"#" + esc(g.id) + "\">" + esc(g.api.replace(/^API de /, "")) + "</a>");
+      g.endpoints.forEach(function (e) {
+        var hit = q && (e.metodo + " " + e.ruta + " " + g.api).toLowerCase().indexOf(q) >= 0;
+        tags.push("<span class=\"cl-tag2" + (hit ? " cl-hit" : "") + "\" title=\"" + esc(e.resumen) + "\">" +
+          esc(e.metodo) + " " + esc(e.ruta) + "</span>");
+      });
+    });
+    return "<article class=\"cl-row\" id=\"v-" + esc(v.fecha) + "\">" +
+      "<h2 class=\"cl-row__fecha\"><time datetime=\"" + esc(v.fecha) + "\">" + esc(v.fecha) + "</time>" +
+      (esUltima ? " <span class=\"cl-latest\">Latest</span>" : "") + "</h2>" +
+      "<p class=\"cl-row__tags\">" + tags.join("") + "</p>" +
     "</article>";
   }
 
@@ -260,6 +248,7 @@
 
     loadJSON(CAMBIOS).then(function (data) {
       var versiones = data.versiones || [];
+      var ultima = versiones.reduce(function (m, v) { return v.fecha > m ? v.fecha : m; }, "");
 
       function pintar() {
         var q = el("q").value.trim().toLowerCase();
@@ -280,7 +269,7 @@
         el("resumen").textContent = filtradas.length + (filtradas.length === 1 ? " fecha" : " fechas") +
           " · " + total + " endpoints";
         lista.innerHTML = filtradas.length
-          ? "<div class=\"cl-timeline\">" + filtradas.map(function (v) { return renderVersion(v, q); }).join("") + "</div>"
+          ? "<div class=\"cl-list\">" + filtradas.map(function (v) { return renderVersion(v, q, v.fecha === ultima); }).join("") + "</div>"
           : "<p class=\"cl-vacio\">No hay fechas que coincidan con la búsqueda.</p>";
       }
 

@@ -5,263 +5,157 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Historial de cambios · fechas y endpoints</title>
   <style>
-    body { font: 16px/1.6 system-ui, "Segoe UI", Roboto, Arial, sans-serif; margin: 0; background: #f6f7f9; color: #1c2230; }
-    main { max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; }
+    body { font: 16px/1.6 system-ui, "Segoe UI", Roboto, Arial, sans-serif; margin: 0; background: #fff; color: #1c2230; }
+    main { max-width: 1100px; margin: 0 auto; padding: 24px 24px 48px; }
     a { color: #2457d6; }
-    h1 { margin: 8px 0 4px; }
-    .resumen-total { color: #5b6475; margin: 0 0 24px; }
-    .fecha { background: #fff; border: 1px solid #e1e5ec; border-radius: 12px; padding: 12px 18px; margin-bottom: 12px; }
-    .fecha h2 { margin: 0 0 6px; font: 700 1.1rem ui-monospace, Consolas, monospace; }
-    .fecha h2 small { font: 400 .85rem system-ui, sans-serif; color: #5b6475; }
-    ul { margin: 0; padding-left: 20px; }
-    .metodo { font: 700 .78rem ui-monospace, Consolas, monospace; }
-    .endpoint { font-weight: 600; overflow-wrap: anywhere; }
-    .api, .estado, .resumen { font-size: .82rem; color: #5b6475; }
-    .estado { background: #eef1f5; border-radius: 999px; padding: 0 8px; }
+    h1 { margin: 8px 0 8px; font-size: 2.2rem; }
+    .fecha { padding: 22px 0 20px; border-bottom: 1px solid #e1e5ec; }
+    .fecha h2 { margin: 0; font-size: 1.45rem; font-weight: 600; display: flex; align-items: center; gap: 12px; }
+    .latest { font-size: 1.05rem; font-weight: 500; color: #2457d6; background: #e8eefc; padding: 4px 16px; border-radius: 999px; }
+    .tags { margin: 10px 0 0; display: flex; flex-wrap: wrap; gap: 4px 14px; color: #5b6475; }
+    .tags a, .tags code { color: #5b6475; text-decoration: none; font: inherit; }
+    .tags a:hover { color: #2457d6; text-decoration: underline; }
   </style>
 </head>
 <body>
   <main>
     <p><a href="./#inicio">← Volver al inicio</a></p>
-    <h1>Historial de cambios: fechas y endpoints</h1>
-    <p class="resumen-total">34 fechas · 68 endpoints · de la más reciente a la más antigua · fechas de demostración</p>
+    <h1>Historial de cambios</h1>
     <section class="fecha" id="2026-10-28">
-      <h2><time datetime="2026-10-28">2026-10-28</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">POST</span> <code class="endpoint">/pedidos/{id}/confirmar</code> <span class="api">API de Pedidos</span> <span class="estado">nuevo</span> <span class="resumen">— Confirmar un pedido</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/pedidos/{id}/cancelar</code> <span class="api">API de Pedidos</span> <span class="estado">nuevo</span> <span class="resumen">— Cancelar un pedido</span></li>
-      </ul>
+      <h2><time datetime="2026-10-28">2026-10-28</time> <span class="latest">Latest</span></h2>
+      <p class="tags"><a class="api" href="./#pedidos">Pedidos</a><code class="endpoint" title="Confirmar un pedido"><span class="metodo">POST</span> /pedidos/{id}/confirmar</code><code class="endpoint" title="Cancelar un pedido"><span class="metodo">POST</span> /pedidos/{id}/cancelar</code></p>
     </section>
     <section class="fecha" id="2026-10-21">
-      <h2><time datetime="2026-10-21">2026-10-21</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/proveedores/{id}/productos</code> <span class="api">API de Proveedores</span> <span class="estado">nuevo</span> <span class="resumen">— Listar productos suministrados</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/proveedores/{id}/evaluaciones</code> <span class="api">API de Proveedores</span> <span class="estado">nuevo</span> <span class="resumen">— Evaluar un proveedor</span></li>
-      </ul>
+      <h2><time datetime="2026-10-21">2026-10-21</time></h2>
+      <p class="tags"><a class="api" href="./#proveedores">Proveedores</a><code class="endpoint" title="Listar productos suministrados"><span class="metodo">GET</span> /proveedores/{id}/productos</code><code class="endpoint" title="Evaluar un proveedor"><span class="metodo">POST</span> /proveedores/{id}/evaluaciones</code></p>
     </section>
     <section class="fecha" id="2026-09-12">
-      <h2><time datetime="2026-09-12">2026-09-12</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/citas/disponibilidad</code> <span class="api">API de Citas</span> <span class="estado">nuevo</span> <span class="resumen">— Consultar disponibilidad</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/citas/{id}/reprogramar</code> <span class="api">API de Citas</span> <span class="estado">nuevo</span> <span class="resumen">— Reprogramar una cita</span></li>
-      </ul>
+      <h2><time datetime="2026-09-12">2026-09-12</time></h2>
+      <p class="tags"><a class="api" href="./#citas">Citas</a><code class="endpoint" title="Consultar disponibilidad"><span class="metodo">GET</span> /citas/disponibilidad</code><code class="endpoint" title="Reprogramar una cita"><span class="metodo">POST</span> /citas/{id}/reprogramar</code></p>
     </section>
     <section class="fecha" id="2026-08-28">
-      <h2><time datetime="2026-08-28">2026-08-28</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/tickets/{id}/comentarios</code> <span class="api">API de Tickets de Soporte</span> <span class="estado">nuevo</span> <span class="resumen">— Listar comentarios</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/tickets/{id}/comentarios</code> <span class="api">API de Tickets de Soporte</span> <span class="estado">nuevo</span> <span class="resumen">— Agregar un comentario</span></li>
-      </ul>
+      <h2><time datetime="2026-08-28">2026-08-28</time></h2>
+      <p class="tags"><a class="api" href="./#tickets">Tickets de Soporte</a><code class="endpoint" title="Listar comentarios"><span class="metodo">GET</span> /tickets/{id}/comentarios</code><code class="endpoint" title="Agregar un comentario"><span class="metodo">POST</span> /tickets/{id}/comentarios</code></p>
     </section>
     <section class="fecha" id="2026-08-20">
-      <h2><time datetime="2026-08-20">2026-08-20</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/envios/{id}/seguimiento</code> <span class="api">API de Envíos</span> <span class="estado">nuevo</span> <span class="resumen">— Ver el seguimiento</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/envios/{id}/eventos</code> <span class="api">API de Envíos</span> <span class="estado">nuevo</span> <span class="resumen">— Registrar un evento</span></li>
-      </ul>
+      <h2><time datetime="2026-08-20">2026-08-20</time></h2>
+      <p class="tags"><a class="api" href="./#envios">Envíos</a><code class="endpoint" title="Ver el seguimiento"><span class="metodo">GET</span> /envios/{id}/seguimiento</code><code class="endpoint" title="Registrar un evento"><span class="metodo">POST</span> /envios/{id}/eventos</code></p>
     </section>
     <section class="fecha" id="2026-07-30">
-      <h2><time datetime="2026-07-30">2026-07-30</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/productos/{id}/stock</code> <span class="api">API de Productos</span> <span class="estado">nuevo</span> <span class="resumen">— Consultar stock</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/productos/{id}/ajustes-stock</code> <span class="api">API de Productos</span> <span class="estado">nuevo</span> <span class="resumen">— Ajustar stock</span></li>
-      </ul>
+      <h2><time datetime="2026-07-30">2026-07-30</time></h2>
+      <p class="tags"><a class="api" href="./#productos">Productos</a><code class="endpoint" title="Consultar stock"><span class="metodo">GET</span> /productos/{id}/stock</code><code class="endpoint" title="Ajustar stock"><span class="metodo">POST</span> /productos/{id}/ajustes-stock</code></p>
     </section>
     <section class="fecha" id="2026-07-27">
-      <h2><time datetime="2026-07-27">2026-07-27</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">PATCH</span> <code class="endpoint">/tickets/{id}</code> <span class="api">API de Tickets de Soporte</span> <span class="estado">nuevo</span> <span class="resumen">— Actualizar un ticket parcialmente</span></li>
-        <li><span class="metodo">DELETE</span> <code class="endpoint">/tickets/{id}</code> <span class="api">API de Tickets de Soporte</span> <span class="estado">nuevo</span> <span class="resumen">— Eliminar un ticket</span></li>
-      </ul>
+      <h2><time datetime="2026-07-27">2026-07-27</time></h2>
+      <p class="tags"><a class="api" href="./#tickets">Tickets de Soporte</a><code class="endpoint" title="Actualizar un ticket parcialmente"><span class="metodo">PATCH</span> /tickets/{id}</code><code class="endpoint" title="Eliminar un ticket"><span class="metodo">DELETE</span> /tickets/{id}</code></p>
     </section>
     <section class="fecha" id="2026-07-10">
-      <h2><time datetime="2026-07-10">2026-07-10</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">PATCH</span> <code class="endpoint">/citas/{id}</code> <span class="api">API de Citas</span> <span class="estado">nuevo</span> <span class="resumen">— Actualizar una cita parcialmente</span></li>
-        <li><span class="metodo">DELETE</span> <code class="endpoint">/citas/{id}</code> <span class="api">API de Citas</span> <span class="estado">nuevo</span> <span class="resumen">— Eliminar una cita</span></li>
-      </ul>
+      <h2><time datetime="2026-07-10">2026-07-10</time></h2>
+      <p class="tags"><a class="api" href="./#citas">Citas</a><code class="endpoint" title="Actualizar una cita parcialmente"><span class="metodo">PATCH</span> /citas/{id}</code><code class="endpoint" title="Eliminar una cita"><span class="metodo">DELETE</span> /citas/{id}</code></p>
     </section>
     <section class="fecha" id="2026-06-27">
-      <h2><time datetime="2026-06-27">2026-06-27</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/cursos/{id}/inscripciones</code> <span class="api">API de Cursos</span> <span class="estado">nuevo</span> <span class="resumen">— Listar inscripciones</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/cursos/{id}/inscripciones</code> <span class="api">API de Cursos</span> <span class="estado">nuevo</span> <span class="resumen">— Inscribir a un alumno</span></li>
-      </ul>
+      <h2><time datetime="2026-06-27">2026-06-27</time></h2>
+      <p class="tags"><a class="api" href="./#cursos">Cursos</a><code class="endpoint" title="Listar inscripciones"><span class="metodo">GET</span> /cursos/{id}/inscripciones</code><code class="endpoint" title="Inscribir a un alumno"><span class="metodo">POST</span> /cursos/{id}/inscripciones</code></p>
     </section>
     <section class="fecha" id="2026-06-15">
-      <h2><time datetime="2026-06-15">2026-06-15</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/citas/{id}</code> <span class="api">API de Citas</span> <span class="estado">nuevo</span> <span class="resumen">— Obtener una cita</span></li>
-        <li><span class="metodo">PUT</span> <code class="endpoint">/citas/{id}</code> <span class="api">API de Citas</span> <span class="estado">nuevo</span> <span class="resumen">— Reemplazar una cita</span></li>
-      </ul>
+      <h2><time datetime="2026-06-15">2026-06-15</time></h2>
+      <p class="tags"><a class="api" href="./#citas">Citas</a><code class="endpoint" title="Obtener una cita"><span class="metodo">GET</span> /citas/{id}</code><code class="endpoint" title="Reemplazar una cita"><span class="metodo">PUT</span> /citas/{id}</code></p>
     </section>
     <section class="fecha" id="2026-06-08">
-      <h2><time datetime="2026-06-08">2026-06-08</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/empleados/{id}/asistencias</code> <span class="api">API de Empleados</span> <span class="estado">nuevo</span> <span class="resumen">— Listar asistencias</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/empleados/{id}/asistencias</code> <span class="api">API de Empleados</span> <span class="estado">nuevo</span> <span class="resumen">— Registrar una marca de asistencia</span></li>
-      </ul>
+      <h2><time datetime="2026-06-08">2026-06-08</time></h2>
+      <p class="tags"><a class="api" href="./#empleados">Empleados</a><code class="endpoint" title="Listar asistencias"><span class="metodo">GET</span> /empleados/{id}/asistencias</code><code class="endpoint" title="Registrar una marca de asistencia"><span class="metodo">POST</span> /empleados/{id}/asistencias</code></p>
     </section>
     <section class="fecha" id="2026-05-31">
-      <h2><time datetime="2026-05-31">2026-05-31</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/citas</code> <span class="api">API de Citas</span> <span class="estado">nuevo</span> <span class="resumen">— Listar citas</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/citas</code> <span class="api">API de Citas</span> <span class="estado">nuevo</span> <span class="resumen">— Crear una cita</span></li>
-      </ul>
+      <h2><time datetime="2026-05-31">2026-05-31</time></h2>
+      <p class="tags"><a class="api" href="./#citas">Citas</a><code class="endpoint" title="Listar citas"><span class="metodo">GET</span> /citas</code><code class="endpoint" title="Crear una cita"><span class="metodo">POST</span> /citas</code></p>
     </section>
     <section class="fecha" id="2026-05-23">
-      <h2><time datetime="2026-05-23">2026-05-23</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">PATCH</span> <code class="endpoint">/envios/{id}</code> <span class="api">API de Envíos</span> <span class="estado">nuevo</span> <span class="resumen">— Actualizar un envío parcialmente</span></li>
-        <li><span class="metodo">DELETE</span> <code class="endpoint">/envios/{id}</code> <span class="api">API de Envíos</span> <span class="estado">nuevo</span> <span class="resumen">— Eliminar un envío</span></li>
-      </ul>
+      <h2><time datetime="2026-05-23">2026-05-23</time></h2>
+      <p class="tags"><a class="api" href="./#envios">Envíos</a><code class="endpoint" title="Actualizar un envío parcialmente"><span class="metodo">PATCH</span> /envios/{id}</code><code class="endpoint" title="Eliminar un envío"><span class="metodo">DELETE</span> /envios/{id}</code></p>
     </section>
     <section class="fecha" id="2026-04-23">
-      <h2><time datetime="2026-04-23">2026-04-23</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">PATCH</span> <code class="endpoint">/empleados/{id}</code> <span class="api">API de Empleados</span> <span class="estado">nuevo</span> <span class="resumen">— Actualizar un empleado parcialmente</span></li>
-        <li><span class="metodo">DELETE</span> <code class="endpoint">/empleados/{id}</code> <span class="api">API de Empleados</span> <span class="estado">nuevo</span> <span class="resumen">— Eliminar un empleado</span></li>
-      </ul>
+      <h2><time datetime="2026-04-23">2026-04-23</time></h2>
+      <p class="tags"><a class="api" href="./#empleados">Empleados</a><code class="endpoint" title="Actualizar un empleado parcialmente"><span class="metodo">PATCH</span> /empleados/{id}</code><code class="endpoint" title="Eliminar un empleado"><span class="metodo">DELETE</span> /empleados/{id}</code></p>
     </section>
     <section class="fecha" id="2026-04-19">
-      <h2><time datetime="2026-04-19">2026-04-19</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/empleados/{id}</code> <span class="api">API de Empleados</span> <span class="estado">nuevo</span> <span class="resumen">— Obtener un empleado</span></li>
-        <li><span class="metodo">PUT</span> <code class="endpoint">/empleados/{id}</code> <span class="api">API de Empleados</span> <span class="estado">nuevo</span> <span class="resumen">— Reemplazar un empleado</span></li>
-      </ul>
+      <h2><time datetime="2026-04-19">2026-04-19</time></h2>
+      <p class="tags"><a class="api" href="./#empleados">Empleados</a><code class="endpoint" title="Obtener un empleado"><span class="metodo">GET</span> /empleados/{id}</code><code class="endpoint" title="Reemplazar un empleado"><span class="metodo">PUT</span> /empleados/{id}</code></p>
     </section>
     <section class="fecha" id="2026-03-17">
-      <h2><time datetime="2026-03-17">2026-03-17</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">PATCH</span> <code class="endpoint">/cursos/{id}</code> <span class="api">API de Cursos</span> <span class="estado">nuevo</span> <span class="resumen">— Actualizar un curso parcialmente</span></li>
-        <li><span class="metodo">DELETE</span> <code class="endpoint">/cursos/{id}</code> <span class="api">API de Cursos</span> <span class="estado">nuevo</span> <span class="resumen">— Eliminar un curso</span></li>
-      </ul>
+      <h2><time datetime="2026-03-17">2026-03-17</time></h2>
+      <p class="tags"><a class="api" href="./#cursos">Cursos</a><code class="endpoint" title="Actualizar un curso parcialmente"><span class="metodo">PATCH</span> /cursos/{id}</code><code class="endpoint" title="Eliminar un curso"><span class="metodo">DELETE</span> /cursos/{id}</code></p>
     </section>
     <section class="fecha" id="2026-03-14">
-      <h2><time datetime="2026-03-14">2026-03-14</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">PATCH</span> <code class="endpoint">/productos/{id}</code> <span class="api">API de Productos</span> <span class="estado">nuevo</span> <span class="resumen">— Actualizar un producto parcialmente</span></li>
-        <li><span class="metodo">DELETE</span> <code class="endpoint">/productos/{id}</code> <span class="api">API de Productos</span> <span class="estado">nuevo</span> <span class="resumen">— Eliminar un producto</span></li>
-      </ul>
+      <h2><time datetime="2026-03-14">2026-03-14</time></h2>
+      <p class="tags"><a class="api" href="./#productos">Productos</a><code class="endpoint" title="Actualizar un producto parcialmente"><span class="metodo">PATCH</span> /productos/{id}</code><code class="endpoint" title="Eliminar un producto"><span class="metodo">DELETE</span> /productos/{id}</code></p>
     </section>
     <section class="fecha" id="2026-02-18">
-      <h2><time datetime="2026-02-18">2026-02-18</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">PATCH</span> <code class="endpoint">/proveedores/{id}</code> <span class="api">API de Proveedores</span> <span class="estado">nuevo</span> <span class="resumen">— Actualizar un proveedor parcialmente</span></li>
-        <li><span class="metodo">DELETE</span> <code class="endpoint">/proveedores/{id}</code> <span class="api">API de Proveedores</span> <span class="estado">nuevo</span> <span class="resumen">— Eliminar un proveedor</span></li>
-      </ul>
+      <h2><time datetime="2026-02-18">2026-02-18</time></h2>
+      <p class="tags"><a class="api" href="./#proveedores">Proveedores</a><code class="endpoint" title="Actualizar un proveedor parcialmente"><span class="metodo">PATCH</span> /proveedores/{id}</code><code class="endpoint" title="Eliminar un proveedor"><span class="metodo">DELETE</span> /proveedores/{id}</code></p>
     </section>
     <section class="fecha" id="2026-02-17">
-      <h2><time datetime="2026-02-17">2026-02-17</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/productos/{id}</code> <span class="api">API de Productos</span> <span class="estado">nuevo</span> <span class="resumen">— Obtener un producto</span></li>
-        <li><span class="metodo">PUT</span> <code class="endpoint">/productos/{id}</code> <span class="api">API de Productos</span> <span class="estado">nuevo</span> <span class="resumen">— Reemplazar un producto</span></li>
-      </ul>
+      <h2><time datetime="2026-02-17">2026-02-17</time></h2>
+      <p class="tags"><a class="api" href="./#productos">Productos</a><code class="endpoint" title="Obtener un producto"><span class="metodo">GET</span> /productos/{id}</code><code class="endpoint" title="Reemplazar un producto"><span class="metodo">PUT</span> /productos/{id}</code></p>
     </section>
     <section class="fecha" id="2026-01-26">
-      <h2><time datetime="2026-01-26">2026-01-26</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/envios/{id}</code> <span class="api">API de Envíos</span> <span class="estado">nuevo</span> <span class="resumen">— Obtener un envío</span></li>
-        <li><span class="metodo">PUT</span> <code class="endpoint">/envios/{id}</code> <span class="api">API de Envíos</span> <span class="estado">nuevo</span> <span class="resumen">— Reemplazar un envío</span></li>
-      </ul>
+      <h2><time datetime="2026-01-26">2026-01-26</time></h2>
+      <p class="tags"><a class="api" href="./#envios">Envíos</a><code class="endpoint" title="Obtener un envío"><span class="metodo">GET</span> /envios/{id}</code><code class="endpoint" title="Reemplazar un envío"><span class="metodo">PUT</span> /envios/{id}</code></p>
     </section>
     <section class="fecha" id="2026-01-18">
-      <h2><time datetime="2026-01-18">2026-01-18</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">PATCH</span> <code class="endpoint">/pedidos/{id}</code> <span class="api">API de Pedidos</span> <span class="estado">nuevo</span> <span class="resumen">— Actualizar un pedido parcialmente</span></li>
-        <li><span class="metodo">DELETE</span> <code class="endpoint">/pedidos/{id}</code> <span class="api">API de Pedidos</span> <span class="estado">nuevo</span> <span class="resumen">— Eliminar un pedido</span></li>
-      </ul>
+      <h2><time datetime="2026-01-18">2026-01-18</time></h2>
+      <p class="tags"><a class="api" href="./#pedidos">Pedidos</a><code class="endpoint" title="Actualizar un pedido parcialmente"><span class="metodo">PATCH</span> /pedidos/{id}</code><code class="endpoint" title="Eliminar un pedido"><span class="metodo">DELETE</span> /pedidos/{id}</code></p>
     </section>
     <section class="fecha" id="2026-01-13">
-      <h2><time datetime="2026-01-13">2026-01-13</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/empleados</code> <span class="api">API de Empleados</span> <span class="estado">nuevo</span> <span class="resumen">— Listar empleados</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/empleados</code> <span class="api">API de Empleados</span> <span class="estado">nuevo</span> <span class="resumen">— Crear un empleado</span></li>
-      </ul>
+      <h2><time datetime="2026-01-13">2026-01-13</time></h2>
+      <p class="tags"><a class="api" href="./#empleados">Empleados</a><code class="endpoint" title="Listar empleados"><span class="metodo">GET</span> /empleados</code><code class="endpoint" title="Crear un empleado"><span class="metodo">POST</span> /empleados</code></p>
     </section>
     <section class="fecha" id="2026-01-06">
-      <h2><time datetime="2026-01-06">2026-01-06</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/tickets/{id}</code> <span class="api">API de Tickets de Soporte</span> <span class="estado">nuevo</span> <span class="resumen">— Obtener un ticket</span></li>
-        <li><span class="metodo">PUT</span> <code class="endpoint">/tickets/{id}</code> <span class="api">API de Tickets de Soporte</span> <span class="estado">nuevo</span> <span class="resumen">— Reemplazar un ticket</span></li>
-      </ul>
+      <h2><time datetime="2026-01-06">2026-01-06</time></h2>
+      <p class="tags"><a class="api" href="./#tickets">Tickets de Soporte</a><code class="endpoint" title="Obtener un ticket"><span class="metodo">GET</span> /tickets/{id}</code><code class="endpoint" title="Reemplazar un ticket"><span class="metodo">PUT</span> /tickets/{id}</code></p>
     </section>
     <section class="fecha" id="2025-12-20">
-      <h2><time datetime="2025-12-20">2025-12-20</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/cursos/{id}</code> <span class="api">API de Cursos</span> <span class="estado">nuevo</span> <span class="resumen">— Obtener un curso</span></li>
-        <li><span class="metodo">PUT</span> <code class="endpoint">/cursos/{id}</code> <span class="api">API de Cursos</span> <span class="estado">nuevo</span> <span class="resumen">— Reemplazar un curso</span></li>
-      </ul>
+      <h2><time datetime="2025-12-20">2025-12-20</time></h2>
+      <p class="tags"><a class="api" href="./#cursos">Cursos</a><code class="endpoint" title="Obtener un curso"><span class="metodo">GET</span> /cursos/{id}</code><code class="endpoint" title="Reemplazar un curso"><span class="metodo">PUT</span> /cursos/{id}</code></p>
     </section>
     <section class="fecha" id="2025-11-18">
-      <h2><time datetime="2025-11-18">2025-11-18</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/envios</code> <span class="api">API de Envíos</span> <span class="estado">nuevo</span> <span class="resumen">— Listar envíos</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/envios</code> <span class="api">API de Envíos</span> <span class="estado">nuevo</span> <span class="resumen">— Crear un envío</span></li>
-      </ul>
+      <h2><time datetime="2025-11-18">2025-11-18</time></h2>
+      <p class="tags"><a class="api" href="./#envios">Envíos</a><code class="endpoint" title="Listar envíos"><span class="metodo">GET</span> /envios</code><code class="endpoint" title="Crear un envío"><span class="metodo">POST</span> /envios</code></p>
     </section>
     <section class="fecha" id="2025-11-01">
-      <h2><time datetime="2025-11-01">2025-11-01</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/pedidos/{id}</code> <span class="api">API de Pedidos</span> <span class="estado">nuevo</span> <span class="resumen">— Obtener un pedido</span></li>
-        <li><span class="metodo">PUT</span> <code class="endpoint">/pedidos/{id}</code> <span class="api">API de Pedidos</span> <span class="estado">nuevo</span> <span class="resumen">— Reemplazar un pedido</span></li>
-      </ul>
+      <h2><time datetime="2025-11-01">2025-11-01</time></h2>
+      <p class="tags"><a class="api" href="./#pedidos">Pedidos</a><code class="endpoint" title="Obtener un pedido"><span class="metodo">GET</span> /pedidos/{id}</code><code class="endpoint" title="Reemplazar un pedido"><span class="metodo">PUT</span> /pedidos/{id}</code></p>
     </section>
     <section class="fecha" id="2025-10-27">
-      <h2><time datetime="2025-10-27">2025-10-27</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/productos</code> <span class="api">API de Productos</span> <span class="estado">nuevo</span> <span class="resumen">— Listar productos</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/productos</code> <span class="api">API de Productos</span> <span class="estado">nuevo</span> <span class="resumen">— Crear un producto</span></li>
-      </ul>
+      <h2><time datetime="2025-10-27">2025-10-27</time></h2>
+      <p class="tags"><a class="api" href="./#productos">Productos</a><code class="endpoint" title="Listar productos"><span class="metodo">GET</span> /productos</code><code class="endpoint" title="Crear un producto"><span class="metodo">POST</span> /productos</code></p>
     </section>
     <section class="fecha" id="2025-09-27">
-      <h2><time datetime="2025-09-27">2025-09-27</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/tickets</code> <span class="api">API de Tickets de Soporte</span> <span class="estado">nuevo</span> <span class="resumen">— Listar tickets</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/tickets</code> <span class="api">API de Tickets de Soporte</span> <span class="estado">nuevo</span> <span class="resumen">— Crear un ticket</span></li>
-      </ul>
+      <h2><time datetime="2025-09-27">2025-09-27</time></h2>
+      <p class="tags"><a class="api" href="./#tickets">Tickets de Soporte</a><code class="endpoint" title="Listar tickets"><span class="metodo">GET</span> /tickets</code><code class="endpoint" title="Crear un ticket"><span class="metodo">POST</span> /tickets</code></p>
     </section>
     <section class="fecha" id="2025-05-30">
-      <h2><time datetime="2025-05-30">2025-05-30</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/cursos</code> <span class="api">API de Cursos</span> <span class="estado">nuevo</span> <span class="resumen">— Listar cursos</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/cursos</code> <span class="api">API de Cursos</span> <span class="estado">nuevo</span> <span class="resumen">— Crear un curso</span></li>
-      </ul>
+      <h2><time datetime="2025-05-30">2025-05-30</time></h2>
+      <p class="tags"><a class="api" href="./#cursos">Cursos</a><code class="endpoint" title="Listar cursos"><span class="metodo">GET</span> /cursos</code><code class="endpoint" title="Crear un curso"><span class="metodo">POST</span> /cursos</code></p>
     </section>
     <section class="fecha" id="2025-05-05">
-      <h2><time datetime="2025-05-05">2025-05-05</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/proveedores/{id}</code> <span class="api">API de Proveedores</span> <span class="estado">nuevo</span> <span class="resumen">— Obtener un proveedor</span></li>
-        <li><span class="metodo">PUT</span> <code class="endpoint">/proveedores/{id}</code> <span class="api">API de Proveedores</span> <span class="estado">nuevo</span> <span class="resumen">— Reemplazar un proveedor</span></li>
-      </ul>
+      <h2><time datetime="2025-05-05">2025-05-05</time></h2>
+      <p class="tags"><a class="api" href="./#proveedores">Proveedores</a><code class="endpoint" title="Obtener un proveedor"><span class="metodo">GET</span> /proveedores/{id}</code><code class="endpoint" title="Reemplazar un proveedor"><span class="metodo">PUT</span> /proveedores/{id}</code></p>
     </section>
     <section class="fecha" id="2025-04-08">
-      <h2><time datetime="2025-04-08">2025-04-08</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/pedidos</code> <span class="api">API de Pedidos</span> <span class="estado">nuevo</span> <span class="resumen">— Listar pedidos</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/pedidos</code> <span class="api">API de Pedidos</span> <span class="estado">nuevo</span> <span class="resumen">— Crear un pedido</span></li>
-      </ul>
+      <h2><time datetime="2025-04-08">2025-04-08</time></h2>
+      <p class="tags"><a class="api" href="./#pedidos">Pedidos</a><code class="endpoint" title="Listar pedidos"><span class="metodo">GET</span> /pedidos</code><code class="endpoint" title="Crear un pedido"><span class="metodo">POST</span> /pedidos</code></p>
     </section>
     <section class="fecha" id="2025-04-07">
-      <h2><time datetime="2025-04-07">2025-04-07</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/proveedores</code> <span class="api">API de Proveedores</span> <span class="estado">nuevo</span> <span class="resumen">— Listar proveedores</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/proveedores</code> <span class="api">API de Proveedores</span> <span class="estado">nuevo</span> <span class="resumen">— Crear un proveedor</span></li>
-      </ul>
+      <h2><time datetime="2025-04-07">2025-04-07</time></h2>
+      <p class="tags"><a class="api" href="./#proveedores">Proveedores</a><code class="endpoint" title="Listar proveedores"><span class="metodo">GET</span> /proveedores</code><code class="endpoint" title="Crear un proveedor"><span class="metodo">POST</span> /proveedores</code></p>
     </section>
     <section class="fecha" id="2025-03-25">
-      <h2><time datetime="2025-03-25">2025-03-25</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/clientes</code> <span class="api">API de Clientes</span> <span class="estado">nuevo</span> <span class="resumen">— Listar clientes</span></li>
-        <li><span class="metodo">GET</span> <code class="endpoint">/clientes/{id}</code> <span class="api">API de Clientes</span> <span class="estado">nuevo</span> <span class="resumen">— Obtener un cliente</span></li>
-      </ul>
+      <h2><time datetime="2025-03-25">2025-03-25</time></h2>
+      <p class="tags"><a class="api" href="./#clientes">Clientes</a><code class="endpoint" title="Listar clientes"><span class="metodo">GET</span> /clientes</code><code class="endpoint" title="Obtener un cliente"><span class="metodo">GET</span> /clientes/{id}</code></p>
     </section>
     <section class="fecha" id="2025-01-31">
-      <h2><time datetime="2025-01-31">2025-01-31</time> <small>(2 endpoints)</small></h2>
-      <ul>
-        <li><span class="metodo">GET</span> <code class="endpoint">/facturas</code> <span class="api">API de Facturas</span> <span class="estado">nuevo</span> <span class="resumen">— Listar facturas</span></li>
-        <li><span class="metodo">POST</span> <code class="endpoint">/facturas</code> <span class="api">API de Facturas</span> <span class="estado">nuevo</span> <span class="resumen">— Crear una factura</span></li>
-      </ul>
+      <h2><time datetime="2025-01-31">2025-01-31</time></h2>
+      <p class="tags"><a class="api" href="./#facturas">Facturas</a><code class="endpoint" title="Listar facturas"><span class="metodo">GET</span> /facturas</code><code class="endpoint" title="Crear una factura"><span class="metodo">POST</span> /facturas</code></p>
     </section>
   </main>
 </body>
