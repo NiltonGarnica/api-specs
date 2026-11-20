@@ -49,20 +49,17 @@ Los botones **Descargar JSON** usan enlaces relativos con el atributo `download`
 
 ## Historial de cambios
 
-La pestaña **Cambios** (`#cambios`) lista las 135 versiones del
-[changelog de Square APIs and SDKs](https://developer.squareup.com/docs/changelog/connect)
-ordenadas por fecha. En cada fecha se ven las APIs afectadas y los endpoints que menciona
-la nota de versión (con su estado: nuevo, beta, obsoleto, retirado o actualizado).
-Se puede buscar por endpoint o API, filtrar por año y cambiar el orden.
+La pestaña **Cambios** (`#cambios`) muestra, ordenado por fecha, qué endpoints de las
+APIs del proyecto se agregaron, modificaron o quitaron. Hay también una versión
+estática sin JavaScript en `cambios.html` (solo fecha → endpoints).
 
-Los datos están en `specs/square-changelog.json` (recopilados el 2026-11-20).
-
-También hay una versión **estática** en `cambios.html`: solo fecha → endpoints, escrita
-directo en el HTML (sin JavaScript), pensada para que un crawler como Lightpanda la lea.
-Si cambias el JSON, regénerala con:
+Los datos salen de los commits del repositorio. Después de cambiar una spec y hacer
+commit, regenera el historial y vuelve a hacer commit:
 
 ```
 py tools/generar_cambios.py
+git add specs/cambios.json cambios.html
+git commit -m "Actualizar historial de cambios"
 ```
 
 ## Probar en Windows

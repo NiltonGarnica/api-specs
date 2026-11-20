@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Documentación de APIs</title>
   <meta name="description" content="Portal para consultar y descargar las especificaciones OpenAPI de 10 APIs de demostración.">
-  <link rel="stylesheet" href="./styles.css?v=2">
+  <link rel="stylesheet" href="./styles.css?v=3">
 </head>
 <body>
   <a class="skip" href="#contenido" data-skip>Saltar al contenido</a>
@@ -49,22 +49,18 @@
       <p class="server" data-field="server"></p>
       <div class="endpoints" data-field="endpoints"></div>
     </section>
-    <!-- Historial de cambios de Square, ordenado por fecha -->
+    <!-- Historial de cambios: fechas y endpoints de las APIs del proyecto -->
     <section class="view" data-view="cambios" aria-labelledby="titulo-cambios" hidden>
       <h1 id="titulo-cambios" tabindex="-1">Historial de cambios</h1>
       <p class="lead">
-        Cada versión del <a href="https://developer.squareup.com/docs/changelog/connect" target="_blank" rel="noopener">changelog oficial</a>
-        ordenada por fecha, con las APIs que toca y los endpoints que menciona su nota de versión.
+        Cada fecha en que cambiaron las APIs de este proyecto, con los endpoints que se
+        agregaron, modificaron o quitaron. Se arma a partir de los commits del repositorio.
       </p>
       <p class="cl-resumen">Versión simple en HTML estático (solo fecha y endpoints): <a href="./cambios.html">cambios.html</a></p>
       <div class="cl-tools">
         <label class="cl-field">
           <span>Buscar endpoint o API</span>
-          <input type="search" placeholder="Ej.: CreatePayment, Orders API" data-cl="q">
-        </label>
-        <label class="cl-field">
-          <span>Año</span>
-          <select data-cl="anio"><option value="">Todos</option></select>
+          <input type="search" placeholder="Ej.: /pedidos, POST, Clientes" data-cl="q">
         </label>
         <label class="cl-field">
           <span>Orden</span>
@@ -72,9 +68,6 @@
             <option value="desc">Más reciente primero</option>
             <option value="asc">Más antigua primero</option>
           </select>
-        </label>
-        <label class="cl-check">
-          <input type="checkbox" data-cl="solo"> Solo fechas con endpoints
         </label>
       </div>
       <p class="cl-resumen" data-cl="resumen" aria-live="polite"></p>
@@ -86,6 +79,6 @@
     <p>APIs de demostración · Especificaciones OpenAPI 3.0.3</p>
   </footer>
 
-  <script src="./app.js?v=2"></script>
+  <script src="./app.js?v=3"></script>
 </body>
 </html>

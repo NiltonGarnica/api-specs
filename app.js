@@ -215,55 +215,38 @@
     });
   }
 
-  // ---------- Historial de cambios de Square ----------
-  var CAMBIOS = "./specs/square-changelog.json";
-  var ESTADOS = { nuevo: "Nuevo", obsoleto: "Obsoleto", retirado: "Retirado", beta: "Beta", actualizado: "Actualizado" };
+  // ---------- Historial de cambios (fechas y endpoints) ----------
+  // specs/cambios.json se genera con: py tools/generar_cambios.py
+  var CAMBIOS = "./specs/cambios.json";
+  var ESTADOS = { nuevo: "Nuevo", modificado: "Modificado", eliminado: "Eliminado" };
   var cambiosListos = false;
-
-  function slugApi(api) {
-    return api.toLowerCase().replace(/\s+/g, "-");
-  }
-  function kebab(nombre) {
-    return nombre.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
-  }
-  function refUrl(api, endpoint) {
-    if (!/ API$/.test(api) || /^(v1 |Settlements|Cash Drawers)/.test(api)) return null;
-    return "https://developer.squareup.com/reference/square/" + slugApi(api) + "/" + kebab(endpoint);
-  }
 
   function renderVersion(v, q) {
     var n = 0;
-    var grupos = v.endpoints.map(function (g) {
+    var grupos = v.apis.map(function (g) {
       n += g.endpoints.length;
       var items = g.endpoints.map(function (e) {
-        var hit = q && (e.nombre.toLowerCase().indexOf(q) >= 0 || g.api.toLowerCase().indexOf(q) >= 0);
-        var url = refUrl(g.api, e.nombre);
-        var nombre = url
-          ? "<a href=\"" + esc(url) + "\" target=\"_blank\" rel=\"noopener\"><code>" + esc(e.nombre) + "</code></a>"
-          : "<code>" + esc(e.nombre) + "</code>";
-        return "<li" + (hit ? " class=\"cl-hit\"" : "") + ">" + nombre +
+        var texto = (e.metodo + " " + e.ruta + " " + g.api).toLowerCase();
+        var hit = q && texto.indexOf(q) >= 0;
+        return "<li" + (hit ? " class=\"cl-hit\"" : "") + ">" +
+          "<span class=\"method method--" + esc(e.metodo.toLowerCase()) + "\">" + esc(e.metodo) + "</span> " +
+          "<a href=\"#" + esc(g.id) + "\"><code>" + esc(e.ruta) + "</code></a>" +
+          (e.resumen ? " <span class=\"cl-desc\">" + esc(e.resumen) + "</span>" : "") +
           " <span class=\"cl-estado cl-estado--" + esc(e.estado) + "\">" + esc(ESTADOS[e.estado] || e.estado) + "</span></li>";
       }).join("");
-      return "<div class=\"cl-grupo\"><h4>" + esc(g.api) + "</h4><ul>" + items + "</ul></div>";
+      return "<div class=\"cl-grupo\"><h4><a href=\"#" + esc(g.id) + "\">" + esc(g.api) + "</a></h4><ul>" + items + "</ul></div>";
     }).join("");
-
-    var apis = v.apis.map(function (a) { return "<span class=\"badge badge--muted\">" + esc(a) + "</span>"; }).join(" ");
-    var etiquetas = v.etiquetas.map(function (t) { return "<span class=\"cl-tag\">" + esc(t) + "</span>"; }).join(" ");
-    var objetos = v.objetos.length
-      ? "<details class=\"cl-objetos\"><summary>Objetos modificados (" + v.objetos.length + ")</summary><p>" +
-        v.objetos.map(function (o) { return "<code>" + esc(o) + "</code>"; }).join(" ") + "</p></details>"
-      : "";
+    var commits = v.commits.map(function (c) {
+      return "<span class=\"cl-commit\"><code>" + esc(c.sha) + "</code> " + esc(c.mensaje) + "</span>";
+    }).join("");
 
     return "<article class=\"cl-item\" id=\"v-" + esc(v.fecha) + "\">" +
       "<div class=\"cl-item__head\">" +
         "<time class=\"cl-fecha\" datetime=\"" + esc(v.fecha) + "\">" + esc(v.fecha) + "</time>" +
-        "<span class=\"cl-cuenta\">" + (n ? n + (n === 1 ? " endpoint" : " endpoints") : "Sin endpoints") + "</span>" +
-        etiquetas +
-        "<a class=\"cl-link\" href=\"" + esc(v.url) + "\" target=\"_blank\" rel=\"noopener\">Ver nota original ↗</a>" +
+        "<span class=\"cl-cuenta\">" + n + (n === 1 ? " endpoint" : " endpoints") + "</span>" +
       "</div>" +
-      (apis ? "<p class=\"cl-apis\">" + apis + "</p>" : (n ? "" : "<p class=\"cl-apis cl-vacio\">Solo cambios de documentación.</p>")) +
-      (grupos || (v.apis.length ? "<p class=\"cl-vacio\">Esta versión no menciona endpoints; los cambios son en objetos, campos o SDKs.</p>" : "")) +
-      objetos +
+      "<p class=\"cl-commits\">" + commits + "</p>" +
+      grupos +
     "</article>";
   }
 
@@ -277,57 +260,32 @@
 
     loadJSON(CAMBIOS).then(function (data) {
       var versiones = data.versiones || [];
-      var anios = [];
-      versiones.forEach(function (v) {
-        var a = v.fecha.slice(0, 4);
-        if (anios.indexOf(a) < 0) anios.push(a);
-      });
-      anios.sort().reverse();
-      el("anio").innerHTML += anios.map(function (a) { return "<option>" + a + "</option>"; }).join("");
 
       function pintar() {
         var q = el("q").value.trim().toLowerCase();
-        var anio = el("anio").value;
-        var solo = el("solo").checked;
         var asc = el("orden").value === "asc";
-
         var filtradas = versiones.filter(function (v) {
-          if (anio && v.fecha.slice(0, 4) !== anio) return false;
-          if (solo && !v.endpoints.length) return false;
           if (!q) return true;
-          var texto = v.apis.join(" ") + " " + v.endpoints.map(function (g) {
-            return g.api + " " + g.endpoints.map(function (e) { return e.nombre; }).join(" ");
-          }).join(" ");
-          return texto.toLowerCase().indexOf(q) >= 0;
+          return v.apis.some(function (g) {
+            return g.endpoints.some(function (e) {
+              return (e.metodo + " " + e.ruta + " " + g.api).toLowerCase().indexOf(q) >= 0;
+            });
+          });
         }).sort(function (a, b) {
           return asc ? a.fecha.localeCompare(b.fecha) : b.fecha.localeCompare(a.fecha);
         });
 
         var total = 0;
-        filtradas.forEach(function (v) { v.endpoints.forEach(function (g) { total += g.endpoints.length; }); });
-        el("resumen").textContent = filtradas.length + (filtradas.length === 1 ? " versión" : " versiones") +
-          " · " + total + " menciones de endpoints";
-
-        if (!filtradas.length) {
-          lista.innerHTML = "<p class=\"cl-vacio\">No hay versiones que coincidan con el filtro.</p>";
-          return;
-        }
-        var html = "", anioActual = "";
-        filtradas.forEach(function (v) {
-          var a = v.fecha.slice(0, 4);
-          if (a !== anioActual) {
-            if (anioActual) html += "</div>";
-            html += "<h2 class=\"cl-anio\">" + a + "</h2><div class=\"cl-timeline\">";
-            anioActual = a;
-          }
-          html += renderVersion(v, q);
-        });
-        lista.innerHTML = html + "</div>";
+        filtradas.forEach(function (v) { v.apis.forEach(function (g) { total += g.endpoints.length; }); });
+        el("resumen").textContent = filtradas.length + (filtradas.length === 1 ? " fecha" : " fechas") +
+          " · " + total + " endpoints";
+        lista.innerHTML = filtradas.length
+          ? "<div class=\"cl-timeline\">" + filtradas.map(function (v) { return renderVersion(v, q); }).join("") + "</div>"
+          : "<p class=\"cl-vacio\">No hay fechas que coincidan con la búsqueda.</p>";
       }
 
-      ["q", "anio", "orden", "solo"].forEach(function (k) {
-        el(k).addEventListener(k === "q" ? "input" : "change", pintar);
-      });
+      el("q").addEventListener("input", pintar);
+      el("orden").addEventListener("change", pintar);
       pintar();
     }).catch(function (err) {
       cambiosListos = false;

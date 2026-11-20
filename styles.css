@@ -289,7 +289,7 @@ pre {
   .endpoint__head, .endpoint__body { padding-left: 16px; padding-right: 16px; }
 }
 
-/* ---------- Historial de cambios de Square ---------- */
+/* ---------- Historial de cambios ---------- */
 .cl-tools {
   display: flex;
   flex-wrap: wrap;
@@ -365,10 +365,8 @@ pre {
 .cl-hit { background: #fff6c2; border-radius: 4px; }
 .cl-estado { font-size: .72rem; font-weight: 600; padding: 1px 7px; border-radius: 999px; margin-left: 4px; }
 .cl-estado--nuevo { background: var(--get-bg); color: var(--get); }
-.cl-estado--obsoleto { background: var(--post-bg); color: var(--post); }
-.cl-estado--retirado { background: var(--delete-bg); color: var(--delete); }
-.cl-estado--beta { background: var(--patch-bg); color: var(--patch); }
-.cl-estado--actualizado { background: var(--put-bg); color: var(--put); }
+.cl-estado--modificado { background: var(--put-bg); color: var(--put); }
+.cl-estado--eliminado { background: var(--delete-bg); color: var(--delete); }
 .cl-objetos { margin-top: 10px; font-size: .9rem; color: var(--muted); }
 .cl-objetos summary { cursor: pointer; }
 .cl-objetos p { margin: 6px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
@@ -378,3 +376,8 @@ pre {
   .cl-field { flex: 1 1 100%; }
   .cl-link { margin-left: 0; }
 }
+.cl-commits { margin: 8px 0 0; display: grid; gap: 2px; font-size: .88rem; color: var(--muted); }
+.cl-commit code { font-size: .82rem; }
+.cl-desc { color: var(--muted); font-size: .88rem; }
+.cl-grupo .method { font-size: .7rem; padding: 1px 6px; min-width: 0; }
+.cl-timeline { margin-top: 16px; }

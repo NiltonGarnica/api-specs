@@ -1,0 +1,494 @@
+{
+ "versiones": [
+  {
+   "fecha": "2026-11-11",
+   "commits": [
+    {
+     "sha": "368d35f",
+     "mensaje": "Agregar 8 APIs nuevas y catálogo de APIs en el sitio"
+    }
+   ],
+   "apis": [
+    {
+     "id": "citas",
+     "api": "API de Citas",
+     "endpoints": [
+      {
+       "metodo": "GET",
+       "ruta": "/citas",
+       "resumen": "Listar citas",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/citas",
+       "resumen": "Crear una cita",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/citas/{id}",
+       "resumen": "Obtener una cita",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PUT",
+       "ruta": "/citas/{id}",
+       "resumen": "Reemplazar una cita",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PATCH",
+       "ruta": "/citas/{id}",
+       "resumen": "Actualizar una cita parcialmente",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "DELETE",
+       "ruta": "/citas/{id}",
+       "resumen": "Eliminar una cita",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/citas/disponibilidad",
+       "resumen": "Consultar disponibilidad",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/citas/{id}/reprogramar",
+       "resumen": "Reprogramar una cita",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "id": "cursos",
+     "api": "API de Cursos",
+     "endpoints": [
+      {
+       "metodo": "GET",
+       "ruta": "/cursos",
+       "resumen": "Listar cursos",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/cursos",
+       "resumen": "Crear un curso",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/cursos/{id}",
+       "resumen": "Obtener un curso",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PUT",
+       "ruta": "/cursos/{id}",
+       "resumen": "Reemplazar un curso",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PATCH",
+       "ruta": "/cursos/{id}",
+       "resumen": "Actualizar un curso parcialmente",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "DELETE",
+       "ruta": "/cursos/{id}",
+       "resumen": "Eliminar un curso",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/cursos/{id}/inscripciones",
+       "resumen": "Listar inscripciones",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/cursos/{id}/inscripciones",
+       "resumen": "Inscribir a un alumno",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "id": "empleados",
+     "api": "API de Empleados",
+     "endpoints": [
+      {
+       "metodo": "GET",
+       "ruta": "/empleados",
+       "resumen": "Listar empleados",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/empleados",
+       "resumen": "Crear un empleado",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/empleados/{id}",
+       "resumen": "Obtener un empleado",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PUT",
+       "ruta": "/empleados/{id}",
+       "resumen": "Reemplazar un empleado",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PATCH",
+       "ruta": "/empleados/{id}",
+       "resumen": "Actualizar un empleado parcialmente",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "DELETE",
+       "ruta": "/empleados/{id}",
+       "resumen": "Eliminar un empleado",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/empleados/{id}/asistencias",
+       "resumen": "Listar asistencias",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/empleados/{id}/asistencias",
+       "resumen": "Registrar una marca de asistencia",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "id": "envios",
+     "api": "API de Envíos",
+     "endpoints": [
+      {
+       "metodo": "GET",
+       "ruta": "/envios",
+       "resumen": "Listar envíos",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/envios",
+       "resumen": "Crear un envío",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/envios/{id}",
+       "resumen": "Obtener un envío",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PUT",
+       "ruta": "/envios/{id}",
+       "resumen": "Reemplazar un envío",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PATCH",
+       "ruta": "/envios/{id}",
+       "resumen": "Actualizar un envío parcialmente",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "DELETE",
+       "ruta": "/envios/{id}",
+       "resumen": "Eliminar un envío",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/envios/{id}/seguimiento",
+       "resumen": "Ver el seguimiento",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/envios/{id}/eventos",
+       "resumen": "Registrar un evento",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "id": "pedidos",
+     "api": "API de Pedidos",
+     "endpoints": [
+      {
+       "metodo": "GET",
+       "ruta": "/pedidos",
+       "resumen": "Listar pedidos",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/pedidos",
+       "resumen": "Crear un pedido",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/pedidos/{id}",
+       "resumen": "Obtener un pedido",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PUT",
+       "ruta": "/pedidos/{id}",
+       "resumen": "Reemplazar un pedido",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PATCH",
+       "ruta": "/pedidos/{id}",
+       "resumen": "Actualizar un pedido parcialmente",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "DELETE",
+       "ruta": "/pedidos/{id}",
+       "resumen": "Eliminar un pedido",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/pedidos/{id}/confirmar",
+       "resumen": "Confirmar un pedido",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/pedidos/{id}/cancelar",
+       "resumen": "Cancelar un pedido",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "id": "productos",
+     "api": "API de Productos",
+     "endpoints": [
+      {
+       "metodo": "GET",
+       "ruta": "/productos",
+       "resumen": "Listar productos",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/productos",
+       "resumen": "Crear un producto",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/productos/{id}",
+       "resumen": "Obtener un producto",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PUT",
+       "ruta": "/productos/{id}",
+       "resumen": "Reemplazar un producto",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PATCH",
+       "ruta": "/productos/{id}",
+       "resumen": "Actualizar un producto parcialmente",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "DELETE",
+       "ruta": "/productos/{id}",
+       "resumen": "Eliminar un producto",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/productos/{id}/stock",
+       "resumen": "Consultar stock",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/productos/{id}/ajustes-stock",
+       "resumen": "Ajustar stock",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "id": "proveedores",
+     "api": "API de Proveedores",
+     "endpoints": [
+      {
+       "metodo": "GET",
+       "ruta": "/proveedores",
+       "resumen": "Listar proveedores",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/proveedores",
+       "resumen": "Crear un proveedor",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/proveedores/{id}",
+       "resumen": "Obtener un proveedor",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PUT",
+       "ruta": "/proveedores/{id}",
+       "resumen": "Reemplazar un proveedor",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PATCH",
+       "ruta": "/proveedores/{id}",
+       "resumen": "Actualizar un proveedor parcialmente",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "DELETE",
+       "ruta": "/proveedores/{id}",
+       "resumen": "Eliminar un proveedor",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/proveedores/{id}/productos",
+       "resumen": "Listar productos suministrados",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/proveedores/{id}/evaluaciones",
+       "resumen": "Evaluar un proveedor",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "id": "tickets",
+     "api": "API de Tickets de Soporte",
+     "endpoints": [
+      {
+       "metodo": "GET",
+       "ruta": "/tickets",
+       "resumen": "Listar tickets",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/tickets",
+       "resumen": "Crear un ticket",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/tickets/{id}",
+       "resumen": "Obtener un ticket",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PUT",
+       "ruta": "/tickets/{id}",
+       "resumen": "Reemplazar un ticket",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "PATCH",
+       "ruta": "/tickets/{id}",
+       "resumen": "Actualizar un ticket parcialmente",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "DELETE",
+       "ruta": "/tickets/{id}",
+       "resumen": "Eliminar un ticket",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/tickets/{id}/comentarios",
+       "resumen": "Listar comentarios",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/tickets/{id}/comentarios",
+       "resumen": "Agregar un comentario",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "fecha": "2026-11-09",
+   "commits": [
+    {
+     "sha": "907c809",
+     "mensaje": "Sitio de documentación de APIs (Facturas y Clientes)"
+    }
+   ],
+   "apis": [
+    {
+     "id": "clientes",
+     "api": "API de Clientes",
+     "endpoints": [
+      {
+       "metodo": "GET",
+       "ruta": "/clientes",
+       "resumen": "Listar clientes",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "GET",
+       "ruta": "/clientes/{id}",
+       "resumen": "Obtener un cliente",
+       "estado": "nuevo"
+      }
+     ]
+    },
+    {
+     "id": "facturas",
+     "api": "API de Facturas",
+     "endpoints": [
+      {
+       "metodo": "GET",
+       "ruta": "/facturas",
+       "resumen": "Listar facturas",
+       "estado": "nuevo"
+      },
+      {
+       "metodo": "POST",
+       "ruta": "/facturas",
+       "resumen": "Crear una factura",
+       "estado": "nuevo"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
