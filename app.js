@@ -357,7 +357,7 @@
       }
     });
     document.title = api ? "API de " + api.nombre + " · " + SITE_TITLE
-      : route === "cambios" ? "Historial de cambios de Square · " + SITE_TITLE : SITE_TITLE;
+      : route === "cambios" ? "Historial de cambios · " + SITE_TITLE : SITE_TITLE;
     if (api) renderSpec(api);
     if (route === "cambios") initCambios();
     window.scrollTo(0, 0);
