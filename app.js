@@ -314,9 +314,10 @@
     }
   }
 
+  // La página principal es el historial de cambios.
   function goHome() {
-    history.replaceState(null, "", "#inicio");
-    show("inicio", false);
+    history.replaceState(null, "", "#cambios");
+    show("cambios", false);
   }
 
   function onHashChange() {

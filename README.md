@@ -107,7 +107,7 @@ Haz esta prueba en local (`http://localhost:8000/api-specs/`) y después en la U
 
 | # | Paso | Resultado esperado |
 |---|------|--------------------|
-| 1 | Abre la URL del sitio sin `#` | Se muestra **Inicio** con el título «Documentación de APIs», la descripción y diez tarjetas, cada una con su versión y cantidad de endpoints. En el menú, **Inicio** aparece resaltado. La URL termina en `#inicio`. |
+| 1 | Abre la URL del sitio sin `#` | Se muestra **Cambios** (la página principal) con el título «Historial de cambios» y la lista de fechas, la más reciente con la etiqueta «Latest». En el menú, **Cambios** aparece primero y resaltado. La URL termina en `#cambios`. |
 | 2 | Pulsa la tarjeta **API de Facturas** | Se abre la pantalla de Facturas (`#facturas`) con nombre, versión `v1.0.0`, descripción y los endpoints `GET /facturas` y `POST /facturas`, incluidos el ejemplo de solicitud y los de respuesta. **Facturas** aparece resaltado en el menú. |
 | 3 | Pulsa **Descargar JSON** | Se descarga `facturas.json`. Al abrirlo empieza con `"openapi": "3.0.3"` y `"title": "API de Facturas"`. |
 | 4 | Pulsa **Clientes** en el menú | Se abre la pantalla de Clientes (`#clientes`) con `GET /clientes` y `GET /clientes/{id}`, y sus ejemplos de respuesta. |
